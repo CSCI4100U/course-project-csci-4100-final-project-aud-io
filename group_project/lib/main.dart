@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'nav.dart';
+import 'package:group_project/side_menu_item.dart';
+import 'package:group_project/user_classes/friends.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,9 +15,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Aud.io',
       theme: ThemeData(
-        primarySwatch: Colors.purple,
+        primarySwatch: Colors.deepPurple,
       ),
       home: const MyHomePage(title: 'Aud.io'),
+        //Routes For Later
+        routes: {
+          // '/loginForm' : (context) => LoginForm(),
+          // '/profile' : (context) => ProfileView(),
+          '/friendList' : (context) => const FriendList(title: "Friends",),
+          // '/playlists' : (context) => PlaylistView(),
+          // '/settings' : (context) => SettingsView(),
+        }
     );
   }
 }
@@ -36,8 +45,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
-    //Replacement can be MenuObjects class of name, route,
-    List options = ["Login/Logout","Profile","Friends","Playlists"];
+    List options = [
+      SideMenuItem(title:"Login",route:"/loginForm"),
+      SideMenuItem(title:"Profile",route:"/profile"),
+      SideMenuItem(title:"Friends",route:"/friendList"),
+      SideMenuItem(title:"Playlists",route:"/playlists"),
+    ];
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -49,7 +62,9 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.home),
           ),
           IconButton(
-            onPressed: (){},
+            onPressed: (){
+              //Call async function that goes to route "/settings"
+            },
             icon: Icon(Icons.settings_outlined),
           ),
         ],
@@ -64,23 +79,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       drawer: Drawer(
+        backgroundColor: Colors.black,
         child: Container(
           padding: const EdgeInsets.all(50),
           child: ListView.separated(
               itemBuilder: (context,index){
-                return Container(
-                  height: 50,
-                  child: TextButton(
-                    child: Text("${options[index]}",
-                      style: const TextStyle(
-                          color: Colors.black
-                      ),
-                    ),
-                    onPressed: (){
-                      print("You pressed button ${options[index]}!");
-                    },
-                  ),
-                );
+                return options[index];
               },
               separatorBuilder: (context,index){
                 return Divider();
