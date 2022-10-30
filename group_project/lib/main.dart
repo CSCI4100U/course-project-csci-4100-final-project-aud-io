@@ -2,6 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:group_project/side_menu_item.dart';
 import 'package:group_project/user_classes/friends.dart';
 
+//App Logo
+// Container logo = Container(
+//     decoration: const BoxDecoration(
+//         image: DecorationImage(
+//           image: AssetImage('lib/images/audio.png'),
+//               fit: BoxFit.cover
+//         ),
+//     )
+// );
+
+Image logo = Image(
+      image: AssetImage('lib/images/audio.png'),
+    );
+
 void main() {
   runApp(const MyApp());
 }
@@ -9,17 +23,20 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Aud.io',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: const MyHomePage(title: 'Aud.io'),
+      home: MyHomePage(title: logo),
         //Routes For Later
         routes: {
+          '/home' : (context) => MyHomePage(title: logo,),
           // '/loginForm' : (context) => LoginForm(),
           // '/profile' : (context) => ProfileView(),
           '/friendList' : (context) => const FriendList(title: "Friends",),
@@ -32,7 +49,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-  final String title;
+  final Widget title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -53,12 +70,16 @@ class _MyHomePageState extends State<MyHomePage> {
     ];
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 100,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: widget.title,
         actions: [
           IconButton(
-            onPressed: (){},
+            onPressed: (){
+              //Call async function that goes to route "/home"
+              Navigator.pushNamed(context, '/home');
+            },
             icon: Icon(Icons.home),
           ),
           IconButton(
