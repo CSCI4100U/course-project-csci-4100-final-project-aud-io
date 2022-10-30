@@ -58,7 +58,7 @@ dev_dependencies:
 flutter:
 
   assets:
-    - lib/images/audio.png
+    - lib/images/
 
 
   # The following line ensures that the Material Icons font is

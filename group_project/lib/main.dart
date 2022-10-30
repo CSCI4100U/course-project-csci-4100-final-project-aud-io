@@ -15,7 +15,7 @@ import 'package:page_transition/page_transition.dart';
 // );
 
 Image logo = Image(
-      image: AssetImage('lib/images/audio.png'),
+      image: AssetImage('lib/images/audio_alt.png'),
     );
 
 void main() {
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         splashTransition: SplashTransition.fadeTransition,
         pageTransitionType: PageTransitionType.fade,
         backgroundColor: Colors.deepPurpleAccent,
-        nextScreen: const MyHomePage(title: 'Aud.io'),
+        nextScreen: MyHomePage(title: logo),
         splashIconSize: 500,
       ),
         //Routes For Later
