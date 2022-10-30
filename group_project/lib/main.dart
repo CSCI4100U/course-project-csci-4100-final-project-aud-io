@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         splash: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/images/audio.png"),
+            Image.asset("lib/images/audio.png"),
           ],
         ),
         duration: 15000,
