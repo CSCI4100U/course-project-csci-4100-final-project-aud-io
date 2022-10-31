@@ -4,17 +4,7 @@ import 'package:group_project/side_menu_item.dart';
 import 'package:group_project/user_classes/friends.dart';
 import 'package:page_transition/page_transition.dart';
 
-//App Logo
-// Container logo = Container(
-//     decoration: const BoxDecoration(
-//         image: DecorationImage(
-//           image: AssetImage('lib/images/audio.png'),
-//               fit: BoxFit.cover
-//         ),
-//     )
-// );
-
-Image logo = Image(
+Image logo = const Image(
       image: AssetImage('lib/images/audio_alt.png'),
     );
 
@@ -62,6 +52,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
+//Todo: make this boolean functional
+bool isLoggedIn = false;
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
   final Widget title;
@@ -72,17 +65,28 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-
-
   @override
   Widget build(BuildContext context) {
 
-    List options = [
-      SideMenuItem(title:"Login",route:"/loginForm"),
+    List sideMenuOptions = [
+      TextButton(
+        onPressed: (){
+          setState(() {
+            isLoggedIn = false;
+            //Todo: go back to /login
+          });
+        },
+        child: const Text(
+          "Logout",
+          style: TextStyle(fontSize: 30),
+        ),
+      ),
       SideMenuItem(title:"Profile",route:"/profile"),
       SideMenuItem(title:"Friends",route:"/friendList"),
       SideMenuItem(title:"Playlists",route:"/playlists"),
+      SideMenuItem(title:"Settings",route:"/settings"),
     ];
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 120,
@@ -92,10 +96,10 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           IconButton(
             onPressed: (){
-              //Call async function that goes to route "/home"
-              Navigator.pushNamed(context, '/home');
+              //Call async function that goes to route "/notifications"
+              //Navigator.pushNamed(context, '/notifications');
             },
-            icon: Icon(Icons.home),
+            icon: const Icon(Icons.notifications),
           ),
           IconButton(
             onPressed: (){
@@ -120,12 +124,12 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: const EdgeInsets.all(50),
           child: ListView.separated(
               itemBuilder: (context,index){
-                return options[index];
+                return sideMenuOptions[index];
               },
               separatorBuilder: (context,index){
                 return Divider();
               },
-              itemCount: options.length
+              itemCount: sideMenuOptions.length
           ),
         ),
       ),
