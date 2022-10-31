@@ -11,7 +11,7 @@ class FriendList extends StatefulWidget {
 }
 
 class _FriendListState extends State<FriendList> {
-  int selectedIndex = 0;
+  //Todo: Get allFriends from local storage
   List<Profile> allFriends = [
     Profile(userName: "rajiv45",
         phoneNum: "555-1234",
@@ -56,26 +56,23 @@ class _FriendListState extends State<FriendList> {
 
                   child: ListTile(
                       title: Text("${allFriends[index].userName}",
-                        style: TextStyle(fontSize: 30),),
+                        style: const TextStyle(fontSize: 30),),
                       trailing: GestureDetector(
-                          child: Icon(Icons.delete),
-                          onTap: (){
-                            Profile user = allFriends[index];
-                            //open dialog
-                            // "Are you sure you want to delete {user}"
-                              _showDeleteFriendAlert(context,user);
-
-                            },
+                        child: const Icon(Icons.delete),
+                        onTap: (){
+                          //currently selected friend
+                          Profile user = allFriends[index];
+                          //open dialog
+                          _showDeleteFriendAlert(context,user);
+                        }
                       ),
-
-                  ),
-
+                  )
                 );
           }
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          //call _addFriend()
+          //Todo: call _addFriend()
         },
         tooltip: 'Add Friend',
         child: const Icon(Icons.add),
@@ -83,18 +80,32 @@ class _FriendListState extends State<FriendList> {
     );
   }
   _deleteFriend(Profile user){
-    //remove friend from local storage
+    //Todo: remove friend from local storage
+
     allFriends.remove(user);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text("Deleted ${user.userName} as a friend :(",
+              style: const TextStyle(fontSize: 20),)
+        )
+    );
+
   }
 
+  /*
+  * Shows a Dialog confirming whether the user
+  * wants to delete a friend.
+  * */
   _showDeleteFriendAlert(BuildContext context, Profile user){
     showDialog(
         barrierDismissible: true,
         context: context,
         builder: (context){
           return AlertDialog(
-            title: Text("Delete Friend"),
-            content: Text("Are you sure you want to delete ${user.userName}?"),
+            title: const Text("Delete Friend"),
+            content: Text("Are you sure you want to delete "
+                "${user.userName}?"),
             actions: [
               TextButton(
                   onPressed: (){
@@ -103,13 +114,13 @@ class _FriendListState extends State<FriendList> {
                     });
                     Navigator.of(context).pop();
                   },
-                  child: Text("Yes")
+                  child: const Text("Yes")
               ),
               TextButton(
                   onPressed: (){
                     Navigator.of(context).pop();
                   },
-                  child: Text("No")
+                  child: const Text("No")
               )
             ],
           );
