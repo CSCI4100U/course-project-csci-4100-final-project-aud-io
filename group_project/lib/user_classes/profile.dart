@@ -8,7 +8,7 @@ class Profile{
   String? country;
   String? city;
 
-  Profile({this.userName,this.phoneNum,this.country,this.city});
+  Profile({this.userID,this.userName,this.phoneNum,this.country,this.city});
 
   String? get password => _password;
 

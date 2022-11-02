@@ -1,11 +1,12 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:group_project/side_menu_item.dart';
+import 'package:group_project/user_classes/addFriend.dart';
 import 'package:group_project/user_classes/friends.dart';
 import 'package:page_transition/page_transition.dart';
 
 Image logo = const Image(
-      image: AssetImage('lib/images/audio_alt.png'),
+      image: AssetImage('lib/images/audio_alt_beige.png'),
     );
 
 void main() {
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
           // '/loginForm' : (context) => LoginForm(),
           // '/profile' : (context) => ProfileView(),
           '/friendList' : (context) => const FriendList(title: "Friends",),
+              '/addFriend' : (context) => const AddFriendSearch(title: "Search Friends to Add",),
           // '/playlists' : (context) => PlaylistView(),
           // '/settings' : (context) => SettingsView(),
         }

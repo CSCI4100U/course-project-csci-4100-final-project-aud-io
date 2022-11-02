@@ -71,14 +71,27 @@ class _FriendListState extends State<FriendList> {
           }
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          //Todo: call _addFriend()
-        },
+        onPressed: _addFriend,
         tooltip: 'Add Friend',
         child: const Icon(Icons.add),
       ),
     );
   }
+  Future<void> _addFriend() async{
+    Profile? friend = await Navigator
+        .pushNamed(context, '/addFriend') as Profile?;
+
+    if(friend != null){
+      //insert friend to local database
+    }
+
+
+    //Snackbar: Just added ${friend.userName}
+
+    //_getAllFriends();
+
+  }
+
   _deleteFriend(Profile user){
     //Todo: remove friend from local storage
 
