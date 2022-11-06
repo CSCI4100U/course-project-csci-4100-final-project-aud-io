@@ -2,13 +2,13 @@
 
 Group members (3-5) (no Student IDs, only names and github usernames):
 
-1. 
+1. Mathew Kasbarian -- Username: MathewKasbarian
 
-2. 
+2. Alessandro Prataviera -- Username: AlessandroPrataviera
 
-3. 
+3. Matthew Sharp -- Username: MatthewSharpOTU
 
-4. 
+4. Rajiv Williams -- Username: rajiv-williams
 
 5.
 
