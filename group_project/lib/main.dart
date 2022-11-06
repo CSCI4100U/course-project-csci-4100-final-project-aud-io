@@ -4,10 +4,12 @@ import 'package:group_project/side_menu_item.dart';
 import 'package:group_project/user_classes/addFriend.dart';
 import 'package:group_project/user_classes/friends.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Image logo = const Image(
-      image: AssetImage('lib/images/audio_alt_beige.png'),
-    );
+  image: AssetImage('lib/images/audio_alt_beige.png'),
+);
 
 void main() {
   runApp(const MyApp());
@@ -20,35 +22,62 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
-    return MaterialApp(
-      title: 'Aud.io',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-      ),
-      home: AnimatedSplashScreen(
-        splash: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset("lib/images/audio.png"),
-          ],
-        ),
-        duration: 15000,
-        splashTransition: SplashTransition.fadeTransition,
-        pageTransitionType: PageTransitionType.fade,
-        backgroundColor: Colors.deepPurpleAccent,
-        nextScreen: MyHomePage(title: logo),
-        splashIconSize: 500,
-      ),
-        //Routes For Later
-        routes: {
-          '/home' : (context) => MyHomePage(title: logo,),
-          // '/loginForm' : (context) => LoginForm(),
-          // '/profile' : (context) => ProfileView(),
-          '/friendList' : (context) => const FriendList(title: "Friends",),
-              '/addFriend' : (context) => const AddFriendSearch(title: "Search Friends to Add",),
-          // '/playlists' : (context) => PlaylistView(),
-          // '/settings' : (context) => SettingsView(),
+    return FutureBuilder(
+        future: Firebase.initializeApp(),
+        builder: (context, snapshot){
+          if (snapshot.hasError){
+            print("Error initializing Firebase");
+          }
+          if (snapshot.connectionState == ConnectionState.done){
+            print ("Successfully connected to Firebase");
+            return MaterialApp(
+                title: 'Aud.io',
+                theme: ThemeData(
+                  primarySwatch: Colors.deepPurple,
+                ),
+                home: AnimatedSplashScreen(
+                  splash: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset("lib/images/audio.png"),
+                    ],
+                  ),
+                  duration: 2000,
+                  splashTransition: SplashTransition.fadeTransition,
+                  pageTransitionType: PageTransitionType.fade,
+                  backgroundColor: Colors.deepPurpleAccent,
+                  nextScreen: MyHomePage(title: logo), // Change to Login Later
+                  splashIconSize: 500,
+                ),
+                //Routes For Later
+                routes: {
+                  '/home' : (context) => MyHomePage(title: logo,),
+                  // '/loginForm' : (context) => LoginForm(),
+                  // '/profile' : (context) => ProfileView(),
+                  '/friendList' : (context) => const FriendList(title: "Friends",),
+                  '/addFriend' : (context) => const AddFriendSearch(title: "Search Friends to Add",),
+                  // '/playlists' : (context) => PlaylistView(),
+                  // '/settings' : (context) => SettingsView(),
+                }
+            );
+          }
+          else{
+            return CircularProgressIndicator();
+            // return AnimatedSplashScreen(
+            //   splash: Column(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       Image.asset("lib/images/audio.png"),
+            //     ],
+            //   ),
+            //   duration: 15000,
+            //   splashTransition: SplashTransition.fadeTransition,
+            //   pageTransitionType: PageTransitionType.fade,
+            //   backgroundColor: Colors.deepPurpleAccent,
+            //   nextScreen: MyHomePage(title: logo),
+            //   splashIconSize: 500,
+            // );
+          }
         }
     );
   }
@@ -140,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
 
       )
-    ,
+      ,
     );
 
   }

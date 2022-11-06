@@ -83,10 +83,18 @@ class _FriendListState extends State<FriendList> {
 
     if(friend != null){
       //insert friend to local database
+
+      //Snackbar: Just added ${friend.userName}
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text("Just added ${friend.userName} as a friend :)",
+                style: const TextStyle(fontSize: 20),)
+          )
+      );
     }
 
 
-    //Snackbar: Just added ${friend.userName}
+
 
     //_getAllFriends();
 
