@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "624682319208",
+    "project_id": "csci4100u-audio-ffc26",
+    "storage_bucket": "csci4100u-audio-ffc26.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:624682319208:android:094e796bbcd0eae9332add",
+        "android_client_info": {
+          "package_name": "com.example.group_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "624682319208-628q2ab6dt880epd4j24jrnkrs8cp9gi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqkZut4x_VpP-MA67CQf6XGiXrRH9cklI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "624682319208-628q2ab6dt880epd4j24jrnkrs8cp9gi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
