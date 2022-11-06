@@ -35,20 +35,7 @@ class MyApp extends StatelessWidget {
                 theme: ThemeData(
                   primarySwatch: Colors.deepPurple,
                 ),
-                home: AnimatedSplashScreen(
-                  splash: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset("lib/images/audio.png"),
-                    ],
-                  ),
-                  duration: 2000,
-                  splashTransition: SplashTransition.fadeTransition,
-                  pageTransitionType: PageTransitionType.fade,
-                  backgroundColor: Colors.deepPurpleAccent,
-                  nextScreen: MyHomePage(title: logo), // Change to Login Later
-                  splashIconSize: 500,
-                ),
+                home: buildSplashScreen(),
                 //Routes For Later
                 routes: {
                   '/home' : (context) => MyHomePage(title: logo,),
@@ -62,25 +49,30 @@ class MyApp extends StatelessWidget {
             );
           }
           else{
-            return CircularProgressIndicator();
-            // return AnimatedSplashScreen(
-            //   splash: Column(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       Image.asset("lib/images/audio.png"),
-            //     ],
-            //   ),
-            //   duration: 15000,
-            //   splashTransition: SplashTransition.fadeTransition,
-            //   pageTransitionType: PageTransitionType.fade,
-            //   backgroundColor: Colors.deepPurpleAccent,
-            //   nextScreen: MyHomePage(title: logo),
-            //   splashIconSize: 500,
-            // );
+            return LinearProgressIndicator();
           }
         }
     );
   }
+}
+
+/*
+* Function returns Custom SplashScreen
+* */
+Widget buildSplashScreen(){
+  return AnimatedSplashScreen(
+    splash: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset("lib/images/audio.png"),
+      ],
+    ),
+    splashTransition: SplashTransition.fadeTransition,
+    pageTransitionType: PageTransitionType.fade,
+    backgroundColor: Colors.deepPurpleAccent,
+    nextScreen: MyHomePage(title: logo), // Change to Login Later
+    splashIconSize: 500,
+  );
 }
 
 //Todo: make this boolean functional
