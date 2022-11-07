@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:group_project/login_form.dart';
 import 'package:group_project/side_menu_item.dart';
 import 'package:group_project/user_classes/addFriend.dart';
 import 'package:group_project/user_classes/friends.dart';
@@ -11,7 +12,9 @@ Image logo = const Image(
   image: AssetImage('lib/images/audio_alt_beige.png'),
 );
 
-void main() {
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -70,7 +73,7 @@ Widget buildSplashScreen(){
     splashTransition: SplashTransition.fadeTransition,
     pageTransitionType: PageTransitionType.fade,
     backgroundColor: Colors.deepPurpleAccent,
-    nextScreen: MyHomePage(title: logo), // Change to Login Later
+    nextScreen: LoginForm(title: logo), // Change to Login Later
     splashIconSize: 500,
   );
 }
