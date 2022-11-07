@@ -34,7 +34,11 @@ dependencies:
   sqflite:
   animated_splash_screen:
   firebase_core:
-  cloud_firestore: 
+  cloud_firestore:
+  firebase_auth:
+  firebase_ui_auth:
+  google_fonts:
+  provider:
 
 
   # The following adds the Cupertino Icons font to your application.
