@@ -1,5 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'main.dart';
 
 
@@ -14,8 +20,11 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
 
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
   final formKey = GlobalKey<FormState>();
   TextStyle style =  TextStyle(fontSize: 20);
+  var email = '';
+  var password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +49,7 @@ class _LoginFormState extends State<LoginForm> {
                 if (value!.isEmpty){
                   return "Email must not be empty";
                 }
+                email = value;
                 return null;
               },
               onSaved: (value){
@@ -56,11 +66,12 @@ class _LoginFormState extends State<LoginForm> {
                 print("Validating password: $value");
               if (value!.length<7) {
                 return "Password length too short, 8+ Chars";
-                }
+              }
+              password = value;
               return null;
               },
               onSaved: (value){
-                print("Saving Password $value");
+                print("Saving Password Successful");
                 },
             ),
             SizedBox(height: 10,),
@@ -70,10 +81,20 @@ class _LoginFormState extends State<LoginForm> {
                 children: [
                   ElevatedButton(
                       onPressed: () {
-                        const SnackBar(
-                          content: Text("Registration Successful"),
-                        );
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MyHomePage(title: logo)));
+                        print('Login button pressed');
+
+                        if (formKey.currentState!.validate()){
+                          print('Valid Input');
+                          formKey.currentState!.save();
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text("Registration Successful"),
+                          ));
+                          users.add({'email' : email, 'password' : password}).then((value) => print('User Added')).catchError((error) => print('Failed to add user'));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MyHomePage(title: logo)));
+
+                        } else{
+                          print("Validation Failed");
+                        }
                       },
                       child: Text("Login", style: style)
                   ),
