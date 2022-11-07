@@ -8,6 +8,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+// Aud.io logo at the top of the menu
 Image logo = const Image(
   image: AssetImage('lib/images/audio_alt_beige.png'),
 );
@@ -20,8 +21,6 @@ Future<void> main() async{
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -43,25 +42,6 @@ class MyApp extends StatelessWidget {
         }
         );
   }
-}
-
-/*
-* Function returns Custom SplashScreen
-* */
-Widget buildSplashScreen(){
-  return AnimatedSplashScreen(
-    splash: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset("lib/images/audio.png"),
-      ],
-    ),
-    splashTransition: SplashTransition.fadeTransition,
-    pageTransitionType: PageTransitionType.fade,
-    backgroundColor: Colors.deepPurpleAccent,
-    nextScreen: LoginForm(title: logo), // Change to Login Later
-    splashIconSize: 500,
-  );
 }
 
 //Todo: make this boolean functional
@@ -154,4 +134,23 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
   }
+}
+
+/*
+* Function returns Custom SplashScreen
+* */
+Widget buildSplashScreen(){
+  return AnimatedSplashScreen(
+    splash: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset("lib/images/audio.png"),
+      ],
+    ),
+    splashTransition: SplashTransition.fadeTransition,
+    pageTransitionType: PageTransitionType.fade,
+    backgroundColor: Colors.deepPurpleAccent,
+    nextScreen: LoginForm(title: logo), // Change to Login Later
+    splashIconSize: 500,
+  );
 }
