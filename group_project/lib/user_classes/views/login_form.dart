@@ -22,7 +22,7 @@ class _LoginFormState extends State<LoginForm> {
 
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   final formKey = GlobalKey<FormState>();
-  TextStyle style =  TextStyle(fontSize: 20);
+  TextStyle style =  TextStyle(fontSize: 15);
   var email = '';
   var password = '';
 
