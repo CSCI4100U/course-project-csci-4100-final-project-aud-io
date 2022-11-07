@@ -76,8 +76,8 @@ class _LoginFormState extends State<LoginForm> {
             ),
             SizedBox(height: 10,),
             Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
                       onPressed: () {
