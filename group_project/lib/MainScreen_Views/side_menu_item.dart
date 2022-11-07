@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
+import '../main.dart';
 
 class SideMenuItem extends StatelessWidget {
   const SideMenuItem({Key? key,this.title,this.route}) : super(key: key);

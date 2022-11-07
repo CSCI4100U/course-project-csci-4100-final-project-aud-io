@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'profile.dart';
+import '../models/profile.dart';
 
 class AddFriendSearch extends StatefulWidget {
   const AddFriendSearch({Key? key, this.title}) : super(key: key);

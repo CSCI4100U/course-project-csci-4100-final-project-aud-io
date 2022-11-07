@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'main.dart';
+import '../../main.dart';
 
 
 class LoginForm extends StatefulWidget {
