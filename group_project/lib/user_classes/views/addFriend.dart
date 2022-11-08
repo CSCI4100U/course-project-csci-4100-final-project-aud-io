@@ -62,7 +62,7 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
 
                   // Updating list of all grades (used for logic purposes)
                   allUsers = snapshot.data.docs.map<Profile>((document) =>
-                      _model.getUser(context, document)
+                      _model.getUserBySnapshot(context, document)
                   ).toList();
 
                   List<Profile> foundUsers = [];
@@ -75,7 +75,7 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
                       // Add user to foundUsers
                       foundUsers.add(user);
                       print("User: $userNameEntered");
-                      //Todo: Add if statement to check if user already in friendsList
+                      //Todo: Add if statement to check if user already in friendsList and not current user
                     }
 
                   }
@@ -135,7 +135,6 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
           )
         ],
       ),
-      //Todo: Have add Button as trailing in List of List Tiles
       // if friend already added, don't include in search results, etc.
       floatingActionButton: FloatingActionButton(
         onPressed: (){

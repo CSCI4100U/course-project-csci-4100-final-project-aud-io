@@ -1,9 +1,10 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:group_project/user_classes/views/login_form.dart';
 import 'package:group_project/MainScreen_Views/side_menu_item.dart';
 import 'package:group_project/user_classes/views/addFriend.dart';
-import 'package:group_project/user_classes/views/friends.dart';
+import 'package:group_project/user_classes/views/friends_list.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -59,7 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     List sideMenuOptions = [
       TextButton(
         onPressed: (){
