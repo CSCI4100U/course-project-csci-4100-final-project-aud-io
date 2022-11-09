@@ -32,6 +32,7 @@ dependencies:
   flutter:
     sdk: flutter
   sqflite:
+  email_validator:
   animated_splash_screen:
   firebase_core:
   cloud_firestore:
