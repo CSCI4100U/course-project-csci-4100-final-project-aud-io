@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:group_project/user_classes/models/utils.dart';
 import 'package:provider/provider.dart';
 import '../../main.dart';
+import '../models/notifications.dart';
 import 'auth_page.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -26,6 +27,8 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final _notifications = Notifications();
+
 
   @override
   void dispose(){
@@ -36,6 +39,8 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context){
+    _notifications.init();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -73,6 +78,8 @@ class _LoginWidgetState extends State<LoginWidget> {
               // Will Implement Email Return for Final
               // For now will send a pending notification to user
               text: TextSpan(
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => _notifications.sendNotificationNow("Password Reset", "Email reset request sent to admin, thank you"),
                   text: 'Forgot Password?',
                   style: TextStyle(
                     decoration: TextDecoration.underline,
