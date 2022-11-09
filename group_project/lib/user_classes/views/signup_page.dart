@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:group_project/user_classes/views/utils.dart';
+import 'package:group_project/user_classes/models/utils.dart';
 
 import '../../main.dart';
 

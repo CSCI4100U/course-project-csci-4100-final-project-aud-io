@@ -9,10 +9,11 @@ class Profile{
   String? phoneNum;
   String? country;
   String? city;
+  String? email;
   String? birthday;
   DocumentReference? reference;
 
-  Profile({this.userName,this.phoneNum,this.country,this.city,this.birthday});
+  Profile({this.userName,this.phoneNum,this.country,this.city,this.birthday,this.email});
 
   String? get password => _password;
 
@@ -26,6 +27,7 @@ class Profile{
     this.country = map['country'];
     this.city = map['city'];
     this.birthday = map['birthday'];
+    this.email = map['email'];
   }
 
   Map<String,Object?> toMap(){
@@ -34,11 +36,12 @@ class Profile{
       'phoneNum': this.phoneNum,
       'country': this.country,
       'city': this.city,
-      'birthday': this.birthday
+      'birthday': this.birthday,
+      'email': this.email
     };
   }
   @override
   String toString(){
-    return "{ $userName : Phone#: $phoneNum. From $city, $country. Born $birthday.";
+    return "{ $userName : Phone#: $phoneNum. From $city, $country. Born $birthday. Email: $email";
   }
 }

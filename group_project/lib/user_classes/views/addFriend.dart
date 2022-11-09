@@ -18,7 +18,7 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
 
   TextStyle style = TextStyle(fontSize: 30);
 
-
+  List<Profile> allUsers = [];
   Profile newFriend = Profile();
   late Stream userStream;
 
@@ -26,7 +26,8 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
   void initState(){
     super.initState();
 
-    userStream = _model.getAllUsers();
+    userStream = _model.getUserStream();
+    loadUsers();
   }
 
   @override
@@ -60,11 +61,6 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
                 else{
                   print("Found data for userList");
 
-                  // Updating list of all users
-                  List<Profile> allUsers = snapshot.data.docs.map<Profile>((document) =>
-                      _model.getUserBySnapshot(context, document)
-                  ).toList();
-
                   List<Profile> foundUsers = [];
 
                   // Query through all users
@@ -76,52 +72,55 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
                       foundUsers.add(user);
                       print("User: $userNameEntered");
                       //Todo: Add if statement to check if user already in friendsList and not current user
+                      // if friend already added, don't include in search results, etc.
                     }
                   }
 
                   if(foundUsers.isNotEmpty){
                     return
-                        Container(
-                          height: 526,
-                          child: ListView.builder(
+                        Expanded(
+                          child:
+                            Container(
+                              child: ListView.builder(
 
-                              padding: const EdgeInsets.all(8.0),
-                              itemCount: foundUsers.length,
-                              itemBuilder: (context,index){
-                                return GestureDetector(
-                                    child: Container(
-                                      decoration: BoxDecoration(color: Colors.white),
-                                      padding: const EdgeInsets.all(10.0),
+                                  padding: const EdgeInsets.all(8.0),
+                                  itemCount: foundUsers.length,
+                                  itemBuilder: (context,index){
+                                    return GestureDetector(
+                                        child: Container(
+                                          decoration: BoxDecoration(color: Colors.white),
+                                          padding: const EdgeInsets.all(10.0),
 
-                                      child: ListTile(
-                                        title: Text("${foundUsers[index].userName}",
-                                          style: TextStyle(fontSize: 30),
+                                          child: ListTile(
+                                            title: Text("${foundUsers[index].userName}",
+                                              style: TextStyle(fontSize: 30),
+                                            ),
+                                            subtitle: Text("${foundUsers[index].country}",
+                                              style: TextStyle(fontSize: 30),
+                                            ),
+                                            /*
+                                                    Todo:
+                                        Make this add Icon, to add multiple users
+                                        to a list to send all friend requests at once
+                                       */
+                                            // trailing:
+                                          ),
+
                                         ),
-                                        subtitle: Text("${foundUsers[index].country}",
-                                          style: TextStyle(fontSize: 30),
-                                        ),
-                                        /*
-                                                Todo:
-                                    Make this add Icon, to add multiple users
-                                    to a list to send all friend requests at once
-                                   */
-                                        // trailing:
-                                      ),
+                                        onTap: (){
+                                          //show selected color
 
-                                    ),
-                                    onTap: (){
-                                      //show selected color
-
-                                      //set this to newFriend to be added
-                                      setState(() {
-                                        newFriend = foundUsers[index];
-                                      });
+                                          //set this to newFriend to be added
+                                          setState(() {
+                                            newFriend = foundUsers[index];
+                                          });
 
 
-                                    }
-                                );
-                              }
-                          ),
+                                        }
+                                    );
+                                  }
+                              ),
+                            ),
                         );
 
                   }
@@ -135,7 +134,6 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
           )
         ],
       ),
-      // if friend already added, don't include in search results, etc.
       floatingActionButton: FloatingActionButton(
         onPressed: (){
           Navigator.of(context).pop(newFriend);
@@ -144,5 +142,17 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
         child: const Icon(Icons.person_add),
       ),
     );
+  }
+
+  // Updates widget with current users in cloud storage
+  loadUsers(){
+    setState(() {
+      getAllUsers();
+    });
+  }
+
+  // Makes list of all users
+  getAllUsers() async{
+    allUsers = await _model.getAllUsers();
   }
 }

@@ -14,42 +14,21 @@ class FriendList extends StatefulWidget {
 }
 
 class _FriendListState extends State<FriendList> {
-  //Todo: Get allFriends from local storage
-  // List<Profile> allFriends = [
-  //   Profile(userName: "rajiv45",
-  //       phoneNum: "555-1234",
-  //       country: "Bahamas",
-  //       city: "Nassau"
-  //   ),
-  //   Profile(userName: "fab",
-  //       phoneNum: "555-1235",
-  //       country: "Canada",
-  //       city: "Ottawa"
-  //   ),
-  //   Profile(userName: "john_doe",
-  //       phoneNum: "555-1237",
-  //       country: "England",
-  //       city: "Liverpool"
-  //   ),
-  // ];
+
   List<Profile> allFriends = [];
   TextStyle style = const TextStyle(fontSize: 30);
-  //For search metric
-  String userNameEntered = "";
-  var _model = UserModel();
-  //Todo: change currentUser to actual logged in user
-  String userName = "rajiv45";
+
+  final _model = UserModel();
   Profile currentUser = Profile();
-  var curr = FirebaseAuth.instance.currentUser!.email;
+  String? currentUserEmail = FirebaseAuth.instance.currentUser!.email;
   late Stream friendListStream;
 
   @override
   void initState(){
     super.initState();
 
-    //_getCurrentUser();
-    friendListStream = _model.getAllFriends(currentUser);
-
+    friendListStream = _model.getFriendStream(currentUser);
+    getCurrentUser(currentUserEmail!);
   }
 
   @override
@@ -70,18 +49,6 @@ class _FriendListState extends State<FriendList> {
       ),
       body: Column(
         children: [
-          TextFormField(
-          style: style,
-            decoration: const InputDecoration(
-                label: Text("Search"),
-                hintText: "john123"
-            ),
-            onChanged: (value){
-              setState(() {
-                userNameEntered = value;
-              });
-            }
-          ),
           StreamBuilder(
             stream: friendListStream,
             builder: (BuildContext context, AsyncSnapshot snapshot){
@@ -93,13 +60,8 @@ class _FriendListState extends State<FriendList> {
               else{
                 print("Found data for friendsList");
 
-                // Updating list of all grades (used for logic purposes)
-                allFriends = snapshot.data.docs.map<Profile>((document) =>
-                    _model.getUserBySnapshot(context, document)
-                ).toList();
-
-
-                return Expanded(
+                if(allFriends.isNotEmpty){
+                  return Expanded(
                     child: Container (
                       child: ListView.builder(
                           padding: const EdgeInsets.all(8.0),
@@ -130,16 +92,24 @@ class _FriendListState extends State<FriendList> {
                           }
                       ),
                     ),
-                );
+                  );
+                }
+                else{
+                  return Container(
+                    // decoration: BoxDecoration(color: gradeColors[index]),
+                      padding: const EdgeInsets.all(10.0),
+
+                      child: Text("Looks like you have no friends :(",
+                        style: style,
+                      )
+                  );
+                }
+
               }
             }
           ),
         ],
       ),
-
-
-
-
       floatingActionButton: FloatingActionButton(
         onPressed: _addFriend,
         tooltip: 'Add Friend',
@@ -147,11 +117,12 @@ class _FriendListState extends State<FriendList> {
       ),
     );
   }
+
   Future<void> _addFriend() async{
     Profile? friend = await Navigator
         .pushNamed(context, '/addFriend') as Profile?;
 
-    if(friend != null){
+    if(friend != null && friend.userName != null){
       //send user a notification
 
       //Snackbar: Just added ${friend.userName}
@@ -162,17 +133,7 @@ class _FriendListState extends State<FriendList> {
           )
       );
     }
-
-
-
-
-    //_getAllFriends();
-
   }
-
-  // Future _getCurrentUser() async{
-  //   currentUser = await _model.getUserByUsername(userName);
-  // }
 
   _deleteFriend(Profile user){
     //Todo: remove friend from local storage
@@ -186,7 +147,6 @@ class _FriendListState extends State<FriendList> {
               style: const TextStyle(fontSize: 20),)
         )
     );
-
   }
 
   /*
@@ -223,4 +183,18 @@ class _FriendListState extends State<FriendList> {
         }
     );
   }
+
+  getCurrentUser(String email)async{
+    currentUser = await _model.getUserByEmail(email);
+    setState(() {
+      friendListStream = _model.getFriendStream(currentUser);
+      getAllFriends();
+    });
+  }
+
+  getAllFriends() async{
+    allFriends = await _model.getFriendsList(currentUser);
+  }
 }
+
+
