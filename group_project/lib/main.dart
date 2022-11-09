@@ -1,10 +1,13 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:group_project/user_classes/views/auth_page.dart';
+import 'package:group_project/user_classes/models/authenticate_user.dart';
 import 'package:group_project/user_classes/views/login_form.dart';
 import 'package:group_project/MainScreen_Views/side_menu_item.dart';
 import 'package:group_project/user_classes/views/addFriend.dart';
 import 'package:group_project/user_classes/views/friends_list.dart';
+import 'package:group_project/user_classes/views/utils.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,12 +23,16 @@ Future<void> main() async{
   runApp(const MyApp());
 }
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        navigatorKey: navigatorKey,
+        scaffoldMessengerKey: Utils.messengerKey,
         title: 'Aud.io',
         theme: ThemeData(
           primarySwatch: Colors.deepPurple,
@@ -60,13 +67,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
+
     List sideMenuOptions = [
       TextButton(
         onPressed: (){
-          setState(() {
-            isLoggedIn = false;
-            //Todo: go back to /login
-          });
+          FirebaseAuth.instance.signOut();
+          // setState(() {
+          //   isLoggedIn = false;
+          //   //Todo: go back to /login
+          // });
         },
         child: const Text(
           "Logout",
