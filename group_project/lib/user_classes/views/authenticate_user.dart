@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:group_project/user_classes/models/utils.dart';
 import 'package:provider/provider.dart';
 import '../../main.dart';
-import '../views/auth_page.dart';
+import 'auth_page.dart';
 
 class LoginWidget extends StatefulWidget {
   LoginWidget({Key? key, required this.title, required this.onClickedSignUp}) : super(key: key);
