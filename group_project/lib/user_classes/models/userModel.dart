@@ -21,16 +21,52 @@ class UserModel{
   /*
   * Returns all users in database for addFriend query
   * */
-  Stream getAllUsers() async*{
+  Stream getUserStream() async*{
 
     print("Getting the users...");
     yield await FirebaseFirestore.instance.collection('users').get();
   }
 
   /*
+  * Returns a List of all users in cloud storage
+  * */
+  Future<List<Profile>> getAllUsers() async{
+    QuerySnapshot users = await FirebaseFirestore.instance.collection('users').get();
+
+    List<Profile> allUsers = users.docs.map<Profile>((document) {
+      final user = Profile.fromMap(
+          document.data(),
+          reference: document.reference);
+      return user;
+    }).toList();
+
+    return allUsers;
+  }
+
+  /*
+  * Function return a Profile given an
+  * email, which is then compared with
+  * the email in the users under
+  * Firebase Authentication.
+  * */
+  Future<Profile> getUserByEmail(String email) async{
+    Profile result = Profile();
+    List<Profile> allUsers = await getAllUsers();
+    print("ALL USERS: $allUsers");
+    for(Profile user in allUsers){
+      if(user.email == email){
+        print("USER CHOSEN: $user");
+        return user;
+      }
+    }
+    return result;
+  }
+
+
+  /*
   * Returns all friends in database for a specific user
   * */
-  Stream getAllFriends(Profile user) async*{
+  Stream getFriendStream(Profile user) async*{
 
     print("Getting the friendsList...");
     if(user.reference!=null){
@@ -38,12 +74,26 @@ class UserModel{
       yield await FirebaseFirestore.instance.collection('users').doc(user.reference!.id)
           .collection('friendsList').get();
     }
-    else{
-      // For now return hardcoded user.reference.id because my code is bad lol
-      yield await FirebaseFirestore.instance.collection('users').doc("uuz3yJIKsMrnPPsaqPXK")
-          .collection('friendsList').get();
-    }
 
+  }
+
+  /*
+  * Function returns friendsList (List<Profile>)
+  * of given a user.
+  * */
+  Future<List<Profile>> getFriendsList(Profile user) async{
+
+    QuerySnapshot friends = await FirebaseFirestore.instance.collection('users')
+        .doc(user.reference!.id).collection('friendsList').get();
+
+    List<Profile> allFriends = friends.docs.map<Profile>((user) {
+      final friend = Profile.fromMap(
+          user.data(),
+          reference: user.reference);
+      return friend;
+    }).toList();
+
+    return allFriends;
   }
 
   Future updateUser(Profile user) async{
@@ -64,6 +114,7 @@ class UserModel{
         reference: userData.reference);
     return user;
   }
+
   // Future<Profile> getUserByUsername(String userName) async{
   //   Profile resultingUser = Profile();
   //   List<Profile> allUsers = await FirebaseFirestore.instance.collection('users').get()..map<Profile>((document){
