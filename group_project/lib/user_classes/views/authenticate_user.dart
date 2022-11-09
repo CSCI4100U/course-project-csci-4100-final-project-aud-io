@@ -65,7 +65,24 @@ class _LoginWidgetState extends State<LoginWidget> {
               style: TextStyle(fontSize: 24),
             )
         ),
-        SizedBox(height: 24,),
+        SizedBox(height: 14,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            RichText(
+              // Will Implement Email Return for Final
+              // For now will send a pending notification to user
+              text: TextSpan(
+                  text: 'Forgot Password?',
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: Theme.of(context).colorScheme.secondary,
+                  )
+              )
+            ),
+          ],
+        ),
+        SizedBox(height: 14,),
         RichText(
             text: TextSpan(
                 style: TextStyle(color: Colors.deepPurple, fontSize: 20),
