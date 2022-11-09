@@ -18,7 +18,7 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
 
   TextStyle style = TextStyle(fontSize: 30);
 
-  List<Profile> allUsers = [];
+
   Profile newFriend = Profile();
   late Stream userStream;
 
@@ -60,14 +60,14 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
                 else{
                   print("Found data for userList");
 
-                  // Updating list of all grades (used for logic purposes)
-                  allUsers = snapshot.data.docs.map<Profile>((document) =>
+                  // Updating list of all users
+                  List<Profile> allUsers = snapshot.data.docs.map<Profile>((document) =>
                       _model.getUserBySnapshot(context, document)
                   ).toList();
 
                   List<Profile> foundUsers = [];
 
-                  // Query through all userS
+                  // Query through all users
                   for(Profile user in allUsers){
 
                     // if current user matches the userName entered
@@ -77,8 +77,8 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
                       print("User: $userNameEntered");
                       //Todo: Add if statement to check if user already in friendsList and not current user
                     }
-
                   }
+
                   if(foundUsers.isNotEmpty){
                     return
                         Container(
@@ -140,7 +140,7 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
         onPressed: (){
           Navigator.of(context).pop(newFriend);
         },
-        tooltip: 'Save',
+        tooltip: 'Add Friend',
         child: const Icon(Icons.person_add),
       ),
     );
