@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:group_project/user_classes/models/profile.dart';
 import 'package:group_project/user_classes/models/utils.dart';
 
 import '../../main.dart';
+import '../models/userModel.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key, required this.onClickedSignIn}) : super(key: key);
@@ -21,6 +24,12 @@ class _SignUpFormState extends State<SignUpForm> {
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   DateTime _eventTime = DateTime.now();
+  final users = UserModel();
+  var username = '';
+  var phoneNum = '';
+  var birthday = '';
+  var city = '';
+  var country = '';
 
 
   @override
@@ -65,17 +74,53 @@ class _SignUpFormState extends State<SignUpForm> {
         TextFormField(
           textInputAction: TextInputAction.next,
           decoration: InputDecoration(labelText: "Username", icon: Icon(Icons.person_pin)),
-          validator: (value) => value != null && value.length < 4
-              ? 'Enter a valid Username, required 4+ characters'
-              : null,
+            validator: (value) {
+              if (value == null || value.length < 4) {
+                return 'Enter a Valid UserName';
+              } else {
+                username = value;
+                return null;
+              }
+            }
         ),
         SizedBox(height: 4),
         TextFormField(
           textInputAction: TextInputAction.next,
-          decoration: InputDecoration(labelText: "Full Name", icon: Icon(Icons.person)),
-          validator: (value) => value != null
-              ? 'Enter a valid Name'
-              : null,
+          decoration: InputDecoration(labelText: "Phone Number (no spaces)", icon: Icon(Icons.phone)),
+          validator: (value){
+            if (value == null || value?.length != 10){
+              return 'Enter a Valid Phone Number';
+            } else {
+              phoneNum = value;
+              return null;
+            }
+          },
+        ),
+        SizedBox(height: 4),
+        TextFormField(
+          textInputAction: TextInputAction.next,
+          decoration: InputDecoration(icon: Icon(Icons.location_city), labelText: "City"),
+          validator: (value) {
+            if (value == null || value.length < 2) {
+              return 'Enter a Valid City Name';
+            } else {
+              city = value;
+              return null;
+            }
+          }
+        ),
+        SizedBox(height: 4,),
+        TextFormField(
+          textInputAction: TextInputAction.next,
+          decoration: InputDecoration(labelText: "Country", icon: Icon(Icons.location_on)),
+            validator: (value) {
+              if (value == null || value.length < 2) {
+                return 'Enter a Valid Country Name';
+              } else {
+                country = value;
+                return null;
+              }
+            }
         ),
         SizedBox(height: 4),
         Row(
@@ -87,10 +132,11 @@ class _SignUpFormState extends State<SignUpForm> {
                     context: context,
                     initialDate: rightNow,
                     firstDate: DateTime(1900),
-                    lastDate: DateTime(2100)
+                    lastDate: rightNow
                 ).then((value) {
                   setState(() {
                     _eventTime = DateTime(value!.year, value.month, value.day);
+                    birthday = _toDateString(_eventTime);
                   });
                 });
               },
@@ -161,6 +207,17 @@ class _SignUpFormState extends State<SignUpForm> {
       Utils.showSnackBar(e.message);
     }
 
+    Profile newUser = Profile(
+      email: emailController.text.toString(),
+      userName: username,
+      phoneNum: phoneNum,
+      country: country,
+      city: city,
+      birthday: birthday
+    );
+
+    users.insertUser(newUser);
+
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }
@@ -173,6 +230,6 @@ String _twoDigits(int value){
 }
 
 String _toDateString(DateTime date){
-  return "${date.year}-${date.month}-${_twoDigits(date.day)}";
+  return "${date.year}-${_twoDigits(date.month)}-${_twoDigits(date.day)}";
 }
 
