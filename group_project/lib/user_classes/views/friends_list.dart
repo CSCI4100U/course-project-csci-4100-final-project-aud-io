@@ -124,27 +124,64 @@ class _FriendListState extends State<FriendList> {
     );
   }
 
+  /*
+  * Function takes the friend added from the
+  * addFriend page and adds it to the current user's
+  * friendsList and subsequently adds the current user
+  * to the other user's friendsList
+  * */
   Future<void> _addFriend() async{
     Profile? friend = await Navigator
         .pushNamed(context, '/addFriend') as Profile?;
 
     if(friend != null && friend.userName != null){
-      //Todo: send friend a notification
+      //Todo: send friend a notification to add
 
       //For the time being, add them to friendsList
       _model.addToFriendList(currentUser, friend);
+
+      //Add current user to friend's friendsList
+      _model.addToFriendList(friend, currentUser);
+
       loadFriends();
 
       showSnackBar("Just added ${friend.userName} as a friend :)");
     }
   }
 
-  _deleteFriend(Profile user){
-    user.reference!.delete();
+  /*
+  * Function deletes a given Profile from the
+  * current user's friendsList and subsequently
+  * deletes themselves from the other user's friendsList
+  * */
+  _deleteFriend(Profile friend) async{
+    //delete user from currentUser's friendList
+    friend.reference!.delete();
     getAllFriends();
-    showSnackBar("Deleted ${user.userName} as a friend :(");
+
+    //delete currentUser from their friendList
+    List<Profile> allUsers = await _model.getAllUsers();
+    for(Profile profile in allUsers){
+      //If profile of friend exists in users
+      if(profile.reference != null && profile.userName == friend.userName){
+        List<Profile> usersFriends = await _model.getFriendsList(profile);
+        for(Profile userToDelete in usersFriends){
+
+          //If userToDelete is found in friendsList
+          if(userToDelete.reference != null && userToDelete.userName == currentUser.userName) {
+            print("User being deleted from ${profile.userName}'s friendsList: $userToDelete : ${userToDelete.reference!.id}");
+            userToDelete.reference!.delete();
+          }
+        }
+      }
+    }
+    showSnackBar("Deleted ${friend.userName} as a friend :(");
   }
 
+  /*
+  * Function shows a snackBar given a
+  * string content
+  * */
   showSnackBar(String content){
     ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -189,16 +226,28 @@ class _FriendListState extends State<FriendList> {
     );
   }
 
+  /*
+  * Function loads the Profile variable of the current user
+  * */
   getCurrentUser(String email)async{
     currentUser = await _model.getUserByEmail(email);
     loadFriends();
   }
 
+  /*
+  * Function rebuilds the widget based on the
+  * reloading of the getAllFriends() function
+  * */
   loadFriends(){
     setState(() {
       getAllFriends();
     });
   }
+
+  /*
+  * Function reloads friend stream and updates the
+  * List of all the friends of the current user
+  * */
   getAllFriends() async{
     friendListStream = _model.getFriendStream(currentUser);
     allFriends = await _model.getFriendsList(currentUser);
