@@ -14,7 +14,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 // Aud.io logo at the top of the menu
 Image logo = const Image(
-  image: AssetImage('lib/images/audio_alt_beige.png'),
+  image: AssetImage('lib/images/audio_alt_beige2.png'),
 );
 
 Future<void> main() async{
@@ -43,8 +43,8 @@ class MyApp extends StatelessWidget {
           '/home' : (context) => MyHomePage(title: logo,),
           // '/loginForm' : (context) => LoginForm(),
           // '/profile' : (context) => ProfileView(),
-          '/friendList' : (context) => const FriendList(title: "Friends",),
-          '/addFriend' : (context) => const AddFriendSearch(title: "Search Friends to Add",),
+          '/friendsList' : (context) => const FriendList(title: "Friends",),
+          '/addFriend' : (context) => const AddFriendSearch(title: "Add Friends",),
           // '/playlists' : (context) => PlaylistView(),
           // '/settings' : (context) => SettingsView(),
         }
@@ -84,14 +84,15 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       SideMenuItem(title:"Profile",route:"/profile"),
-      SideMenuItem(title:"Friends",route:"/friendList"),
+      SideMenuItem(title:"Friends",route:"/friendsList"),
       SideMenuItem(title:"Playlists",route:"/playlists"),
       SideMenuItem(title:"Settings",route:"/settings"),
     ];
+    TextStyle style = TextStyle(fontSize: 25);
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 120,
+        toolbarHeight: 110,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: widget.title,
@@ -111,15 +112,71 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              child: const Text("This is the home page"),
-            )
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+              Container(
+                height: 300,
+                alignment: Alignment.center,
+                child:
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        width: 300,
+                        decoration: BoxDecoration(color: Color.fromRGBO(232, 173, 253, 1)),
+                        child: ListTile(
+                          title: Text("Profile",style: style,),
+                          subtitle: Text("View profile!", style: style,),
+                            trailing: Icon(Icons.person_pin_rounded)
+                        ),
+                      ),
+                      onTap: (){
+                        // Go to friends_list Page
+                        // Navigator.pushNamed(context, '/profile');
+                      },
+                    ),
+                    GestureDetector(
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        width: 300,
+                        decoration: BoxDecoration(color: Color.fromRGBO(118, 149, 255, 1)),
+                        child: ListTile(
+                          title: Text("Friends", style: style,),
+                          subtitle: Text("View friends!", style: style,),
+                            trailing: Icon(Icons.groups)
+                        ),
+                      ),
+                      onTap: (){
+                        // Go to friends_list Page
+                        Navigator.pushNamed(context, '/friendsList');
+                      },
+                    ),
+                    GestureDetector(
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        width: 300,
+                        decoration: BoxDecoration(color: Color.fromRGBO(167, 173, 253, 1)),
+                        child: ListTile(
+                          title: Text("Playlists", style: style,),
+                          subtitle: Text("View playlists!", style: style,),
+                          trailing: Icon(Icons.music_note)
+                        ),
+                      ),
+                      onTap: (){
+                        // Go to playlists Page
+                        // Navigator.pushNamed(context, '/playlists');
+                      },
+                    ),
+                  ],
+                ),
+
+              ),
+        ],
       ),
+
       drawer: Drawer(
         backgroundColor: Colors.black,
         child: Container(
@@ -137,8 +194,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){},
-        child: const Icon(Icons.add),
-
+        child: const Icon(Icons.playlist_add),
+        tooltip: "Add Playlist",
       )
       ,
     );

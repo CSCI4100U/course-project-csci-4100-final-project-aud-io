@@ -52,10 +52,8 @@ class UserModel{
   Future<Profile> getUserByEmail(String email) async{
     Profile result = Profile();
     List<Profile> allUsers = await getAllUsers();
-    print("ALL USERS: $allUsers");
     for(Profile user in allUsers){
       if(user.email == email){
-        print("USER CHOSEN: $user");
         return user;
       }
     }
@@ -70,7 +68,6 @@ class UserModel{
 
     print("Getting the friendsList...");
     if(user.reference!=null){
-      print("Pls work lol");
       yield await FirebaseFirestore.instance.collection('users').doc(user.reference!.id)
           .collection('friendsList').get();
     }
@@ -83,17 +80,33 @@ class UserModel{
   * */
   Future<List<Profile>> getFriendsList(Profile user) async{
 
-    QuerySnapshot friends = await FirebaseFirestore.instance.collection('users')
-        .doc(user.reference!.id).collection('friendsList').get();
+    if(user.reference != null) {
+      QuerySnapshot friends = await FirebaseFirestore.instance.collection(
+          'users')
+          .doc(user.reference!.id).collection('friendsList').get();
 
-    List<Profile> allFriends = friends.docs.map<Profile>((user) {
-      final friend = Profile.fromMap(
-          user.data(),
-          reference: user.reference);
-      return friend;
-    }).toList();
+      List<Profile> allFriends = friends.docs.map<Profile>((user) {
+        final friend = Profile.fromMap(
+            user.data(),
+            reference: user.reference);
+        return friend;
+      }).toList();
 
-    return allFriends;
+      return allFriends;
+    }
+    return [];
+  }
+
+  /*
+  * Insert friend into the givem user's friendsList
+  * */
+  Future addToFriendList(Profile user, Profile friend) async{
+    print("Adding '${friend.userName}' to ${user.userName}'s friendsList...");
+    FirebaseFirestore.instance.collection('users')
+        .doc(user.reference!.id).collection('friendsList').doc().set(friend.toMap());
+
+
+    //print("Added data: $data");
   }
 
   Future updateUser(Profile user) async{
@@ -115,23 +128,27 @@ class UserModel{
     return user;
   }
 
-  // Future<Profile> getUserByUsername(String userName) async{
-  //   Profile resultingUser = Profile();
-  //   List<Profile> allUsers = await FirebaseFirestore.instance.collection('users').get()..map<Profile>((document){
-  //     final user = Profile.fromMap(
-  //         document,
-  //         reference: document.reference);
-  //     return user;
-  //   }
-  //   ).toList();
-  //
-  //   print("AL USERS: ${allUsers.toString()}");
-  //   for(Profile user in allUsers){
-  //     if(user.userName == userName){
-  //       print("Getting resulting user...");
-  //       resultingUser = user;
-  //     }
-  //   }
-  //   return resultingUser;
-  // }
+  /*
+  * Returns user Avatar based on whether or not
+  * they have a profile picture
+  * */
+  Widget buildUserAvatar(Profile user){
+    //Todo: Make variable to hold profile picture for each user
+
+    return GestureDetector(
+      child:
+      Container(
+        padding: EdgeInsets.all(10),
+        child: const CircleAvatar(
+          backgroundColor: Colors.black,
+          radius: 25,
+          //Todo: Replace with profile photo
+          child: Icon(Icons.person),
+        ),
+      ),
+      onTap: (){
+        // go to profile page of friend
+      },
+    );
+  }
 }
