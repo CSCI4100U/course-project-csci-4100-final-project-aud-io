@@ -20,6 +20,8 @@ class _SignUpFormState extends State<SignUpForm> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  DateTime _eventTime = DateTime.now();
+
 
   @override
   void dispose(){
@@ -30,14 +32,13 @@ class _SignUpFormState extends State<SignUpForm> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime rightNow = DateTime.now();
     return Form(
       key: _formKey,
       child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(height: 5,),
-        Image(image: AssetImage('lib/images/audio_no_bg.png')),
-        SizedBox(height:20,),
+        SizedBox(height: 50,),
         TextFormField(
           controller: emailController,
           cursorColor: Colors.white,
@@ -60,6 +61,50 @@ class _SignUpFormState extends State<SignUpForm> {
               ? 'Enter a valid password, required 8+ characters'
               : null,
         ),
+        SizedBox(height: 4,),
+        TextFormField(
+          textInputAction: TextInputAction.next,
+          decoration: InputDecoration(labelText: "Username", icon: Icon(Icons.person_pin)),
+          validator: (value) => value != null && value.length < 4
+              ? 'Enter a valid Username, required 4+ characters'
+              : null,
+        ),
+        SizedBox(height: 4),
+        TextFormField(
+          textInputAction: TextInputAction.next,
+          decoration: InputDecoration(labelText: "Full Name", icon: Icon(Icons.person)),
+          validator: (value) => value != null
+              ? 'Enter a valid Name'
+              : null,
+        ),
+        SizedBox(height: 4),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ElevatedButton.icon(
+              onPressed: (){
+                showDatePicker(
+                    context: context,
+                    initialDate: rightNow,
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime(2100)
+                ).then((value) {
+                  setState(() {
+                    _eventTime = DateTime(value!.year, value.month, value.day);
+                  });
+                });
+              },
+              icon: Icon(Icons.calendar_month),
+              label: Text('Birthday', style: TextStyle(fontSize: 20,),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(_toDateString(_eventTime), style: TextStyle(fontSize: 20),)
+            )
+          ],
+        ),
+        SizedBox(height: 4,),
         ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
               minimumSize: Size.fromHeight(50),
@@ -118,5 +163,16 @@ class _SignUpFormState extends State<SignUpForm> {
 
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
+}
+
+String _twoDigits(int value){
+  if (value > 9){
+    return "$value";
+  }
+  return "0$value";
+}
+
+String _toDateString(DateTime date){
+  return "${date.year}-${date.month}-${_twoDigits(date.day)}";
 }
 

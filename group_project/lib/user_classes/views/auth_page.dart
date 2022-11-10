@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'signup_page.dart';
 import '../../main.dart';
-import '../models/authenticate_user.dart';
+import 'authenticate_user.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key, required this.title}) : super(key: key);

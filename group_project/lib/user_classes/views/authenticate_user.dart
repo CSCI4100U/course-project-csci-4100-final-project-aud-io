@@ -9,7 +9,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:group_project/user_classes/models/utils.dart';
 import 'package:provider/provider.dart';
 import '../../main.dart';
-import '../views/auth_page.dart';
+import '../models/notifications.dart';
+import 'auth_page.dart';
 
 class LoginWidget extends StatefulWidget {
   LoginWidget({Key? key, required this.title, required this.onClickedSignUp}) : super(key: key);
@@ -26,6 +27,8 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final _notifications = Notifications();
+
 
   @override
   void dispose(){
@@ -36,6 +39,8 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context){
+    _notifications.init();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -65,7 +70,26 @@ class _LoginWidgetState extends State<LoginWidget> {
               style: TextStyle(fontSize: 24),
             )
         ),
-        SizedBox(height: 24,),
+        SizedBox(height: 14,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            RichText(
+              // Will Implement Email Return for Final
+              // For now will send a pending notification to user
+              text: TextSpan(
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => _notifications.sendNotificationNow("Password Reset", "Email reset request sent to admin, thank you"),
+                  text: 'Forgot Password?',
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: Theme.of(context).colorScheme.secondary,
+                  )
+              )
+            ),
+          ],
+        ),
+        SizedBox(height: 14,),
         RichText(
             text: TextSpan(
                 style: TextStyle(color: Colors.deepPurple, fontSize: 20),
