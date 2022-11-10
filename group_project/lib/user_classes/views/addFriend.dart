@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../models/profile.dart';
 import '../models/userModel.dart';
 
@@ -19,15 +21,19 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
   TextStyle style = TextStyle(fontSize: 30);
 
   List<Profile> allUsers = [];
-  Profile newFriend = Profile();
+  List<Profile> allFriends = [];
   late Stream userStream;
+
+  Profile currentUser = Profile();
+  String? currentUserEmail = FirebaseAuth.instance.currentUser!.email;
 
   @override
   void initState(){
     super.initState();
 
-    userStream = _model.getUserStream();
+    getCurrentUser(currentUserEmail!);
     loadUsers();
+
   }
 
   @override
@@ -56,90 +62,77 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
                 print("Snapshot: $snapshot");
                 if(!snapshot.hasData){
                   print("Data is missing from userList");
-                  return CircularProgressIndicator();
+                  return const CustomCircularProgressIndicator();
                 }
                 else{
                   print("Found data for userList");
 
-                  List<Profile> foundUsers = [];
+                  // users that meet the criteria of the query
+                  List<Profile> usersFound = getUsersFound();
 
-                  // Query through all users
-                  for(Profile user in allUsers){
+                  if(usersFound.isNotEmpty){
+                    return Expanded(
+                      child:
+                        Container(
+                          child: ListView.builder(
+                            padding: const EdgeInsets.all(8.0),
+                            itemCount: usersFound.length,
+                            itemBuilder: (context,index){
 
-                    // if current user matches the userName entered
-                    if(user.userName != null && user.userName!.contains(userNameEntered)){
-                      // Add user to foundUsers
-                      foundUsers.add(user);
-                      print("User: $userNameEntered");
-                      //Todo: Add if statement to check if user already in friendsList and not current user
-                      // if friend already added, don't include in search results, etc.
-                    }
-                  }
+                              Profile userFound = usersFound[index];
 
-                  if(foundUsers.isNotEmpty){
-                    return
-                        Expanded(
-                          child:
-                            Container(
-                              child: ListView.builder(
-
-                                  padding: const EdgeInsets.all(8.0),
-                                  itemCount: foundUsers.length,
-                                  itemBuilder: (context,index){
-                                    return GestureDetector(
-                                        child: Container(
-                                          decoration: BoxDecoration(color: Colors.white),
-                                          padding: const EdgeInsets.all(10.0),
-
-                                          child: ListTile(
-                                            title: Text("${foundUsers[index].userName}",
+                              return Row(
+                                children: [
+                                  _model.buildUserAvatar(userFound),
+                                  Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: ListTile(
+                                            title: Text("${userFound.userName}",
                                               style: TextStyle(fontSize: 30),
                                             ),
-                                            subtitle: Text("${foundUsers[index].country}",
+                                            subtitle: Text("${userFound.country}",
                                               style: TextStyle(fontSize: 30),
                                             ),
-                                            /*
-                                                    Todo:
-                                        Make this add Icon, to add multiple users
-                                        to a list to send all friend requests at once
-                                       */
-                                            // trailing:
-                                          ),
-
+                                            trailing: IconButton(
+                                                onPressed: (){
+                                                  setState(() {
+                                                    Navigator.of(context).pop(userFound);
+                                                  });
+                                                },
+                                                icon: Icon(Icons.person_add)
+                                            )
                                         ),
-                                        onTap: (){
-                                          //show selected color
-
-                                          //set this to newFriend to be added
-                                          setState(() {
-                                            newFriend = foundUsers[index];
-                                          });
-
-
-                                        }
-                                    );
-                                  }
-                              ),
-                            ),
-                        );
-
+                                      ),
+                                  ),
+                                ]
+                              );
+                            }
+                          ),
+                        ),
+                    );
                   }
                   else{
-                    print("No results found.");
-                    return CircularProgressIndicator();
-                  }
+                    if(userNameEntered == ""){
+                      //Output nothing
+                      return const Text("");
+                    }
+                    else{
+                      return Expanded(
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text("No results found.",
+                              style: style,
+                            ),
+                          )
+                      );
+                    }
 
+                  }
                 }
               }
           )
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.of(context).pop(newFriend);
-        },
-        tooltip: 'Add Friend',
-        child: const Icon(Icons.person_add),
       ),
     );
   }
@@ -147,12 +140,49 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
   // Updates widget with current users in cloud storage
   loadUsers(){
     setState(() {
+      getAllFriends();
       getAllUsers();
     });
   }
 
   // Makes list of all users
   getAllUsers() async{
+    userStream = _model.getUserStream();
     allUsers = await _model.getAllUsers();
+  }
+
+  getAllFriends() async{
+    allFriends = await _model.getFriendsList(currentUser);
+  }
+
+  getCurrentUser(String email)async{
+    currentUser = await _model.getUserByEmail(email);
+    loadUsers();
+    print("CURRENT USER: $currentUser");
+  }
+
+  /*
+  * Queries through users based on userNameEntered
+  * */
+  getUsersFound(){
+    List<Profile> foundUsers = [];
+    // Query through all users
+    for(Profile user in allUsers){
+      // if current user matches the userName entered
+      if(user.userName != null && user.userName!.contains(userNameEntered)
+          && user.userName != currentUser.userName && userNameEntered != ""){
+        bool isFriend = false;
+        for(Profile friend in allFriends){
+          if(friend.userName == user.userName){
+            isFriend = true;
+          }
+        }
+        if(!isFriend){
+          // Add user to foundUsers
+          foundUsers.add(user);
+        }
+      }
+    }
+    return foundUsers;
   }
 }

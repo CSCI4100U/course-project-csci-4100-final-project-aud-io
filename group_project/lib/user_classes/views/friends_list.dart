@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../../MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../models/profile.dart';
 import '../models/userModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,7 +26,6 @@ class _FriendListState extends State<FriendList> {
   @override
   void initState(){
     super.initState();
-
     friendListStream = _model.getFriendStream(currentUser);
     getCurrentUser(currentUserEmail!);
   }
@@ -55,7 +54,7 @@ class _FriendListState extends State<FriendList> {
               print("Snapshot: $snapshot");
               if(!snapshot.hasData){
                 print("Data is missing from friendsList");
-                return CircularProgressIndicator();
+                return const CustomCircularProgressIndicator();
               }
               else{
                 print("Found data for friendsList");
@@ -67,27 +66,34 @@ class _FriendListState extends State<FriendList> {
                           padding: const EdgeInsets.all(8.0),
                           itemCount: allFriends.length,
                           itemBuilder: (context,index){
-                            return Container(
-                              // decoration: BoxDecoration(color: gradeColors[index]),
-                                padding: const EdgeInsets.all(10.0),
 
-                                child: ListTile(
-                                  title: Text("${allFriends[index].userName}",
-                                    style: style,
-                                  ),
-                                  subtitle: Text("${allFriends[index].country}",
-                                    style: style,
-                                  ),
-                                  trailing: GestureDetector(
-                                      child: const Icon(Icons.delete),
-                                      onTap: (){
-                                        //currently selected friend
-                                        Profile user = allFriends[index];
-                                        //open dialog
-                                        _showDeleteFriendAlert(context,user);
-                                      }
-                                  ),
-                                )
+                            Profile currentFriend = allFriends[index];
+
+                            return Row(
+                                children: [
+                                  _model.buildUserAvatar(currentFriend),
+                                  Expanded(
+                                      child: Container(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: ListTile(
+                                            title: Text("${currentFriend.userName}",
+                                              style: style,
+                                            ),
+                                            subtitle: Text("${currentFriend.country}",
+                                              style: style,
+                                            ),
+                                            trailing: GestureDetector(
+                                                child: const Icon(Icons.person_remove),
+                                                onTap: (){
+                                                  //open delete dialog for currentFriend
+                                                  _showDeleteFriendAlert(context,currentFriend);
+                                                }
+                                            ),
+                                          )
+                                      ),
+                                  )
+                                ],
+
                             );
                           }
                       ),
@@ -113,7 +119,7 @@ class _FriendListState extends State<FriendList> {
       floatingActionButton: FloatingActionButton(
         onPressed: _addFriend,
         tooltip: 'Add Friend',
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.person_add_alt_1),
       ),
     );
   }
@@ -123,27 +129,26 @@ class _FriendListState extends State<FriendList> {
         .pushNamed(context, '/addFriend') as Profile?;
 
     if(friend != null && friend.userName != null){
-      //send user a notification
+      //Todo: send friend a notification
 
-      //Snackbar: Just added ${friend.userName}
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text("Just added ${friend.userName} as a friend :)",
-                style: const TextStyle(fontSize: 20),)
-          )
-      );
+      //For the time being, add them to friendsList
+      _model.addToFriendList(currentUser, friend);
+      loadFriends();
+
+      showSnackBar("Just added ${friend.userName} as a friend :)");
     }
   }
 
   _deleteFriend(Profile user){
-    //Todo: remove friend from local storage
-
-    //allFriends.remove(user);
     user.reference!.delete();
+    getAllFriends();
+    showSnackBar("Deleted ${user.userName} as a friend :(");
+  }
 
+  showSnackBar(String content){
     ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text("Deleted ${user.userName} as a friend :(",
+            content: Text(content,
               style: const TextStyle(fontSize: 20),)
         )
     );
@@ -186,13 +191,16 @@ class _FriendListState extends State<FriendList> {
 
   getCurrentUser(String email)async{
     currentUser = await _model.getUserByEmail(email);
+    loadFriends();
+  }
+
+  loadFriends(){
     setState(() {
-      friendListStream = _model.getFriendStream(currentUser);
       getAllFriends();
     });
   }
-
   getAllFriends() async{
+    friendListStream = _model.getFriendStream(currentUser);
     allFriends = await _model.getFriendsList(currentUser);
   }
 }
