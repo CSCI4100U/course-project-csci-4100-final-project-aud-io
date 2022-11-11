@@ -3,14 +3,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:group_project/user_classes/views/auth_page.dart';
 import 'package:group_project/user_classes/views/authenticate_user.dart';
+import 'package:group_project/user_classes/views/genre_form.dart';
 import 'package:group_project/user_classes/views/login_form.dart';
 import 'package:group_project/MainScreen_Views/side_menu_item.dart';
 import 'package:group_project/user_classes/views/addFriend.dart';
 import 'package:group_project/user_classes/views/friends_list.dart';
 import 'package:group_project/user_classes/models/utils.dart';
+import 'package:group_project/user_classes/views/profile_view.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+import 'MainScreen_Views/settings_view.dart';
 
 // Aud.io logo at the top of the menu
 Image logo = const Image(
@@ -42,11 +46,12 @@ class MyApp extends StatelessWidget {
         routes: {
           '/home' : (context) => MyHomePage(title: logo,),
           // '/loginForm' : (context) => LoginForm(),
-          // '/profile' : (context) => ProfileView(),
+          '/profile' : (context) => const ProfileView(title: "Profile"),
           '/friendsList' : (context) => const FriendList(title: "Friends",),
           '/addFriend' : (context) => const AddFriendSearch(title: "Add Friends",),
           // '/playlists' : (context) => PlaylistView(),
-          // '/settings' : (context) => SettingsView(),
+          '/settings' : (context) => const SettingsView(title: "Settings"),
+          '/addGenre' : (context) => const GenreForm(title: "Add a Favourite Genre"),
         }
         );
   }
