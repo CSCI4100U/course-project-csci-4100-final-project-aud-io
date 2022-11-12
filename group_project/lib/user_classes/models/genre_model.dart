@@ -3,7 +3,7 @@ import 'db_utils.dart';
 import 'genre.dart';
 import 'dart:async';
 
-GenreModel() {
+class GenreModel{
   Future<int> insertGenre(Genre genre) async{
     final db = await DBUtils.init();
     return db.insert(
