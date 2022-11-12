@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           '/profile' : (context) => const ProfileView(title: "Profile"),
           '/friendsList' : (context) => const FriendList(title: "Friends",),
           '/addFriend' : (context) => const AddFriendSearch(title: "Add Friends",),
-          // '/playlists' : (context) => PlaylistView(),
+          '/playlists' : (context) => PlaylistView(title: "playlist"),
           '/settings' : (context) => const SettingsView(title: "Settings"),
           '/addGenre' : (context) => const GenreForm(title: "Add a Favourite Genre"),
         }
@@ -172,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       onTap: (){
                         // Go to playlists Page
-                        // Navigator.pushNamed(context, '/playlists');
+                         Navigator.pushNamed(context, '/playlists');
                       },
                     ),
                   ],
