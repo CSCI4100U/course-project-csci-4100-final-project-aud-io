@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:group_project/user_classes/models/profile.dart';
 import 'package:group_project/user_classes/models/utils.dart';
-
 import '../../main.dart';
 import '../models/userModel.dart';
 
@@ -42,147 +41,157 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     DateTime rightNow = DateTime.now();
-    return Form(
-      key: _formKey,
-      child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(height: 50,),
-        TextFormField(
-          controller: emailController,
-          cursorColor: Colors.white,
-          textInputAction: TextInputAction.next,
-          decoration: InputDecoration(labelText: "Email", icon: Icon(Icons.email)),
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (email) =>
-              email != null && !EmailValidator.validate(email)
-                  ? 'Please enter a valid email'
-                  : null,
-        ),
-        SizedBox(height: 4,),
-        TextFormField(
-          controller: passwordController,
-          textInputAction: TextInputAction.next,
-          decoration: InputDecoration( icon: Icon(Icons.password), labelText: "Password"),
-          obscureText: true,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (value) => value != null && value.length < 8
-              ? 'Enter a valid password, required 8+ characters'
-              : null,
-        ),
-        SizedBox(height: 4,),
-        TextFormField(
-          textInputAction: TextInputAction.next,
-          decoration: InputDecoration(labelText: "Username", icon: Icon(Icons.person_pin)),
-            validator: (value) {
-              if (value == null || value.length < 4) {
-                return 'Enter a Valid UserName';
-              } else {
-                username = value;
-                return null;
-              }
-            }
-        ),
-        SizedBox(height: 4),
-        TextFormField(
-          textInputAction: TextInputAction.next,
-          decoration: InputDecoration(labelText: "Phone Number (no spaces)", icon: Icon(Icons.phone)),
-          validator: (value){
-            if (value == null || value?.length != 10){
-              return 'Enter a Valid Phone Number';
-            } else {
-              phoneNum = value;
-              return null;
-            }
-          },
-        ),
-        SizedBox(height: 4),
-        TextFormField(
-          textInputAction: TextInputAction.next,
-          decoration: InputDecoration(icon: Icon(Icons.location_city), labelText: "City"),
-          validator: (value) {
-            if (value == null || value.length < 2) {
-              return 'Enter a Valid City Name';
-            } else {
-              city = value;
-              return null;
-            }
-          }
-        ),
-        SizedBox(height: 4,),
-        TextFormField(
-          textInputAction: TextInputAction.next,
-          decoration: InputDecoration(labelText: "Country", icon: Icon(Icons.location_on)),
-            validator: (value) {
-              if (value == null || value.length < 2) {
-                return 'Enter a Valid Country Name';
-              } else {
-                country = value;
-                return null;
-              }
-            }
-        ),
-        SizedBox(height: 4),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ElevatedButton.icon(
-              onPressed: (){
-                showDatePicker(
-                    context: context,
-                    initialDate: rightNow,
-                    firstDate: DateTime(1900),
-                    lastDate: rightNow
-                ).then((value) {
-                  setState(() {
-                    _eventTime = DateTime(value!.year, value.month, value.day);
-                    birthday = _toDateString(_eventTime);
-                  });
-                });
-              },
-              icon: Icon(Icons.calendar_month),
-              label: Text('Birthday', style: TextStyle(fontSize: 20,),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text(_toDateString(_eventTime), style: TextStyle(fontSize: 20),)
+            SingleChildScrollView(
+                child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        TextFormField(
+                          controller: emailController,
+                          cursorColor: Colors.white,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(labelText: "Email", icon: Icon(Icons.email)),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (email) =>
+                          email != null && !EmailValidator.validate(email)
+                              ? 'Please enter a valid email'
+                              : null,
+                        ),
+                        SizedBox(height: 4,),
+                        TextFormField(
+                          controller: passwordController,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration( icon: Icon(Icons.password), labelText: "Password"),
+                          obscureText: true,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (value) => value != null && value.length < 8
+                              ? 'Enter a valid password, required 8+ characters'
+                              : null,
+                        ),
+                        SizedBox(height: 4,),
+                        TextFormField(
+                            textInputAction: TextInputAction.next,
+                            decoration: InputDecoration(labelText: "Username", icon: Icon(Icons.person_pin)),
+                            validator: (value) {
+                              if (value == null || value.length < 4) {
+                                return 'Enter a Valid UserName';
+                              } else {
+                                username = value;
+                                return null;
+                              }
+                            }
+                        ),
+                        SizedBox(height: 4),
+                        TextFormField(
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(labelText: "Phone Number (no spaces)", icon: Icon(Icons.phone)),
+                          validator: (value){
+                            if (value == null || value?.length != 10){
+                              return 'Enter a Valid Phone Number';
+                            } else {
+                              phoneNum = value;
+                              return null;
+                            }
+                          },
+                        ),
+                        SizedBox(height: 4),
+                        TextFormField(
+                            textInputAction: TextInputAction.next,
+                            decoration: InputDecoration(icon: Icon(Icons.location_city), labelText: "City"),
+                            validator: (value) {
+                              if (value == null || value.length < 2) {
+                                return 'Enter a Valid City Name';
+                              } else {
+                                city = value;
+                                return null;
+                              }
+                            }
+                        ),
+                        SizedBox(height: 4,),
+                        TextFormField(
+                            textInputAction: TextInputAction.next,
+                            decoration: InputDecoration(labelText: "Country", icon: Icon(Icons.location_on)),
+                            validator: (value) {
+                              if (value == null || value.length < 2) {
+                                return 'Enter a Valid Country Name';
+                              } else {
+                                country = value;
+                                return null;
+                              }
+                            }
+                        ),
+                        SizedBox(height: 4),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            ElevatedButton.icon(
+                              onPressed: (){
+                                showDatePicker(
+                                    context: context,
+                                    initialDate: rightNow,
+                                    firstDate: DateTime(1900),
+                                    lastDate: rightNow
+                                ).then((value) {
+                                  setState(() {
+                                    _eventTime = DateTime(value!.year, value.month, value.day);
+                                    birthday = _toDateString(_eventTime);
+                                  });
+                                });
+                              },
+                              icon: Icon(Icons.calendar_month),
+                              label: Text('Birthday', style: TextStyle(fontSize: 20,),
+                              ),
+                            ),
+                            Container(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: Text(_toDateString(_eventTime), style: TextStyle(fontSize: 20),)
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 4,),
+                        ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: Size.fromHeight(50),
+                            ),
+                            onPressed: signUp,
+                            icon: Icon(Icons.arrow_forward, size: 32),
+                            label: Text(
+                              'Sign-Up',
+                              style: TextStyle(fontSize: 24),
+                            )
+                        ),
+                        SizedBox(height: 24,),
+                        RichText(
+                            text: TextSpan(
+                                style: TextStyle(color: Colors.deepPurple, fontSize: 20),
+                                text: 'Have An Account Already?   ',
+                                children: [
+                                  TextSpan(
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = widget.onClickedSignIn,
+                                      text: 'Log In HERE',
+                                      style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        color: Theme.of(context).colorScheme.secondary,
+                                      )
+                                  )
+                                ]
+                            )
+                        ),
+                      ],
+                    )
+                )
             )
           ],
         ),
-        SizedBox(height: 4,),
-        ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              minimumSize: Size.fromHeight(50),
-            ),
-            onPressed: signUp,
-            icon: Icon(Icons.arrow_forward, size: 32),
-            label: Text(
-              'Sign-Up',
-              style: TextStyle(fontSize: 24),
-            )
-        ),
-        SizedBox(height: 24,),
-        RichText(
-            text: TextSpan(
-                style: TextStyle(color: Colors.deepPurple, fontSize: 20),
-                text: 'Have An Account Already?   ',
-                children: [
-                  TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = widget.onClickedSignIn,
-                      text: 'Log In HERE',
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Theme.of(context).colorScheme.secondary,
-                      )
-                  )
-                ]
-            )
-        ),
-      ],
-      )
-    );
+      );
   }
 
   Future signUp() async{
