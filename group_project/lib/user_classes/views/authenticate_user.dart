@@ -59,6 +59,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           decoration: InputDecoration( icon: Icon(Icons.password), labelText: "Password"),
           obscureText: true,
         ),
+        SizedBox(height: 4,),
         ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
               minimumSize: Size.fromHeight(50),
