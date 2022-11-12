@@ -7,7 +7,7 @@ import 'package:group_project/user_classes/views/genre_form.dart';
 import 'package:group_project/user_classes/views/login_form.dart';
 import 'package:group_project/MainScreen_Views/side_menu_item.dart';
 import 'package:group_project/user_classes/views/addFriend.dart';
-import 'package:group_project/music_classes/views/playList.dart';
+import 'package:group_project/music_classes/views/playlist.dart';
 import 'package:group_project/user_classes/views/friends_list.dart';
 import 'package:group_project/user_classes/models/utils.dart';
 import 'package:group_project/user_classes/views/profile_view.dart';
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           '/profile' : (context) => const ProfileView(title: "Profile"),
           '/friendsList' : (context) => const FriendList(title: "Friends",),
           '/addFriend' : (context) => const AddFriendSearch(title: "Add Friends",),
-          '/playlists' : (context) => PlaylistView(title: "playlist"),
+          '/playlists' : (context) => PlayListView(title: "Playlist"),
           '/settings' : (context) => const SettingsView(title: "Settings"),
           '/addGenre' : (context) => const GenreForm(title: "Add a Favourite Genre"),
         }
@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           IconButton(
             onPressed: (){
-              //Call async function that goes to route "/settings"
+              Navigator.pushNamed(context, '/settings');
             },
             icon: Icon(Icons.settings_outlined),
           ),
@@ -141,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       onTap: (){
                         // Go to friends_list Page
-                        // Navigator.pushNamed(context, '/profile');
+                        Navigator.pushNamed(context, '/profile');
                       },
                     ),
                     GestureDetector(

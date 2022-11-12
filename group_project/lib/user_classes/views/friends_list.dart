@@ -82,12 +82,13 @@ class _FriendListState extends State<FriendList> {
                                             subtitle: Text("${currentFriend.country}",
                                               style: style,
                                             ),
-                                            trailing: GestureDetector(
-                                                child: const Icon(Icons.person_remove),
-                                                onTap: (){
+                                            trailing: IconButton(
+                                              highlightColor: Color.fromRGBO(118, 149, 255, 1),
+                                                onPressed: (){
                                                   //open delete dialog for currentFriend
                                                   _showDeleteFriendAlert(context,currentFriend);
-                                                }
+                                                },
+                                                icon: Icon(Icons.person_remove,size: 30,),
                                             ),
                                           )
                                       ),
