@@ -8,10 +8,11 @@ import 'package:group_project/MainScreen_Views/side_menu_item.dart';
 import 'package:group_project/user_classes/views/addFriend.dart';
 import 'package:group_project/user_classes/views/friends_list.dart';
 import 'package:group_project/user_classes/models/utils.dart';
+import 'package:group_project/music_classes/views/playlist.dart';
+
 import 'package:page_transition/page_transition.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 // Aud.io logo at the top of the menu
 Image logo = const Image(
   image: AssetImage('lib/images/audio_alt_beige2.png'),
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
           // '/profile' : (context) => ProfileView(),
           '/friendsList' : (context) => const FriendList(title: "Friends",),
           '/addFriend' : (context) => const AddFriendSearch(title: "Add Friends",),
-          // '/playlists' : (context) => PlaylistView(),
+          '/playlists' : (context) => PlayListView(title:"playlists",),
           // '/settings' : (context) => SettingsView(),
         }
         );
@@ -135,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       onTap: (){
                         // Go to friends_list Page
-                        // Navigator.pushNamed(context, '/profile');
+                         Navigator.pushNamed(context, '/profile');
                       },
                     ),
                     GestureDetector(
@@ -167,7 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       onTap: (){
                         // Go to playlists Page
-                        // Navigator.pushNamed(context, '/playlists');
+                         Navigator.pushNamed(context, '/playlists');
                       },
                     ),
                   ],
