@@ -4,11 +4,7 @@ class Artist{
   String? genre;
   Artist({this.name,this.country,this.genre});
 
-
-  //The typing here is mandatory! If you do not
-  //specify Map<String,Object?>, everything breaks
-
-
+  @override
   String toString(){
     return 'Artist: $name, from: $country, genre: $genre';
   }

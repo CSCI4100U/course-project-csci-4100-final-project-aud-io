@@ -1,3 +1,7 @@
+/*
+* Author: Rajiv Williams
+* */
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -104,9 +108,6 @@ class UserModel{
     print("Adding '${friend.userName}' to ${user.userName}'s friendsList...");
     FirebaseFirestore.instance.collection('users')
         .doc(user.reference!.id).collection('friendsList').doc().set(friend.toMap());
-
-
-    //print("Added data: $data");
   }
 
   Future updateUser(Profile user) async{

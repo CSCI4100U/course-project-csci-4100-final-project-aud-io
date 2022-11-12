@@ -1,9 +1,15 @@
+/*
+* Author: Alessandro Prataviera
+* */
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../models/genre.dart';
 import '../models/genre_model.dart';
 import '../models/profile.dart';
 import '../models/userModel.dart';
+import 'package:group_project/MainScreen_Model/nav.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({Key? key, this.title}) : super(key: key);
@@ -18,8 +24,8 @@ class _ProfileViewState extends State<ProfileView> {
   final _model = UserModel();
   Profile currentUser = Profile();
   var db = GenreModel();
-  var _lastInsertedGenre;
   var allGenres = [];
+  var _lastInsertedGenre;
   var selectedIndex = -1;
   var genresLength;
 
@@ -35,65 +41,69 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title!),
-      ),
-      body: Column(
-        children: [
-          CircleAvatar(
-            child: Text("AP"),
-          ),
-          Container(
-            child: ListTile(
-              title: Text("email: ${currentUser.email}"),
-              trailing: IconButton(onPressed: (){}, icon: const Icon(Icons.edit)),
+    if(currentUser.userName!=null){
+      return Scaffold(
+        appBar: buildAppBarForSubPages(context, widget.title!),
+        body: Column(
+          children: [
+            CircleAvatar(
+              child: Text(currentUser.userName![0].toUpperCase()),
             ),
-          ),
-          Container(
-            child: ListTile(
-              title: Text("username: ${currentUser.userName}"),
-              trailing: IconButton(onPressed: (){}, icon: const Icon(Icons.edit)),
-            ),
-          ),
-          Flexible(
-              child: ListView.builder(
-                itemCount: allGenres.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: selectedIndex == index ? Colors.blue : null,
-                      ),
-                      child: GestureDetector(
-                        child: ListTile(
-                          title: Text('${allGenres[index].genre}'),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            if(selectedIndex == index) {
-                              selectedIndex = -1;
-                            } else {
-                              selectedIndex = index;
-                            }
-                          });
-                        },
-                      ),
-                    );
-                  }
-              )
-          ),
-          Container(
-            child: ListTile(
-              title: const Text("Add Favourite Genre"),
-              trailing: ElevatedButton(
-                onPressed: _addGenre,
-                child: const Text("Add")
+            Container(
+              child: ListTile(
+                title: Text("email: ${currentUser.email}"),
+                trailing: IconButton(onPressed: (){}, icon: const Icon(Icons.edit)),
               ),
-            )
-          ),
-        ],
-      ),
-    );
+            ),
+            Container(
+              child: ListTile(
+                title: Text("username: ${currentUser.userName}"),
+                trailing: IconButton(onPressed: (){}, icon: const Icon(Icons.edit)),
+              ),
+            ),
+            Flexible(
+                child: ListView.builder(
+                    itemCount: allGenres.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: selectedIndex == index ? Colors.blue : null,
+                        ),
+                        child: GestureDetector(
+                          child: ListTile(
+                            title: Text('${allGenres[index].genre}'),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              if(selectedIndex == index) {
+                                selectedIndex = -1;
+                              } else {
+                                selectedIndex = index;
+                              }
+                            });
+                          },
+                        ),
+                      );
+                    }
+                )
+            ),
+            Container(
+                child: ListTile(
+                  title: const Text("Add Favourite Genre"),
+                  trailing: ElevatedButton(
+                      onPressed: _addGenre,
+                      child: const Text("Add")
+                  ),
+                )
+            ),
+          ],
+        ),
+      );
+    }
+    else{
+      return const CustomCircularProgressIndicator();
+    }
+
   }
   getCurrentUser(String email)async{
     currentUser = await _model.getUserByEmail(email);

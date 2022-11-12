@@ -1,3 +1,7 @@
+/*
+* Author: Alessandro Prataviera
+* */
+
 import 'package:sqflite/sqflite.dart';
 import 'db_utils.dart';
 import 'genre.dart';
