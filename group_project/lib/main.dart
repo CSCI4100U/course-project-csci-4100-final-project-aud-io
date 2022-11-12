@@ -7,7 +7,7 @@ import 'package:group_project/user_classes/views/genre_form.dart';
 import 'package:group_project/user_classes/views/login_form.dart';
 import 'package:group_project/MainScreen_Views/side_menu_item.dart';
 import 'package:group_project/user_classes/views/addFriend.dart';
-import 'package:group_project/music_classes/views/PlayList.dart';
+import 'package:group_project/music_classes/views/playList.dart';
 import 'package:group_project/user_classes/views/friends_list.dart';
 import 'package:group_project/user_classes/models/utils.dart';
 import 'package:group_project/user_classes/views/profile_view.dart';
