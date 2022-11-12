@@ -1,3 +1,7 @@
+/*
+* Author: Matthew Sharp
+* */
+
 import 'package:flutter/material.dart';
 import 'signup_page.dart';
 import '../../main.dart';

@@ -1,5 +1,8 @@
-import 'package:flutter/material.dart';
+/*
+* Author: Alessandro Prataviera
+* */
 
+import 'package:flutter/material.dart';
 import '../models/genre.dart';
 
 class GenreForm extends StatefulWidget {

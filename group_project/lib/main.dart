@@ -1,18 +1,38 @@
+// *******************************************************
+// *                  WELCOME TO AUD.io
+// *------------------------------------------------------
+// *
+// * Developers:
+// * -Rajiv Williams
+// * -Matthew Sharp
+// * -Alessandro Prataviera
+// * -Mathew Kasbarian
+// *
+// * Description:
+// * This application allow you to add new friends
+// * (notification for friend request coming soon),
+// * and create and collaborate on music playlists
+// * using a Spotify SDK (Currently doing research).
+// *
+// * The user also can view their own profile and
+// * add genres (Local Storage). Also, the user
+// * can search for friends and add them (Cloud Storage).
+// ********************************************************
+
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:group_project/user_classes/views/auth_page.dart';
-import 'package:group_project/user_classes/views/authenticate_user.dart';
+import 'package:group_project/MainScreen_Views/notifications.dart';
+import 'package:group_project/music_classes/views/addPlaylist.dart';
 import 'package:group_project/user_classes/views/genre_form.dart';
 import 'package:group_project/user_classes/views/login_form.dart';
 import 'package:group_project/MainScreen_Views/side_menu_item.dart';
 import 'package:group_project/user_classes/views/addFriend.dart';
-import 'package:group_project/music_classes/views/playlist.dart';
+import 'package:group_project/music_classes/views/playlist_view.dart';
 import 'package:group_project/user_classes/views/friends_list.dart';
 import 'package:group_project/user_classes/models/utils.dart';
 import 'package:group_project/user_classes/views/profile_view.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'MainScreen_Views/settings_view.dart';
@@ -43,16 +63,16 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.deepPurple,
         ),
         home: buildSplashScreen(),
-        //Routes For Later
         routes: {
           '/home' : (context) => MyHomePage(title: logo,),
-          // '/loginForm' : (context) => LoginForm(),
           '/profile' : (context) => const ProfileView(title: "Profile"),
           '/friendsList' : (context) => const FriendList(title: "Friends",),
           '/addFriend' : (context) => const AddFriendSearch(title: "Add Friends",),
-          '/playlists' : (context) => PlayListView(title: "Playlist"),
+          '/playlists' : (context) => PlayListView(title: "Playlists"),
+          '/addPlaylist' : (context) => AddPlaylistView(title: "Add Playlist",),
           '/settings' : (context) => const SettingsView(title: "Settings"),
           '/addGenre' : (context) => const GenreForm(title: "Add a Favourite Genre"),
+          '/notifications' : (context) => const NotificationsView(title: "Notifications",),
         }
         );
   }
@@ -106,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(
             onPressed: (){
               //Call async function that goes to route "/notifications"
-              //Navigator.pushNamed(context, '/notifications');
+              Navigator.pushNamed(context, '/notifications');
             },
             icon: const Icon(Icons.notifications),
           ),
@@ -198,12 +218,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-        child: const Icon(Icons.playlist_add),
-        tooltip: "Add Playlist",
-      )
-      ,
     );
 
   }

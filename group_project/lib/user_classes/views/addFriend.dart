@@ -1,6 +1,11 @@
+/*
+* Author: Rajiv Williams
+* */
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
+import '../../MainScreen_Model/nav.dart';
 import '../models/profile.dart';
 import '../models/userModel.dart';
 
@@ -30,18 +35,14 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
   @override
   void initState(){
     super.initState();
-
     getCurrentUser(currentUserEmail!);
     loadUsers();
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title!),
-      ),
+      appBar: buildAppBarForSubPages(context, widget.title!),
       body: Column(
         children: [
           TextFormField(
@@ -100,7 +101,7 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
                                                     Navigator.of(context).pop(userFound);
                                                   });
                                                 },
-                                                icon: Icon(Icons.person_add)
+                                                icon: Icon(Icons.person_add,size: 30,)
                                             )
                                         ),
                                       ),

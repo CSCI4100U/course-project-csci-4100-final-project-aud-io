@@ -1,8 +1,13 @@
+/*
+* Author: Rajiv Williams
+* */
+
 import 'package:flutter/material.dart';
 import '../../MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../models/profile.dart';
 import '../models/userModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:group_project/MainScreen_Model/nav.dart';
 
 class FriendList extends StatefulWidget {
   const FriendList({Key? key,this.title}) : super(key: key);
@@ -33,19 +38,7 @@ class _FriendListState extends State<FriendList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title!),
-        actions: [
-          IconButton(
-              onPressed: (){
-                //Call async function that goes to route "/home"
-                Navigator.pushNamed(context, '/home');
-              },
-              tooltip: 'Home',
-              icon: const Icon(Icons.home)
-          ),
-        ],
-      ),
+      appBar: buildAppBarForSubPages(context, widget.title!),
       body: Column(
         children: [
           StreamBuilder(
