@@ -97,6 +97,10 @@ class _ProfileViewState extends State<ProfileView> {
   }
   getCurrentUser(String email)async{
     currentUser = await _model.getUserByEmail(email);
+    setState(() {
+      print("CURRENT USER: $currentUser");
+      currentUser;
+    });
   }
 
   Future _addGenre() async{
@@ -108,8 +112,9 @@ class _ProfileViewState extends State<ProfileView> {
     });
   }
 
-  Future getGenres() async{
+  getGenres() async{
     allGenres = await db.getAllGenres();
+
     setState(() {
       allGenres;
     });
