@@ -36,6 +36,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'MainScreen_Views/settings_view.dart';
+import 'map_views/find_users_view.dart';
 
 // Aud.io logo at the top of the menu
 Image logo = const Image(
@@ -73,6 +74,7 @@ class MyApp extends StatelessWidget {
           '/settings' : (context) => const SettingsView(title: "Settings"),
           '/addGenre' : (context) => const GenreForm(title: "Add a Favourite Genre"),
           '/notifications' : (context) => const NotificationsView(title: "Notifications",),
+          '/explore' : (context) => const FindUsersView(title: "Find Users",),
         }
         );
   }
@@ -142,60 +144,85 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
               Container(
-                height: 300,
+                height: 400,
                 alignment: Alignment.center,
                 child:
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    GestureDetector(
-                      child: Container(
-                        padding: EdgeInsets.all(8.0),
-                        width: 300,
-                        decoration: BoxDecoration(color: Color.fromRGBO(232, 173, 253, 1)),
-                        child: ListTile(
-                          title: Text("Profile",style: style,),
-                          subtitle: Text("View profile!", style: style,),
-                            trailing: Icon(Icons.person_pin_rounded)
+                    Expanded(
+                        child: GestureDetector(
+                          child: Container(
+                            padding: EdgeInsets.all(10.0),
+                            width: 300,
+                            decoration: BoxDecoration(color: Color.fromRGBO(232, 173, 253, 1)),
+                            child: ListTile(
+                                title: Text("Profile",style: style,),
+                                subtitle: Text("View profile!", style: style,),
+                                trailing: Icon(Icons.person_pin_rounded)
+                            ),
+                          ),
+                          onTap: (){
+                            // Go to friends_list Page
+                            Navigator.pushNamed(context, '/profile');
+                          },
                         ),
-                      ),
-                      onTap: (){
-                        // Go to friends_list Page
-                        Navigator.pushNamed(context, '/profile');
-                      },
                     ),
-                    GestureDetector(
-                      child: Container(
-                        padding: EdgeInsets.all(8.0),
-                        width: 300,
-                        decoration: BoxDecoration(color: Color.fromRGBO(118, 149, 255, 1)),
-                        child: ListTile(
-                          title: Text("Friends", style: style,),
-                          subtitle: Text("View friends!", style: style,),
-                            trailing: Icon(Icons.groups)
+                    Expanded(
+                        child: GestureDetector(
+                          child: Container(
+                            padding: EdgeInsets.all(10.0),
+                            width: 300,
+                            decoration: BoxDecoration(color: Color.fromRGBO(118, 149, 255, 1)),
+                            child: ListTile(
+                                title: Text("Friends", style: style,),
+                                subtitle: Text("View friends!", style: style,),
+                                trailing: Icon(Icons.groups)
+                            ),
+                          ),
+                          onTap: (){
+                            // Go to friends_list Page
+                            Navigator.pushNamed(context, '/friendsList');
+                          },
                         ),
-                      ),
-                      onTap: (){
-                        // Go to friends_list Page
-                        Navigator.pushNamed(context, '/friendsList');
-                      },
                     ),
-                    GestureDetector(
-                      child: Container(
-                        padding: EdgeInsets.all(8.0),
-                        width: 300,
-                        decoration: BoxDecoration(color: Color.fromRGBO(167, 173, 253, 1)),
-                        child: ListTile(
-                          title: Text("Playlists", style: style,),
-                          subtitle: Text("View playlists!", style: style,),
-                          trailing: Icon(Icons.music_note)
+                    Expanded(
+                        child: GestureDetector(
+                          child: Container(
+                            padding: EdgeInsets.all(10.0),
+                            width: 300,
+                            decoration: BoxDecoration(color: Color.fromRGBO(167, 173, 253, 1)),
+                            child: ListTile(
+                                title: Text("Playlists", style: style,),
+                                subtitle: Text("View playlists!", style: style,),
+                                trailing: Icon(Icons.music_note)
+                            ),
+                          ),
+                          onTap: (){
+                            // Go to playlists Page
+                            Navigator.pushNamed(context, '/playlists');
+                          },
                         ),
-                      ),
-                      onTap: (){
-                        // Go to playlists Page
-                         Navigator.pushNamed(context, '/playlists');
-                      },
                     ),
+                    Expanded(
+                        child: GestureDetector(
+                          child: Container(
+                            padding: EdgeInsets.all(8.0),
+                            width: 300,
+                            decoration: BoxDecoration(color: Color.fromRGBO(141, 255, 187, 1.0)),
+                            child: ListTile(
+                                title: Text("Explore", style: style,),
+                                subtitle: Text("Travel the world!", style: style,),
+                                trailing: Icon(Icons.search)
+                            ),
+                          ),
+                          onTap: (){
+                            // Go to playlists Page
+                            Navigator.pushNamed(context, '/explore');
+                          },
+                        ),
+                    ),
+
                   ],
                 ),
 

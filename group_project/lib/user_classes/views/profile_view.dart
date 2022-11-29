@@ -8,7 +8,7 @@ import 'package:group_project/MainScreen_Views/custom_circular_progress_indicato
 import '../models/genre.dart';
 import '../models/genre_model.dart';
 import '../models/profile.dart';
-import '../models/userModel.dart';
+import '../models/user_model.dart';
 import 'package:group_project/MainScreen_Model/nav.dart';
 
 class ProfileView extends StatefulWidget {
