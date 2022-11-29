@@ -36,7 +36,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'MainScreen_Views/settings_view.dart';
-import 'map_views/find_users_view.dart';
+import 'map_views/explore_page.dart';
 
 // Aud.io logo at the top of the menu
 Image logo = const Image(
@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
           '/settings' : (context) => const SettingsView(title: "Settings"),
           '/addGenre' : (context) => const GenreForm(title: "Add a Favourite Genre"),
           '/notifications' : (context) => const NotificationsView(title: "Notifications",),
-          '/explore' : (context) => const FindUsersView(title: "Find Users",),
+          '/explore' : (context) => const ExplorePage(title: "Explore",),
         }
         );
   }
@@ -209,7 +209,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Container(
                             padding: EdgeInsets.all(8.0),
                             width: 300,
-                            decoration: BoxDecoration(color: Color.fromRGBO(141, 255, 187, 1.0)),
+                            decoration: BoxDecoration(color: Color.fromRGBO(
+                                149, 215, 250, 1.0)),
                             child: ListTile(
                                 title: Text("Explore", style: style,),
                                 subtitle: Text("Travel the world!", style: style,),

@@ -5,23 +5,22 @@ import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:group_project/map_model/map_constants.dart';
 import 'package:latlong2/latlong.dart';
-class FindUsersView extends StatefulWidget {
-  const FindUsersView({Key? key, required this.title}) : super(key: key);
+class ExplorePage extends StatefulWidget {
+  const ExplorePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<FindUsersView> createState() => _FindUsersViewState();
+  State<ExplorePage> createState() => _ExplorePageState();
 }
 
 
 
-class _FindUsersViewState extends State<FindUsersView> {
+class _ExplorePageState extends State<ExplorePage> {
   late MapController mapController; // = MapController();
   late var currentLocation;
-  bool locationLoaded = false;
   List<GeoLocation> mapMarkers = [];
-
+  bool locationLoaded = false;
   List<LatLng> polyline = [];
   late List<List<LatLng>> polylines;
 
@@ -44,7 +43,7 @@ class _FindUsersViewState extends State<FindUsersView> {
             minZoom: 5,
             maxZoom: 18,
             zoom: 13,
-            center: currentLocation ?? MapConstants.myLocation
+            center: currentLocation ?? MapConstants.defaultLocation
         ),
         layers: [
           TileLayerOptions(
@@ -61,9 +60,10 @@ class _FindUsersViewState extends State<FindUsersView> {
                         return Container(
                           child: IconButton(
                             onPressed: () {
-                              setState(() {
-                                currentLocation = mapMarkers[i].latlng;
-                              });
+                              // setState(() {
+                              //   currentLocation = mapMarkers[i].latlng;
+                              //   MapConstants.defaultLocation = mapMarkers[i].latlng;
+                              // });
                             },
                             icon: Icon(Icons.circle),
                             color: Colors.red,
@@ -84,12 +84,22 @@ class _FindUsersViewState extends State<FindUsersView> {
     );
   }
 
-  _updateLocationStream(Position userLocation) async{
+  _updateCurrentLocation() async{
     Position userLocation = await Geolocator.getCurrentPosition();
     setState(() {
       locationLoaded = true;
       currentLocation = LatLng(userLocation.latitude, userLocation.longitude);
     });
+  }
+
+  _updateLocationStream(Position userLocation) async{
+    userLocation = await Geolocator.getCurrentPosition();
+    if(mounted){
+      setState(() {
+        locationLoaded = true;
+        currentLocation = LatLng(userLocation.latitude, userLocation.longitude);
+      });
+    }
     /*E/flutter ( 4153): This error happens if you call setState() on a State object for a widget that no longer appears in the widget tree (e.g., whose parent widget no longer includes the widget in its build). This error can occur when code calls setState() from a timer or an animation callback.
 E/flutter ( 4153): The preferred solution is to cancel the timer or stop listening to the animation in the dispose() callback. Another solution is to check the "mounted" property of this object before calling setState() to ensure the object is still in the tree.
 E/flutter ( 4153): This error might indicate a memory leak if setState() is being called because another object is retaining a reference to this State object after it has been removed from the tree. To avoid memory leaks, consider breaking the reference to this object during dispose().*/
@@ -105,7 +115,7 @@ E/flutter ( 4153): This error might indicate a memory leak if setState() is bein
         }
     );
     Geolocator.getPositionStream(
-      locationSettings: const LocationSettings(
+      locationSettings: LocationSettings(
           accuracy: LocationAccuracy.best
       ),
     ).listen(_updateLocationStream);
