@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../../MainScreen_Model/nav.dart';
 import '../models/profile.dart';
-import '../models/userModel.dart';
+import '../models/user_model.dart';
 
 class AddFriendSearch extends StatefulWidget {
   const AddFriendSearch({Key? key, this.title}) : super(key: key);

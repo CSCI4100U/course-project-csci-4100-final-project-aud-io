@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import '../../MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../models/profile.dart';
-import '../models/userModel.dart';
+import '../models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:group_project/MainScreen_Model/nav.dart';
 

@@ -10,7 +10,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:group_project/user_classes/models/profile.dart';
 import 'package:group_project/user_classes/models/utils.dart';
 import '../../main.dart';
-import '../models/userModel.dart';
+import '../models/user_model.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key, required this.onClickedSignIn}) : super(key: key);

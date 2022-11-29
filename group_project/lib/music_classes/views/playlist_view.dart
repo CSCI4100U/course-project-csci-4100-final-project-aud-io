@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:group_project/MainScreen_Model/nav.dart';
+import 'package:group_project/music_classes/models/song_model.dart';
 import '../models/playlist.dart';
 import '../models/song.dart';
 
@@ -17,28 +18,28 @@ class PlayListView extends StatefulWidget {
 }
 
 class _PlayListViewState extends State<PlayListView> {
-
+  final _model = SongModel();
   List<Playlist> allPlaylists = [
     Playlist(title:"Playlist 1",
         creatorUserName: "rajiv45",
         allSongs: [
-          Song(title: "Stronger", artistName:"Kanye",
-            duration: "2:42",album: "Graduation",genre: "Rap"),
-          Song(title: "Praise God", artistName:"Kanye",
-              duration: "2:42",album: "Donda",genre: "Rap"),
-          Song(title: "Conception", artistName:"Black Thought",
-              duration: "2:42",album: "Conception",genre: "Rap"),
+          Song(name: "Stronger", artist:"Kanye",
+            duration: "2:42"),
+          Song(name: "Praise God", artist:"Kanye",
+              duration: "2:42"),
+          Song(name: "Conception", artist:"Black Thought",
+              duration: "2:42"),
         ]
     ),
     Playlist(title:"Playlist 2",
         creatorUserName: "rajiv45",
         allSongs: [
-          Song(title: "Rich Flex", artistName:"Drake",
-              duration: "2:42",album: "Her Loss",genre: "Rap"),
-          Song(title: "Follow God", artistName:"Kanye",
-              duration: "2:42",album: "Jesus is King",genre: "Rap"),
-          Song(title: "Circo Loco", artistName:"Drake",
-              duration: "2:42",album: "Her Loss",genre: "Rap"),
+          Song(name: "Rich Flex", artist:"Drake",
+              duration: "2:42"),
+          Song(name: "Follow God", artist:"Kanye",
+              duration: "2:42"),
+          Song(name: "Circo Loco", artist:"Drake",
+              duration: "2:42"),
         ]
     ),
   ];
@@ -98,8 +99,8 @@ class _PlayListViewState extends State<PlayListView> {
           color: Color.fromRGBO(227, 227, 227, 1.0)
       ),
       child: ListTile(
-        title: Text(song.title!),
-        subtitle: Text(song.artistName!),
+        title: Text(song.name!),
+        subtitle: Text(song.artist!),
         trailing: Text(song.duration!),
       ),
     );
