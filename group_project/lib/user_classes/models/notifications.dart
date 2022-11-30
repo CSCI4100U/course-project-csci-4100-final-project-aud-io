@@ -1,4 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/timezone.dart';
+import 'dart:io';
 
 class Notifications{
 
@@ -47,5 +49,17 @@ class Notifications{
   void sendNotificationNow(String title, String body){
     print(_flutterLocalNotificationsPlugin.toString());
     _flutterLocalNotificationsPlugin.show(_notificationID++, title, body, _platformChannelInfo);
+  }
+
+  scheduleNotificationLater(String title, String body, TZDateTime when){
+    return _flutterLocalNotificationsPlugin.zonedSchedule(
+        _notificationID++,
+        title,
+        body,
+        when,
+        _platformChannelInfo!,
+      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      androidAllowWhileIdle: true,
+    );
   }
 }
