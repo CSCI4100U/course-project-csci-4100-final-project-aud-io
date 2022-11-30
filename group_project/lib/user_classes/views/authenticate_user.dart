@@ -10,6 +10,8 @@ import 'package:group_project/user_classes/models/utils.dart';
 import '../../main.dart';
 import '../models/notifications.dart';
 import 'forgot_password.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 class LoginWidget extends StatefulWidget {
   LoginWidget({Key? key, required this.title, required this.onClickedSignUp}) : super(key: key);
@@ -27,6 +29,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final _notifications = Notifications();
+  var when;
 
 
   @override
@@ -38,6 +41,7 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context){
+    tz.initializeTimeZones();
     _notifications.init();
 
     return Column(
@@ -84,6 +88,12 @@ class _LoginWidgetState extends State<LoginWidget> {
               ),
               onTap: (){
                 _notifications.sendNotificationNow("Aud.io - Password Reset", "Please Fill in the Form to Reset Your Password");
+                when = tz.TZDateTime.now(tz.local).add(Duration(minutes: 2));
+                _notifications.scheduleNotificationLater(
+                    "Aud.io - Password Reset",
+                    "If you have not received an email, please resubmit the form",
+                    when
+                );
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => ForgotPassword(),
                     )
