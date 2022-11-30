@@ -9,6 +9,7 @@ import 'dart:async';
 import 'package:group_project/user_classes/models/utils.dart';
 import '../../main.dart';
 import '../models/notifications.dart';
+import 'forgot_password.dart';
 
 class LoginWidget extends StatefulWidget {
   LoginWidget({Key? key, required this.title, required this.onClickedSignUp}) : super(key: key);
@@ -73,18 +74,21 @@ class _LoginWidgetState extends State<LoginWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            RichText(
-              // Will Implement Email Return for Final
-              // For now will send a pending notification to user
-              text: TextSpan(
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => _notifications.sendNotificationNow("Password Reset", "Email reset request sent to admin, thank you"),
-                  text: 'Forgot Password?',
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Theme.of(context).colorScheme.secondary,
-                  )
-              )
+            GestureDetector(
+              child: Text(
+                ' Forgot Password?',
+                style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: Theme.of(context).colorScheme.secondary
+                ),
+              ),
+              onTap: (){
+                _notifications.sendNotificationNow("Aud.io - Password Reset", "Please Fill in the Form to Reset Your Password");
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ForgotPassword(),
+                    )
+                  );
+              },
             ),
           ],
         ),
