@@ -34,12 +34,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       appBar: AppBar(
         title: Text('Reset Password Page'),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: Form(
+      body: Form(
           key: formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 'Enter a valid email\nto reset your password :D',
@@ -48,9 +47,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               ),
               SizedBox(height: 20,),
               TextFormField(
+                style: TextStyle(fontSize: 20),
                 controller: emailController,
                 textInputAction: TextInputAction.done,
-                decoration: InputDecoration(labelText: 'Email'),
+                decoration: InputDecoration(labelText: 'Email', icon: Icon(Icons.email)),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (email) {
                   email != null && !EmailValidator.validate(email)
@@ -61,7 +61,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               SizedBox(height: 20,),
               ElevatedButton.icon(
                 onPressed: resetPassword,
-                icon: Icon(Icons.email_outlined),
+                icon: Icon(Icons.send, size: 20,),
                 label: Text('Reset Password', style: TextStyle(fontSize: 20),),
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size.fromHeight(50),
@@ -70,8 +70,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             ],
           )
         ),
-      ),
-    );
+      );
   }
 
   Future resetPassword() async{

@@ -46,38 +46,41 @@ class _LoginWidgetState extends State<LoginWidget> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login Page")
+        title: Text("Sign-in Page")
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SizedBox(height: 20,),
             Image(image: AssetImage('lib/images/audio_no_bg.png')),
             SizedBox(height:20,),
             TextField(
+              style: TextStyle(fontSize: 20),
               controller: emailController,
               cursorColor: Colors.white,
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(labelText: "Email", icon: Icon(Icons.email)),
             ),
-            SizedBox(height: 4,),
+            SizedBox(height: 14,),
             TextField(
+              style: TextStyle(fontSize: 20),
               controller: passwordController,
               textInputAction: TextInputAction.next,
               decoration: InputDecoration( icon: Icon(Icons.password), labelText: "Password"),
               obscureText: true,
             ),
-            SizedBox(height: 4,),
+            SizedBox(height: 14,),
             ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size.fromHeight(50),
                 ),
                 onPressed: signIn,
-                icon: Icon(Icons.lock_open, size: 32),
+                icon: Icon(Icons.lock_open, size: 20),
                 label: Text(
                   'Sign-in',
-                  style: TextStyle(fontSize: 24),
+                  style: TextStyle(fontSize: 20),
                 )
             ),
             SizedBox(height: 14,),
@@ -89,7 +92,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                     ' Forgot Password?',
                     style: TextStyle(
                         decoration: TextDecoration.underline,
-                        color: Theme.of(context).colorScheme.secondary
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontSize: 20
                     ),
                   ),
                   onTap: (){

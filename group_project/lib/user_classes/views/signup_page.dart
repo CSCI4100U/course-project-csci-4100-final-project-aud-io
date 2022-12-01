@@ -62,6 +62,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     TextFormField(
+                      style: TextStyle(fontSize: 20),
                       controller: emailController,
                       cursorColor: Colors.white,
                       textInputAction: TextInputAction.next,
@@ -72,8 +73,9 @@ class _SignUpFormState extends State<SignUpForm> {
                           ? 'Please enter a valid email'
                           : null,
                     ),
-                    SizedBox(height: 4,),
+                    SizedBox(height: 14,),
                     TextFormField(
+                      style: TextStyle(fontSize: 20),
                       controller: passwordController,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration( icon: Icon(Icons.password), labelText: "Password"),
@@ -83,8 +85,9 @@ class _SignUpFormState extends State<SignUpForm> {
                           ? 'Enter a valid password, required 8+ characters'
                           : null,
                     ),
-                    SizedBox(height: 4,),
+                    SizedBox(height: 14,),
                     TextFormField(
+                        style: TextStyle(fontSize: 20),
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(labelText: "Username", icon: Icon(Icons.person_pin)),
                         validator: (value) {
@@ -96,8 +99,9 @@ class _SignUpFormState extends State<SignUpForm> {
                           }
                         }
                     ),
-                    SizedBox(height: 4),
+                    SizedBox(height: 14),
                     TextFormField(
+                      style: TextStyle(fontSize: 20),
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(labelText: "Phone Number (no spaces)", icon: Icon(Icons.phone)),
                       validator: (value){
@@ -109,8 +113,9 @@ class _SignUpFormState extends State<SignUpForm> {
                         }
                       },
                     ),
-                    SizedBox(height: 4),
+                    SizedBox(height: 14),
                     TextFormField(
+                        style: TextStyle(fontSize: 20),
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(icon: Icon(Icons.location_city), labelText: "City"),
                         validator: (value) {
@@ -122,8 +127,9 @@ class _SignUpFormState extends State<SignUpForm> {
                           }
                         }
                     ),
-                    SizedBox(height: 4,),
+                    SizedBox(height: 14,),
                     TextFormField(
+                        style: TextStyle(fontSize: 20),
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(labelText: "Country", icon: Icon(Icons.location_on)),
                         validator: (value) {
@@ -135,7 +141,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           }
                         }
                     ),
-                    SizedBox(height: 4),
+                    SizedBox(height: 14),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -163,19 +169,19 @@ class _SignUpFormState extends State<SignUpForm> {
                         )
                       ],
                     ),
-                    SizedBox(height: 4,),
+                    SizedBox(height: 14,),
                     ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
                           minimumSize: Size.fromHeight(50),
                         ),
                         onPressed: signUp,
-                        icon: Icon(Icons.arrow_forward, size: 32),
+                        icon: Icon(Icons.arrow_forward, size: 20),
                         label: Text(
                           'Sign-Up',
-                          style: TextStyle(fontSize: 24),
+                          style: TextStyle(fontSize: 20),
                         )
                     ),
-                    SizedBox(height: 24,),
+                    SizedBox(height: 14,),
                     RichText(
                         text: TextSpan(
                             style: TextStyle(color: Colors.deepPurple, fontSize: 20),
