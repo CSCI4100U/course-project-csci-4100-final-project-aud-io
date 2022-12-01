@@ -231,17 +231,17 @@ class _SignUpFormState extends State<SignUpForm> {
     }
 
     Profile newUser = Profile(
-      email: emailController.text.toString(),
-      userName: username,
-      phoneNum: phoneNum,
-      country: country,
-      city: city,
-      birthday: birthday
+        email: emailController.text.toString(),
+        userName: username,
+        phoneNum: phoneNum,
+        country: country,
+        city: city,
+        birthday: birthday
     );
 
     users.insertUser(newUser);
 
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    navigatorKey.currentState!.pop();
   }
 }
 

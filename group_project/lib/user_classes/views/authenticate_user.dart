@@ -155,7 +155,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       Utils.showSnackBar(e.message);
     }
 
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    navigatorKey.currentState!.pop();
 
   }
 }
