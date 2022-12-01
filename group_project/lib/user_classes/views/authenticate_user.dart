@@ -44,83 +44,91 @@ class _LoginWidgetState extends State<LoginWidget> {
     tz.initializeTimeZones();
     _notifications.init();
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Image(image: AssetImage('lib/images/audio_no_bg.png')),
-        SizedBox(height:20,),
-        TextField(
-          controller: emailController,
-          cursorColor: Colors.white,
-          textInputAction: TextInputAction.next,
-          decoration: InputDecoration(labelText: "Email", icon: Icon(Icons.email)),
-        ),
-        SizedBox(height: 4,),
-        TextField(
-          controller: passwordController,
-          textInputAction: TextInputAction.next,
-          decoration: InputDecoration( icon: Icon(Icons.password), labelText: "Password"),
-          obscureText: true,
-        ),
-        SizedBox(height: 4,),
-        ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              minimumSize: Size.fromHeight(50),
-            ),
-            onPressed: signIn,
-            icon: Icon(Icons.lock_open, size: 32),
-            label: Text(
-              'Sign-in',
-              style: TextStyle(fontSize: 24),
-            )
-        ),
-        SizedBox(height: 14,),
-        Row(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Login Page")
+      ),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            GestureDetector(
-              child: Text(
-                ' Forgot Password?',
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  color: Theme.of(context).colorScheme.secondary
+            Image(image: AssetImage('lib/images/audio_no_bg.png')),
+            SizedBox(height:20,),
+            TextField(
+              controller: emailController,
+              cursorColor: Colors.white,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(labelText: "Email", icon: Icon(Icons.email)),
+            ),
+            SizedBox(height: 4,),
+            TextField(
+              controller: passwordController,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration( icon: Icon(Icons.password), labelText: "Password"),
+              obscureText: true,
+            ),
+            SizedBox(height: 4,),
+            ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size.fromHeight(50),
                 ),
-              ),
-              onTap: (){
-                _notifications.sendNotificationNow("Aud.io - Password Reset", "Please Fill in the Form to Reset Your Password");
-                when = tz.TZDateTime.now(tz.local).add(Duration(minutes: 2));
-                _notifications.scheduleNotificationLater(
-                    "Aud.io - Password Reset",
-                    "If you have not received an email, please resubmit the form",
-                    when
-                );
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ForgotPassword(),
+                onPressed: signIn,
+                icon: Icon(Icons.lock_open, size: 32),
+                label: Text(
+                  'Sign-in',
+                  style: TextStyle(fontSize: 24),
+                )
+            ),
+            SizedBox(height: 14,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  child: Text(
+                    ' Forgot Password?',
+                    style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        color: Theme.of(context).colorScheme.secondary
+                    ),
+                  ),
+                  onTap: (){
+                    _notifications.sendNotificationNow("Aud.io - Password Reset", "Please Fill in the Form to Reset Your Password");
+                    when = tz.TZDateTime.now(tz.local).add(Duration(minutes: 2));
+                    _notifications.scheduleNotificationLater(
+                        "Aud.io - Password Reset",
+                        "If you have not received an email, please resubmit the form",
+                        when
+                    );
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ForgotPassword(),
                     )
-                  );
-              },
+                    );
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 14,),
+            RichText(
+                text: TextSpan(
+                    style: TextStyle(color: Colors.deepPurple, fontSize: 20),
+                    text: 'Not Yet Signed Up?   ',
+                    children: [
+                      TextSpan(
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = widget.onClickedSignUp,
+                          text: 'Sign Up HERE',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Theme.of(context).colorScheme.secondary,
+                          )
+                      )
+                    ]
+                )
             ),
           ],
         ),
-        SizedBox(height: 14,),
-        RichText(
-            text: TextSpan(
-                style: TextStyle(color: Colors.deepPurple, fontSize: 20),
-                text: 'Not Yet Signed Up?   ',
-                children: [
-                  TextSpan(
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = widget.onClickedSignUp,
-                      text: 'Sign Up HERE',
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Theme.of(context).colorScheme.secondary,
-                      )
-                  )
-                ]
-            )
-        ),
-      ],
+      )
     );
   }
 
