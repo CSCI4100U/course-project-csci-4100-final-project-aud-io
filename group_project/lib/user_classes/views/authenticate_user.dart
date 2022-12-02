@@ -5,10 +5,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'dart:async';
 import 'package:group_project/user_classes/models/utils.dart';
 import '../../main.dart';
 import '../models/notifications.dart';
+import 'auth_page.dart';
 import 'forgot_password.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
@@ -30,7 +32,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   final passwordController = TextEditingController();
   final _notifications = Notifications();
   var when;
-
+  Locale sharedLocale = Locale('en');
 
   @override
   void dispose(){
@@ -46,7 +48,51 @@ class _LoginWidgetState extends State<LoginWidget> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sign-in Page")
+        title: Text(FlutterI18n.translate(context, "titles.signin")),
+        actions: [
+          SizedBox(
+            width: 37,
+            child: PopupMenuButton(
+              itemBuilder: (context) => [
+                const PopupMenuItem(
+                    value: 1,
+                    child: Text('Change to EN')
+                ),
+                const PopupMenuItem(
+                    value: 2,
+                    child: Text('Change to FR')
+                ),
+                const PopupMenuItem(
+                    value: 3,
+                    child: Text('Change to ES')
+                ),
+              ],
+              onSelected: (value) {
+                if (value == 1){
+                  print('Swapping to English');
+                  Locale newLocale = Locale('en');
+                  sharedLocale = newLocale;
+                  setState(() {
+                    FlutterI18n.refresh(context, newLocale);
+                  });
+                } else if (value == 2){
+                  print('Swapping to French');
+                  Locale newLocale = Locale('fr');
+                  sharedLocale = newLocale;
+                  setState(() {
+                    FlutterI18n.refresh(context, newLocale);
+                  });
+                } else if (value == 3) {
+                  print('Swapping to Spanish');
+                  Locale newLocale = Locale('es');
+                  sharedLocale = newLocale;
+                  setState(() {
+                    FlutterI18n.refresh(context, newLocale);
+                  });                }
+              },
+            ),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -61,14 +107,19 @@ class _LoginWidgetState extends State<LoginWidget> {
               controller: emailController,
               cursorColor: Colors.white,
               textInputAction: TextInputAction.next,
-              decoration: InputDecoration(labelText: "Email", icon: Icon(Icons.email)),
+              decoration: InputDecoration(
+                  labelText: FlutterI18n.translate(context, "forms.email"),
+                  icon: Icon(Icons.email)
+              ),
             ),
             SizedBox(height: 14,),
             TextField(
               style: TextStyle(fontSize: 20),
               controller: passwordController,
               textInputAction: TextInputAction.next,
-              decoration: InputDecoration( icon: Icon(Icons.password), labelText: "Password"),
+              decoration: InputDecoration(
+                  icon: Icon(Icons.password),
+                  labelText: FlutterI18n.translate(context, "forms.password")),
               obscureText: true,
             ),
             SizedBox(height: 14,),
@@ -79,7 +130,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                 onPressed: signIn,
                 icon: Icon(Icons.lock_open, size: 20),
                 label: Text(
-                  'Sign-in',
+                  FlutterI18n.translate(context, "titles.signin"),
                   style: TextStyle(fontSize: 20),
                 )
             ),
@@ -89,7 +140,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               children: [
                 GestureDetector(
                   child: Text(
-                    ' Forgot Password?',
+                    FlutterI18n.translate(context, "forms.buttons.forgot"),
                     style: TextStyle(
                         decoration: TextDecoration.underline,
                         color: Theme.of(context).colorScheme.secondary,
@@ -105,7 +156,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         when
                     );
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ForgotPassword(),
+                      builder: (context) => ForgotPassword(locale: sharedLocale),
                     )
                     );
                   },
@@ -116,12 +167,12 @@ class _LoginWidgetState extends State<LoginWidget> {
             RichText(
                 text: TextSpan(
                     style: TextStyle(color: Colors.deepPurple, fontSize: 20),
-                    text: 'Not Yet Signed Up?   ',
+                    text: FlutterI18n.translate(context, "forms.texts.no_account"),
                     children: [
                       TextSpan(
                           recognizer: TapGestureRecognizer()
                             ..onTap = widget.onClickedSignUp,
-                          text: 'Sign Up HERE',
+                          text: FlutterI18n.translate(context, "forms.buttons.signup_here"),
                           style: TextStyle(
                             decoration: TextDecoration.underline,
                             color: Theme.of(context).colorScheme.secondary,
@@ -155,7 +206,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       Utils.showSnackBar(e.message);
     }
 
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    navigatorKey.currentState!.pop();
 
   }
 }

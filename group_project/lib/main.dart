@@ -34,6 +34,10 @@ import 'package:group_project/user_classes/models/utils.dart';
 import 'package:group_project/user_classes/views/profile_view.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_i18n/flutter_i18n_delegate.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 
 import 'MainScreen_Views/settings_view.dart';
 import 'map_views/explore_page.dart';
@@ -75,8 +79,27 @@ class MyApp extends StatelessWidget {
           '/addGenre' : (context) => const GenreForm(title: "Add a Favourite Genre"),
           '/notifications' : (context) => const NotificationsView(title: "Notifications",),
           '/explore' : (context) => const ExplorePage(title: "Explore",),
-        }
-        );
+        },
+        localizationsDelegates: [
+          FlutterI18nDelegate(
+            missingTranslationHandler: (key,locale){
+              print("MISSING KEY: $key, Language Code: ${locale!.languageCode}");
+            },
+            translationLoader: FileTranslationLoader(
+              useCountryCode: false,
+              fallbackFile: 'en',
+              basePath: 'assets/i18n'
+            ),
+          ),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale('en'),
+          Locale('fr'),
+          Locale('es'),
+        ],
+          );
   }
 }
 

@@ -1,0 +1,34 @@
+{
+  "titles": {
+    "signin" : "Connexion",
+    "signup" : "S'inscrire",
+    "reset" : "Réinitialiser le mot de Passe"
+  },
+  "forms": {
+    "email" : "E-mail",
+    "password" : "Mot de Passe",
+    "username" : "Nom d'utilisateur",
+    "phone" : "Numéro de Téléphone",
+    "city" : "Ville",
+    "country" : "Pays",
+    "buttons" : {
+      "birthday" : "Date d'anniversaire",
+      "login_here" : "Connectez-vous ici",
+      "signup_here" : "Inscrivez-vous ici",
+      "forgot" : "Mot de Passe Oublié?"
+    },
+    "texts" : {
+      "have_account" : "Avoir un compte?\t\t\t",
+      "no_account" : "Vous n'êtes pas enregistré?\n",
+      "enter_email" : "Entrez un email valide pour\nréinitialiser votre mot de passe :D"
+    },
+    "errors" : {
+      "valid_email" : "Entrer un email valide",
+      "valid_password" : "Entrez un mot de passe valide, requis 8+ caractères",
+      "valid_user" : "Entrez un nom d'utilisateur valide",
+      "valid_num" : "Entrez un numéro de téléphone valide",
+      "valid_city" : "Entrez un nom de ville valide",
+      "valid_country" : "Entrez un nom de pays valide"
+    }
+  }
+}

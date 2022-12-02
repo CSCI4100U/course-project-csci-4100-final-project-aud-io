@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:group_project/user_classes/models/profile.dart';
 import 'package:group_project/user_classes/models/utils.dart';
 import '../../main.dart';
@@ -47,7 +48,48 @@ class _SignUpFormState extends State<SignUpForm> {
     DateTime rightNow = DateTime.now();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Signup Page"),
+        title: Text(FlutterI18n.translate(context, "titles.signup")),
+        actions: [
+          SizedBox(
+            width: 37,
+            child: PopupMenuButton(
+              itemBuilder: (context) => [
+                const PopupMenuItem(
+                    value: 1,
+                    child: Text('Change to EN')
+                ),
+                const PopupMenuItem(
+                    value: 2,
+                    child: Text('Change to FR')
+                ),
+                const PopupMenuItem(
+                    value: 3,
+                    child: Text('Change to ES')
+                ),
+              ],
+              onSelected: (value) {
+                if (value == 1){
+                  print('Swapping to English');
+                  Locale newLocale = Locale('en');
+                  setState(() {
+                    FlutterI18n.refresh(context, newLocale);
+                  });
+                } else if (value == 2){
+                  print('Swapping to French');
+                  Locale newLocale = Locale('fr');
+                  setState(() {
+                    FlutterI18n.refresh(context, newLocale);
+                  });
+                } else if (value == 3) {
+                  print('Swapping to Spanish');
+                  Locale newLocale = Locale('es');
+                  setState(() {
+                    FlutterI18n.refresh(context, newLocale);
+                  });                }
+              },
+            ),
+          )
+        ],
       ),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
@@ -66,11 +108,13 @@ class _SignUpFormState extends State<SignUpForm> {
                       controller: emailController,
                       cursorColor: Colors.white,
                       textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(labelText: "Email", icon: Icon(Icons.email)),
+                      decoration: InputDecoration(
+                          labelText: FlutterI18n.translate(context, "forms.email"),
+                          icon: Icon(Icons.email)),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (email) =>
                       email != null && !EmailValidator.validate(email)
-                          ? 'Please enter a valid email'
+                          ? FlutterI18n.translate(context, "forms.errors.valid_email")
                           : null,
                     ),
                     SizedBox(height: 14,),
@@ -78,21 +122,25 @@ class _SignUpFormState extends State<SignUpForm> {
                       style: TextStyle(fontSize: 20),
                       controller: passwordController,
                       textInputAction: TextInputAction.next,
-                      decoration: InputDecoration( icon: Icon(Icons.password), labelText: "Password"),
+                      decoration: InputDecoration(
+                          icon: Icon(Icons.password),
+                          labelText: FlutterI18n.translate(context, "forms.password")),
                       obscureText: true,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) => value != null && value.length < 8
-                          ? 'Enter a valid password, required 8+ characters'
+                          ? FlutterI18n.translate(context, "forms.errors.valid_password")
                           : null,
                     ),
                     SizedBox(height: 14,),
                     TextFormField(
                         style: TextStyle(fontSize: 20),
                         textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(labelText: "Username", icon: Icon(Icons.person_pin)),
+                        decoration: InputDecoration(
+                            labelText: FlutterI18n.translate(context, "forms.username"),
+                            icon: Icon(Icons.person_pin)),
                         validator: (value) {
                           if (value == null || value.length < 4) {
-                            return 'Enter a Valid UserName';
+                            return FlutterI18n.translate(context, "forms.errors.valid_user");
                           } else {
                             username = value;
                             return null;
@@ -103,10 +151,12 @@ class _SignUpFormState extends State<SignUpForm> {
                     TextFormField(
                       style: TextStyle(fontSize: 20),
                       textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(labelText: "Phone Number (no spaces)", icon: Icon(Icons.phone)),
+                      decoration: InputDecoration(
+                          labelText: FlutterI18n.translate(context, "forms.phone"),
+                          icon: Icon(Icons.phone)),
                       validator: (value){
                         if (value == null || value?.length != 10){
-                          return 'Enter a Valid Phone Number';
+                          return FlutterI18n.translate(context, "forms.errors.valid_num");
                         } else {
                           phoneNum = value;
                           return null;
@@ -117,10 +167,12 @@ class _SignUpFormState extends State<SignUpForm> {
                     TextFormField(
                         style: TextStyle(fontSize: 20),
                         textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(icon: Icon(Icons.location_city), labelText: "City"),
+                        decoration: InputDecoration(
+                            icon: Icon(Icons.location_city),
+                            labelText: FlutterI18n.translate(context, "forms.city")),
                         validator: (value) {
                           if (value == null || value.length < 2) {
-                            return 'Enter a Valid City Name';
+                            return FlutterI18n.translate(context, "forms.errors.valid_city");
                           } else {
                             city = value;
                             return null;
@@ -131,10 +183,12 @@ class _SignUpFormState extends State<SignUpForm> {
                     TextFormField(
                         style: TextStyle(fontSize: 20),
                         textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(labelText: "Country", icon: Icon(Icons.location_on)),
+                        decoration: InputDecoration(
+                            labelText: FlutterI18n.translate(context, "forms.country"),
+                            icon: Icon(Icons.location_on)),
                         validator: (value) {
                           if (value == null || value.length < 2) {
-                            return 'Enter a Valid Country Name';
+                            return FlutterI18n.translate(context, "forms.errors.valid_country");
                           } else {
                             country = value;
                             return null;
@@ -160,7 +214,9 @@ class _SignUpFormState extends State<SignUpForm> {
                             });
                           },
                           icon: Icon(Icons.calendar_month),
-                          label: Text('Birthday', style: TextStyle(fontSize: 20,),
+                          label: Text(
+                            FlutterI18n.translate(context, "forms.buttons.birthday"),
+                            style: TextStyle(fontSize: 20,),
                           ),
                         ),
                         Container(
@@ -177,7 +233,7 @@ class _SignUpFormState extends State<SignUpForm> {
                         onPressed: signUp,
                         icon: Icon(Icons.arrow_forward, size: 20),
                         label: Text(
-                          'Sign-Up',
+                          FlutterI18n.translate(context, "titles.signup"),
                           style: TextStyle(fontSize: 20),
                         )
                     ),
@@ -185,12 +241,12 @@ class _SignUpFormState extends State<SignUpForm> {
                     RichText(
                         text: TextSpan(
                             style: TextStyle(color: Colors.deepPurple, fontSize: 20),
-                            text: 'Have An Account Already?   ',
+                            text: FlutterI18n.translate(context, "forms.texts.have_account"),
                             children: [
                               TextSpan(
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = widget.onClickedSignIn,
-                                  text: 'Log In HERE',
+                                  text: FlutterI18n.translate(context, "forms.buttons.login_here"),
                                   style: TextStyle(
                                     decoration: TextDecoration.underline,
                                     color: Theme.of(context).colorScheme.secondary,
@@ -231,17 +287,17 @@ class _SignUpFormState extends State<SignUpForm> {
     }
 
     Profile newUser = Profile(
-      email: emailController.text.toString(),
-      userName: username,
-      phoneNum: phoneNum,
-      country: country,
-      city: city,
-      birthday: birthday
+        email: emailController.text.toString(),
+        userName: username,
+        phoneNum: phoneNum,
+        country: country,
+        city: city,
+        birthday: birthday
     );
 
     users.insertUser(newUser);
 
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    navigatorKey.currentState!.pop();
   }
 }
 
