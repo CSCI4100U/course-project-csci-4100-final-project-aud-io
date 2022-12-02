@@ -21,6 +21,14 @@
       "have_account" : "¿Tener una Cuenta?\t\t\t",
       "no_account" : "¿No Estás Registrado?\t\t\t",
       "enter_email" : "Ingrese un correo electrónico\nválido para restablecer su contraseña :D"
+    },
+    "errors" : {
+      "valid_email" : "Introduzca una dirección de correo electrónico válida",
+      "valid_password" : "Ingrese una contraseña válida, requiere más de 8 caracteres",
+      "valid_user" : "Introduce un nombre de usuario válido",
+      "valid_num" : "Introduce un número de teléfono válido",
+      "valid_city" : "Introduzca un nombre de ciudad válido",
+      "valid_country" : "Introduzca un nombre de país válido"
     }
   }
 }

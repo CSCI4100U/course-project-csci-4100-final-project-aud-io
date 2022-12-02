@@ -21,6 +21,14 @@
       "have_account" : "Have an Account?\t\t\t",
       "no_account" : "Not Signed Up?\t\t\t",
       "enter_email" : "Enter a valid email\nto reset your password :D"
+    },
+    "errors" : {
+      "valid_email" : "Enter a valid email",
+      "valid_password" : "Enter a valid password, required 8+ characters",
+      "valid_user" : "Enter a Valid Username",
+      "valid_num" : "Enter a Valid Phone Number",
+      "valid_city" : "Enter a Valid City Name",
+      "valid_country" : "Enter a Valid Country Name"
     }
   }
 }
