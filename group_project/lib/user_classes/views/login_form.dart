@@ -7,16 +7,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../main.dart';
 import 'auth_page.dart';
 
-class LoginForm extends StatefulWidget {
+class LoginForm extends StatelessWidget {
   LoginForm({Key? key, required this.title}) : super(key: key);
 
   final Widget title;
 
-  @override
-  State<LoginForm> createState() => _LoginFormState();
-}
-
-class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
