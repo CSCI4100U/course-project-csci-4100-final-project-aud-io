@@ -18,8 +18,9 @@
       "forgot" : "¿Has Olvidado tu Contraseña?"
     },
     "texts" : {
-      "have_account" : "¿Tener una Cuenta?\n",
-      "no_account" : "¿No Estás Registrado?"
+      "have_account" : "¿Tener una Cuenta?\t\t\t",
+      "no_account" : "¿No Estás Registrado?\t\t\t",
+      "enter_email" : "Ingrese un correo electrónico\nválido para restablecer su contraseña :D"
     }
   }
 }

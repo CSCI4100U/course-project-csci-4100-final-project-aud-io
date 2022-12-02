@@ -18,8 +18,9 @@
       "forgot" : "Mot de Passe Oublié?"
     },
     "texts" : {
-      "have_account" : "Avoir un compte?",
-      "no_account" : "Vous n'êtes pas enregistré?"
+      "have_account" : "Avoir un compte?\t\t\t",
+      "no_account" : "Vous n'êtes pas enregistré?\n",
+      "enter_email" : "Entrez un email valide pour\nréinitialiser votre mot de passe :D"
     }
   }
 }

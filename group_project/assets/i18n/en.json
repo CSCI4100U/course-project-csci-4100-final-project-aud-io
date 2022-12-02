@@ -18,8 +18,9 @@
       "forgot" : "Forgot Password?"
     },
     "texts" : {
-      "have_account" : "Have an Account?",
-      "no_account" : "Not Signed Up?"
+      "have_account" : "Have an Account?\t\t\t",
+      "no_account" : "Not Signed Up?\t\t\t",
+      "enter_email" : "Enter a valid email\nto reset your password :D"
     }
   }
 }
