@@ -1,0 +1,25 @@
+{
+  "titles": {
+    "signin" : "Sign-in",
+    "signup" : "Sign-up",
+    "reset" : "Reset Password"
+  },
+  "forms": {
+    "email" : "Email",
+    "password" : "Password",
+    "username" : "Username",
+    "phone" : "Phone Number",
+    "city" : "City",
+    "country" : "Country",
+    "buttons" : {
+      "birthday" : "Birthday",
+      "login_here" : "Login Here",
+      "signup_here" : "SignUp Here",
+      "forgot" : "Forgot Password?"
+    },
+    "texts" : {
+      "have_account" : "Have an Account?",
+      "no_account" : "Not Signed Up?"
+    }
+  }
+}

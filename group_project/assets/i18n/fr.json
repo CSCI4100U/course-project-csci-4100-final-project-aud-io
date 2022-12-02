@@ -1,0 +1,25 @@
+{
+  "titles": {
+    "signin" : "Connexion",
+    "signup" : "S'inscrire",
+    "reset" : "Réinitialiser le mot de Passe"
+  },
+  "forms": {
+    "email" : "E-mail",
+    "password" : "Mot de Passe",
+    "username" : "Nom d'utilisateur",
+    "phone" : "Numéro de Téléphone",
+    "city" : "Ville",
+    "country" : "Pays",
+    "buttons" : {
+      "birthday" : "Date d'anniversaire",
+      "login_here" : "Connectez-vous ici",
+      "signup_here" : "Inscrivez-vous ici",
+      "forgot" : "Mot de Passe Oublié?"
+    },
+    "texts" : {
+      "have_account" : "Avoir un compte?",
+      "no_account" : "Vous n'êtes pas enregistré?"
+    }
+  }
+}

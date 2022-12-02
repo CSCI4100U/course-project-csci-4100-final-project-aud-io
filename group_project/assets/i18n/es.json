@@ -1,0 +1,25 @@
+{
+  "titles": {
+    "signin" : "Registrarse",
+    "signup" : "Inscribirse",
+    "reset" : "Restablecer su Contraseña"
+  },
+  "forms": {
+    "email" : "Correo Electrónico",
+    "password" : "Clave",
+    "username" : "Nombre de Usuario",
+    "phone" : "Número de Teléfono",
+    "city" : "Ciudad",
+    "country" : "País",
+    "buttons" : {
+      "birthday" : "Cumpleaños",
+      "login_here" : "Entre Aquí",
+      "signup_here" : "Registrate Aquí",
+      "forgot" : "¿Has Olvidado tu Contraseña?"
+    },
+    "texts" : {
+      "have_account" : "¿Tener una Cuenta?\n",
+      "no_account" : "¿No Estás Registrado?"
+    }
+  }
+}
