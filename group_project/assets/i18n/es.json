@@ -2,7 +2,12 @@
   "titles": {
     "signin" : "Registrarse",
     "signup" : "Inscribirse",
-    "reset" : "Restablecer su Contraseña"
+    "reset" : "Restablecer su Contraseña",
+    "profile" : "Perfil",
+    "setting" : "Ajustes",
+    "friend" : "Amigos",
+    "add_friend" : "Agregar Amigos",
+    "explore" : "Explorar"
   },
   "forms": {
     "email" : "Correo Electrónico",
@@ -11,16 +16,19 @@
     "phone" : "Número de Teléfono",
     "city" : "Ciudad",
     "country" : "País",
+    "search" : "Buscar nombre de usuario",
     "buttons" : {
       "birthday" : "Cumpleaños",
       "login_here" : "Entre Aquí",
       "signup_here" : "Registrate Aquí",
-      "forgot" : "¿Has Olvidado tu Contraseña?"
+      "forgot" : "¿Has Olvidado tu Contraseña?",
+      "search" : "Búsqueda"
     },
     "texts" : {
       "have_account" : "¿Tener una Cuenta?\t\t\t",
       "no_account" : "¿No Estás Registrado?\t\t\t",
-      "enter_email" : "Ingrese un correo electrónico\nválido para restablecer su contraseña :D"
+      "enter_email" : "Ingrese un correo electrónico\nválido para restablecer su contraseña :D",
+      "no_friend" : "Parece que no tienes\namigos :("
     },
     "errors" : {
       "valid_email" : "Introduzca una dirección de correo electrónico válida",
@@ -30,5 +38,11 @@
       "valid_city" : "Introduzca un nombre de ciudad válido",
       "valid_country" : "Introduzca un nombre de país válido"
     }
+  },
+  "main" : {
+    "view_profile" : "¡Ver perfil!",
+    "view_friend" : "¡Ver amigos!",
+    "view_genre" : "¡Ver género!",
+    "view_explore" : "¡Viajar el mundo!"
   }
 }

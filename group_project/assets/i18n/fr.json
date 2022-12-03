@@ -2,7 +2,12 @@
   "titles": {
     "signin" : "Connexion",
     "signup" : "S'inscrire",
-    "reset" : "Réinitialiser le mot de Passe"
+    "reset" : "Réinitialiser le mot de Passe",
+    "profile" : "Profil",
+    "setting" : "Réglages",
+    "friend" : "Amis",
+    "add_friend" : "Ajouter des Amis",
+    "explore" : "Explorer"
   },
   "forms": {
     "email" : "E-mail",
@@ -11,16 +16,19 @@
     "phone" : "Numéro de Téléphone",
     "city" : "Ville",
     "country" : "Pays",
+    "search" : "Rechercher un nom d'utilisateur",
     "buttons" : {
       "birthday" : "Date d'anniversaire",
       "login_here" : "Connectez-vous ici",
       "signup_here" : "Inscrivez-vous ici",
-      "forgot" : "Mot de Passe Oublié?"
+      "forgot" : "Mot de Passe Oublié?",
+      "search" : "Chercher"
     },
     "texts" : {
       "have_account" : "Avoir un compte?\t\t\t",
       "no_account" : "Vous n'êtes pas enregistré?\n",
-      "enter_email" : "Entrez un email valide pour\nréinitialiser votre mot de passe :D"
+      "enter_email" : "Entrez un email valide pour\nréinitialiser votre mot de passe :D",
+      "no_friend" : "Apparemment tu n'as\npas d'amis :("
     },
     "errors" : {
       "valid_email" : "Entrer un email valide",
@@ -30,5 +38,11 @@
       "valid_city" : "Entrez un nom de ville valide",
       "valid_country" : "Entrez un nom de pays valide"
     }
+  },
+  "main" : {
+    "view_profile" : "Voir le profil!",
+    "view_friend" : "Voir les amis!",
+    "view_genre" : "Voir le genre!",
+    "view_explore" : "Voyager à travers le monde!"
   }
 }
