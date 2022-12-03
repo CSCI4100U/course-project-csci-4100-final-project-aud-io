@@ -3,9 +3,12 @@
 * */
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:group_project/user_classes/views/profile_view.dart';
 import 'dart:async';
 import 'profile.dart';
+import 'package:latlong2/latlong.dart';
 
 class UserModel{
   /*
@@ -133,7 +136,7 @@ class UserModel{
   * Returns user Avatar based on whether or not
   * they have a profile picture
   * */
-  Widget buildUserAvatar(Profile user){
+  Widget buildUserAvatar(Profile user, BuildContext context){
     //Todo: Make variable to hold profile picture for each user
 
     return GestureDetector(
@@ -149,6 +152,12 @@ class UserModel{
       ),
       onTap: (){
         // go to profile page of friend
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ProfileView(
+                title: "${user.userName}'s Profile",
+                currentUserEmail: "${user.email}",
+            ))
+        );
       },
     );
   }

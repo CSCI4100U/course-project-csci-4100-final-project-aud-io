@@ -12,15 +12,16 @@ import '../models/user_model.dart';
 import 'package:group_project/MainScreen_Model/nav.dart';
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({Key? key, this.title}) : super(key: key);
+  ProfileView({Key? key, required this.title, required this.currentUserEmail}) : super(key: key);
   final String? title;
+  final String? currentUserEmail;
   @override
   State<ProfileView> createState() => _ProfileViewState();
 }
 
 class _ProfileViewState extends State<ProfileView> {
   List<Profile> myProfile = [];
-  String? currentUserEmail = FirebaseAuth.instance.currentUser!.email;
+  late String? currentUserEmail = widget.currentUserEmail;
   final _model = UserModel();
   Profile currentUser = Profile();
   var db = GenreModel();

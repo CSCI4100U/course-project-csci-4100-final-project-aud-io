@@ -37,6 +37,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 import 'MainScreen_Views/settings_view.dart';
@@ -70,7 +71,7 @@ class MyApp extends StatelessWidget {
         home: buildSplashScreen(),
         routes: {
           '/home' : (context) => MyHomePage(title: logo,),
-          '/profile' : (context) => const ProfileView(title: "Profile"),
+          '/profile' : (context) => ProfileView(title: "Profile", currentUserEmail: FirebaseAuth.instance.currentUser!.email),
           '/friendsList' : (context) => const FriendList(title: "Friends",),
           '/addFriend' : (context) => const AddFriendSearch(title: "Add Friends",),
           '/playlists' : (context) => PlayListView(title: "Playlists"),
@@ -103,8 +104,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-//Todo: make this boolean functional
-bool isLoggedIn = false;
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -118,16 +117,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser!;
+    //final user = FirebaseAuth.instance.currentUser;
 
     List sideMenuOptions = [
       TextButton(
         onPressed: (){
           FirebaseAuth.instance.signOut();
-          // setState(() {
-          //   isLoggedIn = false;
-          //   //Todo: go back to /login
-          // });
         },
         child: const Text(
           "Logout",
