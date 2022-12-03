@@ -15,6 +15,9 @@ class Profile{
   set location(location){
     _location = location;
   }
+  get location{
+    return _location;
+  }
 
   Profile.fromMap(var map, {this.reference}){
     this.userName = map['userName'];
