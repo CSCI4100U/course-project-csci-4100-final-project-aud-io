@@ -84,7 +84,7 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
 
                               return Row(
                                 children: [
-                                  _model.buildUserAvatar(userFound),
+                                  _model.buildUserAvatar(userFound,context),
                                   Expanded(
                                       child: Container(
                                         padding: const EdgeInsets.all(10.0),

@@ -64,7 +64,7 @@ class _FriendListState extends State<FriendList> {
 
                             return Row(
                                 children: [
-                                  _model.buildUserAvatar(currentFriend),
+                                  _model.buildUserAvatar(currentFriend,context),
                                   Expanded(
                                       child: Container(
                                           padding: const EdgeInsets.all(10.0),
