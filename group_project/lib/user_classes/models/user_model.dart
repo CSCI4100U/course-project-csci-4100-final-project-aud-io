@@ -20,8 +20,11 @@ class UserModel{
     FirebaseFirestore.instance.collection('users').doc().set(user.toMap());
     
     // Make a friendsList collection for the user
-    FirebaseFirestore.instance.collection('users').doc(user.reference!.id)
-        .collection('friendsList').add({});
+    if(user.reference != null){
+      FirebaseFirestore.instance.collection('users').doc(user.reference!.id)
+          .collection('friendsList').add({});
+    }
+
 
   }
 

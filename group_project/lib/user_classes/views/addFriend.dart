@@ -10,9 +10,10 @@ import '../models/profile.dart';
 import '../models/user_model.dart';
 
 class AddFriendSearch extends StatefulWidget {
-  const AddFriendSearch({Key? key, this.title}) : super(key: key);
+  AddFriendSearch({Key? key, this.title, required this.userNameEntered}) : super(key: key);
 
-  final String? title;
+  String? title;
+  String userNameEntered;
 
   @override
   State<AddFriendSearch> createState() => _AddFriendSearchState();
@@ -20,7 +21,7 @@ class AddFriendSearch extends StatefulWidget {
 
 class _AddFriendSearchState extends State<AddFriendSearch> {
   var formKey = GlobalKey<FormState>();
-  String userNameEntered = "";
+  late String userNameEntered = widget.userNameEntered;
   final _model = UserModel();
 
   TextStyle style = TextStyle(fontSize: 30);
