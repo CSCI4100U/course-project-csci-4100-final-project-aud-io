@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:group_project/map_model/map_constants.dart';
 import 'package:group_project/user_classes/models/user_model.dart';
+import 'package:group_project/user_classes/views/addFriend.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../user_classes/models/profile.dart';
@@ -28,6 +29,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
   // User Variables
   final _model = UserModel();
   late Profile currentUser = Profile();
+  List<Profile> allFriends = [];
 
   // Map Variables
   late PageController pageController;
@@ -85,13 +87,6 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                 ),
                               ),
                               onTap: (){
-                                // go to profile page of friend
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //     builder: (context) => ProfileView(
-                                //       title: "${user.userName}'s Profile",
-                                //       currentUserEmail: "${user.email}",
-                                //     ))
-                                // );
                                 pageController.animateToPage(
                                     i,
                                     duration: Duration(milliseconds: 500),
@@ -119,12 +114,12 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                 onPageChanged: (value){
                   setState(() {
                     selectedIndex = value;
-                    // currentLocation = mapMarkers[value].location;
-                    // _animatedMapMove(currentLocation, 11.5);
+                    currentLocation = mapMarkers[value].latlng!;
+                    _animatedMapMove(currentLocation, 11.5);
                   });
                 },
                 itemBuilder: (context,index){
-                  var user = mapMarkers[index];
+                  var user = mapMarkers[index].user;
 
                   return Padding(
                     padding: EdgeInsets.all(15),
@@ -151,14 +146,63 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                           padding: const EdgeInsets.all(10.0),
                                           child: Row(
                                             children: [
-                                              Text(
-                                                user.user?.userName ?? '',
-                                                style: const TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white
-                                                ),
+                                              Expanded(child: _model.buildUserAvatar(user!, context)),
+                                              Expanded(
+                                                  child: Container(
+                                                    width: 100,
+                                                    child: Text(
+                                                      user?.userName ?? '',
+                                                      style: const TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight: FontWeight.bold,
+                                                          color: Colors.white
+                                                      ),
+                                                    )
+                                                  )
                                               ),
+                                              Expanded(
+                                                child: isAFriend(user)
+                                                    ? Container(
+                                                    width: 10,
+                                                    color: Colors.grey,
+                                                    padding: const EdgeInsets.all(10.0),
+                                                    child: Row(
+                                                      children: const [
+                                                        Expanded(child: Text("FRIEND")),
+                                                        Expanded(child: Icon(Icons.check))
+                                                      ],
+                                                    )
+                                                ) : GestureDetector(
+                                                  onTap: (){
+                                                    // go to profile page of friend
+                                                    Navigator.of(context).push(MaterialPageRoute(
+                                                        builder: (context) => AddFriendSearch(
+                                                          title: "Add ${user.userName}", //Add Friends
+                                                          userNameEntered: user.userName!,
+                                                        ))
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                      color: Colors.blue,
+                                                      padding: const EdgeInsets.all(10.0),
+                                                      child: Row(
+                                                        children: const [
+                                                          Expanded(
+                                                            flex: 2,
+                                                              child: Text("SEARCH")
+                                                          ),
+                                                          Expanded(
+                                                              flex: 1,
+                                                              child:
+                                                              Icon(Icons.search)
+                                                          )
+                                                        ],
+                                                      )
+                                                  ),
+                                                ),
+                                              )
+
+
                                             ],
                                           ),
                                         ),
@@ -208,20 +252,27 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
   }
 
   _askForLocation() async{
+    bool permissionDenied = false;
     Geolocator.isLocationServiceEnabled().then((value) => null);
     Geolocator.requestPermission().then((value) => null);
     Geolocator.checkPermission().then(
             (LocationPermission permission)
         {
           print("Check Location Permission: $permission");
+          if(permission == "LocationPermission.denied"){
+            permissionDenied = true;
+          }
         }
     );
     await getCurrentUser(FirebaseAuth.instance.currentUser!.email!);
-    Geolocator.getPositionStream(
-      locationSettings: const LocationSettings(
-          accuracy: LocationAccuracy.best
-      ),
-    ).listen(_updateLocationStream);
+
+    if(!permissionDenied){
+      Geolocator.getPositionStream(
+        locationSettings: const LocationSettings(
+            accuracy: LocationAccuracy.best
+        ),
+      ).listen(_updateLocationStream);
+    }
   }
 
   getCurrentUser(String email)async{
@@ -243,6 +294,23 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
       print("MARKERS: $mapMarkers");
     });
   }
+
+  /*
+  * Function reloads friend stream and updates the
+  * List of all the friends of the current user
+  * */
+  getAllFriends() async{
+    allFriends = await _model.getFriendsList(currentUser);
+  }
+
+  isAFriend(Profile user){
+    for(Profile friend in allFriends){
+      if(friend.userName == user.userName){
+        return true;
+      }
+    }
+    return false;
+  }
   
   UserLocation getUserLocation(Profile user){
     List<String> locationFromDatabase = user.location.toString().split(",");
@@ -251,7 +319,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
     return UserLocation(
         latlng: LatLng(latitude, longitude),
         user: user
-    );;
+    );
   }
 
   /*

@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
           '/home' : (context) => MyHomePage(title: logo,),
           '/profile' : (context) => ProfileView(title: "Profile", currentUserEmail: FirebaseAuth.instance.currentUser!.email),
           '/friendsList' : (context) => const FriendList(title: "Friends",),
-          '/addFriend' : (context) => const AddFriendSearch(title: "Add Friends",),
+          '/addFriend' : (context) => AddFriendSearch(title: "Add Friends",userNameEntered: ""),
           '/playlists' : (context) => PlayListView(title: "Playlists"),
           '/addPlaylist' : (context) => AddPlaylistView(title: "Add Playlist",),
           '/settings' : (context) => const SettingsView(title: "Settings"),
