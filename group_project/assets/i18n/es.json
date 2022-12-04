@@ -7,8 +7,11 @@
     "genre" : "Género",
     "setting" : "Ajustes",
     "friend" : "Amigos",
+    "friend_sing" : "Amigo",
     "add_friend" : "Agregar Amigos",
-    "explore" : "Explorar"
+    "explore" : "Explorar",
+    "stats_table" :  "Tabla de datos Estadísticos",
+    "stats_chart" : "Gráfico de Estadísticas"
   },
   "forms": {
     "email" : "Correo Electrónico",
@@ -25,13 +28,17 @@
       "forgot" : "¿Has Olvidado tu Contraseña?",
       "search" : "Búsqueda",
       "logout" : "Cerrar sesión",
-      "add" : "Agregar"
+      "add" : "Agregar",
+      "stats" : "Estadísticas"
     },
     "texts" : {
       "have_account" : "¿Tener una Cuenta?\t\t\t",
       "no_account" : "¿No Estás Registrado?\t\t\t",
       "enter_email" : "Ingrese un correo electrónico\nválido para restablecer su contraseña :D",
-      "no_friend" : "Parece que no tienes\namigos :("
+      "no_friend" : "Parece que no tienes\namigos :(",
+      "project" : "Este es nuestro proyecto ¡Espero que lo disfrutes!",
+      "add_fav" : "Añadir género favorito",
+      "user_current" : "Usuario actualmente a:"
     },
     "errors" : {
       "valid_email" : "Introduzca una dirección de correo electrónico válida",
@@ -47,5 +54,8 @@
     "view_friend" : "¡Ver amigos!",
     "view_genre" : "¡Ver género!",
     "view_explore" : "¡Viajar el mundo!"
+  },
+  "charts" : {
+    "freq" :"Frecuencia"
   }
 }
