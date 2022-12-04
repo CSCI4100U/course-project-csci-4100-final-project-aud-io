@@ -61,14 +61,12 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             Container(
               child: ListTile(
-                title: Text("${FlutterI18n.translate(context, "forms.email")}: ${userBeingViewed.email}"),
-                trailing: IconButton(onPressed: (){}, icon: const Icon(Icons.edit)),
+                title: Text("${FlutterI18n.translate(context, "forms.username")}: ${userBeingViewed.userName}"),
               ),
             ),
             Container(
               child: ListTile(
-                title: Text("${FlutterI18n.translate(context, "forms.username")}: ${userBeingViewed.userName}"),
-                trailing: IconButton(onPressed: (){}, icon: const Icon(Icons.edit)),
+                title: Text("${FlutterI18n.translate(context, "forms.email")}: ${userBeingViewed.email}"),
               ),
             ),
             Flexible(

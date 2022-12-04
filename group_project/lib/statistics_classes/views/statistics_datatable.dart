@@ -7,14 +7,14 @@ import 'package:group_project/statistics_classes/models/countries.dart';
 
 import '../models/countries.dart';
 
-class Statistics_DataTable extends StatefulWidget {
-  const Statistics_DataTable({Key? key, this.title}) : super(key: key);
+class StatisticsDataTable extends StatefulWidget {
+  const StatisticsDataTable({Key? key, this.title}) : super(key: key);
   final String? title;
   @override
-  State<Statistics_DataTable> createState() => _Statistics_DataTableState();
+  State<StatisticsDataTable> createState() => _StatisticsDataTableState();
 }
 
-class _Statistics_DataTableState extends State<Statistics_DataTable> {
+class _StatisticsDataTableState extends State<StatisticsDataTable> {
   var allUsers = [];
   List<CountryFrequency> frequencies = [];
   final UserModel _model = UserModel();
