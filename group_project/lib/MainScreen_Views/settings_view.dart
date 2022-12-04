@@ -15,7 +15,13 @@ class _SettingsViewState extends State<SettingsView> {
       appBar: buildAppBarForSubPages(context, widget.title!),
       body: Column(
         children: [
-          Text("This is our Project hope you enjoy!", style: TextStyle(fontSize: 30),)
+          Text("This is our Project hope you enjoy!", style: TextStyle(fontSize: 30),),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "/statistics");
+              },
+              child: Text("Statistics", style: TextStyle(fontSize: 30)))
+
         ],
       ),
     );

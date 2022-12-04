@@ -24,6 +24,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:group_project/MainScreen_Views/notifications.dart';
 import 'package:group_project/music_classes/views/addPlaylist.dart';
+import 'package:group_project/statistics_classes/views/statistics_chart.dart';
+import 'package:group_project/statistics_classes/views/statistics_datatable.dart';
 import 'package:group_project/user_classes/views/genre_form.dart';
 import 'package:group_project/user_classes/views/login_form.dart';
 import 'package:group_project/MainScreen_Views/side_menu_item.dart';
@@ -80,6 +82,8 @@ class MyApp extends StatelessWidget {
           '/addGenre' : (context) => const GenreForm(title: "Add a Favourite Genre"),
           '/notifications' : (context) => const NotificationsView(title: "Notifications",),
           '/explore' : (context) => const ExplorePage(title: "Explore",),
+          '/statistics' : (context) => const Statistics_DataTable(title: "Statistics Data Table",),
+          '/statisticsChart' : (context) => StatisticsChart(title: "Statistics Data Table", frequencies: [],),
         },
         localizationsDelegates: [
           FlutterI18nDelegate(
