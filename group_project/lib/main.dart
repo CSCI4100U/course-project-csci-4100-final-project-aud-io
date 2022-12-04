@@ -78,8 +78,8 @@ class MyApp extends StatelessWidget {
           '/addPlaylist' : (context) => AddPlaylistView(title: "Add Playlist",),
           '/settings' : (context) => SettingsView(title: FlutterI18n.translate(context, "titles.setting")),
           '/addGenre' : (context) => const GenreForm(title: "Add a Favourite Genre"),
-          '/notifications' : (context) => const NotificationsView(title: "Notifications",), //TO DELETE
-          '/explore' : (context) => ExplorePage(title: FlutterI18n.translate(context, "titles.explore"),),
+          '/notifications' : (context) => const NotificationsView(title: "Notifications",),
+          '/explore' : (context) => const ExplorePage(title: "Explore",),
         },
         localizationsDelegates: [
           FlutterI18nDelegate(
