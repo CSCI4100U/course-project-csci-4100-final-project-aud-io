@@ -7,6 +7,7 @@ import '../../MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../models/profile.dart';
 import '../models/user_model.dart';
 import 'package:group_project/MainScreen_Model/nav.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 class FriendList extends StatefulWidget {
   const FriendList({Key? key,this.title}) : super(key: key);
@@ -96,7 +97,8 @@ class _FriendListState extends State<FriendList> {
                     // decoration: BoxDecoration(color: gradeColors[index]),
                       padding: const EdgeInsets.all(10.0),
 
-                      child: Text("Looks like you have no friends :(",
+                      child: Text(
+                        FlutterI18n.translate(context, "forms.texts.no_friend"),
                         style: style,
                       )
                   );

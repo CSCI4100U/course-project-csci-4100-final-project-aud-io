@@ -3,6 +3,7 @@
 * */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../models/genre.dart';
 import '../models/genre_model.dart';
@@ -60,13 +61,13 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             Container(
               child: ListTile(
-                title: Text("username: ${userBeingViewed.userName}"),
+                title: Text("${FlutterI18n.translate(context, "forms.email")}: ${userBeingViewed.email}"),
                 trailing: IconButton(onPressed: (){}, icon: const Icon(Icons.edit)),
               ),
             ),
             Container(
               child: ListTile(
-                title: Text("email: ${userBeingViewed.email}"),
+                title: Text("${FlutterI18n.translate(context, "forms.username")}: ${userBeingViewed.userName}"),
                 trailing: IconButton(onPressed: (){}, icon: const Icon(Icons.edit)),
               ),
             ),

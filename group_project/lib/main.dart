@@ -20,6 +20,8 @@ import 'package:flutter/material.dart';
 import 'package:group_project/MainScreen_Views/notifications.dart';
 import 'package:group_project/music_classes/views/addPlaylist.dart';
 import 'package:group_project/user_classes/models/user_model.dart';
+import 'package:group_project/statistics_classes/views/statistics_chart.dart';
+import 'package:group_project/statistics_classes/views/statistics_datatable.dart';
 import 'package:group_project/user_classes/views/genre_form.dart';
 import 'package:group_project/user_classes/views/login_form.dart';
 import 'package:group_project/user_classes/views/addFriend.dart';
@@ -71,14 +73,16 @@ class MyApp extends StatelessWidget {
         routes: {
           '/home' : (context) => MyHomePage(title: logo,),
           '/profile' : (context) => const ProfileView(title: "Profile"),
-          '/friendsList' : (context) => const FriendList(title: "Friends",),
-          '/addFriend' : (context) => AddFriendSearch(title: "Add Friends",userNameEntered: ""),
-          '/playlists' : (context) => PlayListView(title: "Genres"),
+          '/friendsList' : (context) => FriendList(title: FlutterI18n.translate(context, "titles.friend"),),
+          '/addFriend' : (context) => AddFriendSearch(title: FlutterI18n.translate(context, "titles.add_friend"),userNameEntered: ""),
+          '/playlists' : (context) => PlayListView(title: FlutterI18n.translate(context, "titles.genre")),
           '/addPlaylist' : (context) => AddPlaylistView(title: "Add Playlist",),
-          '/settings' : (context) => const SettingsView(title: "Settings"),
+          '/settings' : (context) => SettingsView(title: FlutterI18n.translate(context, "titles.setting")),
           '/addGenre' : (context) => const GenreForm(title: "Add a Favourite Genre"),
           '/notifications' : (context) => const NotificationsView(title: "Notifications",),
-          '/explore' : (context) => const ExplorePage(title: "Explore",),
+          '/explore' : (context) => ExplorePage(title: FlutterI18n.translate(context, "titles.explore"),),
+          '/statistics' : (context) => const Statistics_DataTable(title: "Statistics Data Table",),
+          '/statisticsChart' : (context) => StatisticsChart(title: "Statistics Data Table", frequencies: [],),
         },
         localizationsDelegates: [
           FlutterI18nDelegate(
@@ -139,6 +143,45 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             icon: Icon(Icons.settings_outlined),
           ),
+          SizedBox(
+            width: 37,
+            child: PopupMenuButton(
+              itemBuilder: (context) => [
+                const PopupMenuItem(
+                    value: 1,
+                    child: Text('Change to EN')
+                ),
+                const PopupMenuItem(
+                    value: 2,
+                    child: Text('Change to FR')
+                ),
+                const PopupMenuItem(
+                    value: 3,
+                    child: Text('Change to ES')
+                ),
+              ],
+              onSelected: (value) {
+                if (value == 1){
+                  print('Swapping to English');
+                  Locale newLocale = Locale('en');
+                  setState(() {
+                    FlutterI18n.refresh(context, newLocale);
+                  });
+                } else if (value == 2){
+                  print('Swapping to French');
+                  Locale newLocale = Locale('fr');
+                  setState(() {
+                    FlutterI18n.refresh(context, newLocale);
+                  });
+                } else if (value == 3) {
+                  print('Swapping to Spanish');
+                  Locale newLocale = Locale('es');
+                  setState(() {
+                    FlutterI18n.refresh(context, newLocale);
+                  });                }
+              },
+            ),
+          ),
         ],
       ),
       body: Column(
@@ -158,9 +201,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             width: 300,
                             decoration: const BoxDecoration(color: Color.fromRGBO(232, 173, 253, 1)),
                             child: ListTile(
-                                title: Text("Profile",style: style,),
-                                subtitle: Text("View profile!", style: style,),
-                                trailing: const Icon(Icons.person_pin_rounded)
+                                title: Text(FlutterI18n.translate(context, "titles.profile"),style: style,),
+                                subtitle: Text(FlutterI18n.translate(context, "main.view_profile"), style: style,),
+                                trailing: Icon(Icons.person_pin_rounded)
                             ),
                           ),
                           onTap: (){
@@ -176,9 +219,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             width: 300,
                             decoration: const BoxDecoration(color: Color.fromRGBO(118, 149, 255, 1)),
                             child: ListTile(
-                                title: Text("Friends", style: style,),
-                                subtitle: Text("View friends!", style: style,),
-                                trailing: const Icon(Icons.groups)
+                                title: Text(FlutterI18n.translate(context, "titles.friend"), style: style,),
+                                subtitle: Text(FlutterI18n.translate(context, "main.view_friend"), style: style,),
+                                trailing: Icon(Icons.groups)
                             ),
                           ),
                           onTap: (){
@@ -194,9 +237,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             width: 300,
                             decoration: const BoxDecoration(color: Color.fromRGBO(167, 173, 253, 1)),
                             child: ListTile(
-                                title: Text("Genres", style: style,),
-                                subtitle: Text("View genres!", style: style,),
-                                trailing: const Icon(Icons.music_note)
+                                title: Text(FlutterI18n.translate(context, "titles.genre"), style: style,),
+                                subtitle: Text(FlutterI18n.translate(context, "main.view_genre"), style: style,),
+                                trailing: Icon(Icons.music_note)
                             ),
                           ),
                           onTap: (){
@@ -213,9 +256,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             decoration: const BoxDecoration(color: Color.fromRGBO(
                                 149, 215, 250, 1.0)),
                             child: ListTile(
-                                title: Text("Explore", style: style,),
-                                subtitle: Text("Travel the world!", style: style,),
-                                trailing: const Icon(Icons.public)
+                                title: Text(FlutterI18n.translate(context, "titles.explore"), style: style,),
+                                subtitle: Text(FlutterI18n.translate(context, "main.view_explore"), style: style,),
+                                trailing: Icon(Icons.public)
                             ),
                           ),
                           onTap: (){

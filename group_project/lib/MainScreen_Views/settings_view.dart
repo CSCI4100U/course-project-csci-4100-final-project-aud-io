@@ -16,6 +16,12 @@ class _SettingsViewState extends State<SettingsView> {
       appBar: buildAppBarForSubPages(context, widget.title!),
       body: ListView(
         children: [
+           ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "/statistics");
+              },
+              child: Text("Statistics", style: TextStyle(fontSize: 30))
+           ),
           TextButton(
             onPressed: (){
               FirebaseAuth.instance.signOut();
@@ -26,7 +32,7 @@ class _SettingsViewState extends State<SettingsView> {
               style: TextStyle(fontSize: 30),
             ),
           )
-        ],
+         ],
       ),
     );
   }

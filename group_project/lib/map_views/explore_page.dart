@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:group_project/MainScreen_Model/nav.dart';
 import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
@@ -185,7 +186,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                                           fontWeight: FontWeight.bold,
                                                           color: Colors.white
                                                       ),
-                                                    )
+                                               )
                                               )
                                             ],
                                           ),

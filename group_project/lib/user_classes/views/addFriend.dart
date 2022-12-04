@@ -8,6 +8,7 @@ import 'package:group_project/MainScreen_Views/custom_circular_progress_indicato
 import '../../MainScreen_Model/nav.dart';
 import '../models/profile.dart';
 import '../models/user_model.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 class AddFriendSearch extends StatefulWidget {
   AddFriendSearch({Key? key, this.title, required this.userNameEntered}) : super(key: key);
@@ -44,8 +45,8 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
         children: [
           TextFormField(
               style: TextStyle(fontSize: 30),
-              decoration: const InputDecoration(
-                  label: Text("Search username"),
+              decoration: InputDecoration(
+                  label: Text(FlutterI18n.translate(context, "forms.search")),
                   hintText: "john123"
               ),
               onChanged: (value){
