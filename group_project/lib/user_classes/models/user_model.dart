@@ -5,6 +5,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:group_project/user_classes/views/profile_view.dart';
 import 'dart:async';
 import 'profile.dart';
@@ -157,7 +158,7 @@ class UserModel{
         // go to profile page of friend
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ProfileView(
-                title: "${user.userName}'s Profile",
+                title: "${user.userName}'s ${FlutterI18n.translate(context, "titles.profile")}",
                 currentUserEmail: "${user.email}",
             ))
         );
