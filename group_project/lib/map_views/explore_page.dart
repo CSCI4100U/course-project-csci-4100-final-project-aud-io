@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:group_project/MainScreen_Model/nav.dart';
+import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
 import 'package:group_project/map_model/userLocation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:group_project/map_model/map_constants.dart';
 import 'package:group_project/user_classes/models/user_model.dart';
-import 'package:group_project/user_classes/views/addFriend.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../user_classes/models/profile.dart';
@@ -28,8 +28,8 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
 
   // User Variables
   final _model = UserModel();
-  late Profile currentUser = Profile();
   List<Profile> allFriends = [];
+  int? numFriends;
 
   // Map Variables
   late PageController pageController;
@@ -113,6 +113,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                 itemCount: mapMarkers.length,
                 onPageChanged: (value){
                   setState(() {
+                    numFriends = null;
                     selectedIndex = value;
                     currentLocation = mapMarkers[value].latlng!;
                     _animatedMapMove(currentLocation, 11.5);
@@ -120,6 +121,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                 },
                 itemBuilder: (context,index){
                   var user = mapMarkers[index].user;
+                  getAllFriends(user!);
 
                   return Padding(
                     padding: EdgeInsets.all(15),
@@ -129,7 +131,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                         borderRadius: BorderRadius.circular(10),
 
                       ),
-                      color: const Color.fromARGB(255, 30, 29, 29),
+                      color: const Color.fromARGB(255, 23, 23, 23),
                       child: Row(
                         children: [
                           const SizedBox(width: 10,),
@@ -137,18 +139,16 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Expanded(
-                                    flex: 2, // expanding so it fills space (aesthetic)
+                                numFriends != null ? Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Container(
-                                          padding: const EdgeInsets.all(10.0),
+                                          padding: const EdgeInsets.all(5.0),
                                           child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
-                                              Expanded(child: _model.buildUserAvatar(user!, context)),
-                                              Expanded(
-                                                  child: Container(
+                                              _model.buildUserAvatar(user!, context),
+                                              Container(
                                                     width: 100,
                                                     child: Text(
                                                       user?.userName ?? '',
@@ -158,70 +158,33 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                                           color: Colors.white
                                                       ),
                                                     )
-                                                  )
-                                              ),
-                                              Expanded(
-                                                child: isAFriend(user)
-                                                    ? Container(
-                                                    width: 10,
-                                                    color: Colors.grey,
-                                                    padding: const EdgeInsets.all(10.0),
-                                                    child: Row(
-                                                      children: const [
-                                                        Expanded(child: Text("FRIEND")),
-                                                        Expanded(child: Icon(Icons.check))
-                                                      ],
-                                                    )
-                                                ) : GestureDetector(
-                                                  onTap: (){
-                                                    // go to profile page of friend
-                                                    Navigator.of(context).push(MaterialPageRoute(
-                                                        builder: (context) => AddFriendSearch(
-                                                          title: "Add ${user.userName}", //Add Friends
-                                                          userNameEntered: user.userName!,
-                                                        ))
-                                                    );
-                                                  },
-                                                  child: Container(
-                                                      color: Colors.blue,
-                                                      padding: const EdgeInsets.all(10.0),
-                                                      child: Row(
-                                                        children: const [
-                                                          Expanded(
-                                                            flex: 2,
-                                                              child: Text("SEARCH")
-                                                          ),
-                                                          Expanded(
-                                                              flex: 1,
-                                                              child:
-                                                              Icon(Icons.search)
-                                                          )
-                                                        ],
-                                                      )
-                                                  ),
-                                                ),
                                               )
-
-
                                             ],
                                           ),
                                         ),
+                                        Container(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.person,color: Colors.white,),
+                                               Text(numFriends! != 1 ?"$numFriends Friends": "1 Friend",
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        )
                                       ],
                                     )
-                                )
+                                ) : CustomCircularProgressIndicator()
                               ],
                             ),
                           ),
-                          const SizedBox(width: 10,),
-                          // Expanded(
-                          //     child: Padding(
-                          //       padding: EdgeInsets.all(4),
-                          //       child: ClipRRect(
-                          //         borderRadius: BorderRadius.circular(10),
-                          //         child: Image.network(mapMarkers[index].image),
-                          //       ),
-                          //     )
-                          // )
+                          const SizedBox(
+                            width: 10,
+                          ),
                         ],
                       ),
                     ),
@@ -241,12 +204,20 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
 
   _updateLocationStream(Position userLocation) async{
     userLocation = await Geolocator.getCurrentPosition();
+    List<Placemark> places = await placemarkFromCoordinates(
+        userLocation.latitude,
+        userLocation.longitude
+    );
     if(mounted){
       setState(() {
-        locationLoaded = true;
         currentLocation = LatLng(userLocation.latitude, userLocation.longitude);
         currentUser.location = "${userLocation.latitude},${userLocation.longitude}";
         UserModel().updateUser(currentUser);
+        if(!locationLoaded){
+          showSnackBar("User currently at: ${places[0].subThoroughfare!} ${places[0].thoroughfare!}");
+          getAllFriends(currentUser);
+        }
+        locationLoaded = true;
       });
     }
   }
@@ -264,7 +235,6 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
           }
         }
     );
-    await getCurrentUser(FirebaseAuth.instance.currentUser!.email!);
 
     if(!permissionDenied){
       Geolocator.getPositionStream(
@@ -273,14 +243,6 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
         ),
       ).listen(_updateLocationStream);
     }
-  }
-
-  getCurrentUser(String email)async{
-    currentUser = await _model.getUserByEmail(email);
-    setState(() {
-      print("CURRENT USER: $currentUser");
-      currentUser;
-    });
   }
 
   getAllUserMarkers() async{
@@ -299,8 +261,9 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
   * Function reloads friend stream and updates the
   * List of all the friends of the current user
   * */
-  getAllFriends() async{
-    allFriends = await _model.getFriendsList(currentUser);
+  getAllFriends(Profile user) async{
+    allFriends = await _model.getFriendsList(user);
+    numFriends = allFriends.length;
   }
 
   isAFriend(Profile user){
@@ -319,6 +282,19 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
     return UserLocation(
         latlng: LatLng(latitude, longitude),
         user: user
+    );
+  }
+
+  /*
+  * Function shows a snackBar given a
+  * string content
+  * */
+  showSnackBar(String content){
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(content,
+              style: const TextStyle(fontSize: 20),)
+        )
     );
   }
 

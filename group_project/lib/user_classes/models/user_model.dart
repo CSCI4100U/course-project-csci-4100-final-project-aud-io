@@ -10,7 +10,14 @@ import 'dart:async';
 import 'profile.dart';
 import 'package:latlong2/latlong.dart';
 
+Profile currentUser = Profile();
+
 class UserModel{
+  static initializeCurrentUser() async{
+    print("Initializing current user...");
+    currentUser = await UserModel().getUserByEmail(FirebaseAuth.instance.currentUser!.email!);
+  }
+
   /*
   * Insert newly signed up user into database
   * */
