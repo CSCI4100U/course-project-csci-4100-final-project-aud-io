@@ -2,7 +2,13 @@
   "titles": {
     "signin" : "Sign-in",
     "signup" : "Sign-up",
-    "reset" : "Reset Password"
+    "reset" : "Reset Password",
+    "profile" : "Profile",
+    "genre" : "Genre",
+    "setting" : "Settings",
+    "friend" : "Friends",
+    "add_friend" : "Add Friends",
+    "explore" : "Explore"
   },
   "forms": {
     "email" : "Email",
@@ -11,16 +17,21 @@
     "phone" : "Phone Number",
     "city" : "City",
     "country" : "Country",
+    "search" : "Search username",
     "buttons" : {
       "birthday" : "Birthday",
       "login_here" : "Login Here",
       "signup_here" : "SignUp Here",
-      "forgot" : "Forgot Password?"
+      "forgot" : "Forgot Password?",
+      "search" : "Search",
+      "logout" : "Logout",
+      "add" : "Add"
     },
     "texts" : {
       "have_account" : "Have an Account?\t\t\t",
       "no_account" : "Not Signed Up?\t\t\t",
-      "enter_email" : "Enter a valid email\nto reset your password :D"
+      "enter_email" : "Enter a valid email\nto reset your password :D",
+      "no_friend" : "Looks like you have no\nfriends :("
     },
     "errors" : {
       "valid_email" : "Enter a valid email",
@@ -30,5 +41,11 @@
       "valid_city" : "Enter a Valid City Name",
       "valid_country" : "Enter a Valid Country Name"
     }
+  },
+  "main" : {
+    "view_profile" : "View profile!",
+    "view_friend" : "View friends!",
+    "view_genre" : "View genre!",
+    "view_explore" : "Travel the world!"
   }
 }

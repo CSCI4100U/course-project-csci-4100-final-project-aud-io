@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:group_project/MainScreen_Model/nav.dart';
 import 'package:group_project/map_model/userLocation.dart';
@@ -177,19 +178,21 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                                     // go to profile page of friend
                                                     Navigator.of(context).push(MaterialPageRoute(
                                                         builder: (context) => AddFriendSearch(
-                                                          title: "Add ${user.userName}", //Add Friends
+                                                          title: "${FlutterI18n.translate(context, "forms.buttons.add")} ${user.userName}", //Add Friends
                                                           userNameEntered: user.userName!,
                                                         ))
                                                     );
                                                   },
                                                   child: Container(
                                                       color: Colors.blue,
-                                                      padding: const EdgeInsets.all(10.0),
+                                                      padding: const EdgeInsets.all(5.0),
                                                       child: Row(
-                                                        children: const [
+                                                        children: [
                                                           Expanded(
                                                             flex: 2,
-                                                              child: Text("SEARCH")
+                                                              child: Text(FlutterI18n.translate(context, "forms.buttons.search"),
+                                                                style: TextStyle(fontSize: 14),
+                                                              )
                                                           ),
                                                           Expanded(
                                                               flex: 1,
