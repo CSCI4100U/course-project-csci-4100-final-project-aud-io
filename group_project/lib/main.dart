@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
           '/addGenre' : (context) => const GenreForm(title: "Add a Favourite Genre"),
           '/notifications' : (context) => const NotificationsView(title: "Notifications",),
           '/explore' : (context) => ExplorePage(title: FlutterI18n.translate(context, "titles.explore"),),
-          '/statistics' : (context) => const Statistics_DataTable(title: "Statistics Data Table",),
+          '/statistics' : (context) => const StatisticsDataTable(title: "Statistics Data Table",),
           '/statisticsChart' : (context) => StatisticsChart(title: "Statistics Data Table", frequencies: [],),
         },
         localizationsDelegates: [
