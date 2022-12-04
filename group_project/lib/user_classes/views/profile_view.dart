@@ -51,7 +51,7 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     if(userBeingViewed.userName!=null){
       return Scaffold(
-        appBar: buildAppBarForSubPages(context, widget.title!),
+        appBar: buildAppBarForSubPages(context, FlutterI18n.translate(context, "titles.profile")),
         body: Column(
           children: [
             CircleAvatar(
@@ -99,10 +99,10 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             Container(
                 child: ListTile(
-                  title: const Text("Add Favourite Genre"),
+                  title: Text(FlutterI18n.translate(context, "forms.texts.add_fav")),
                   trailing: ElevatedButton(
                       onPressed: _addGenre,
-                      child: const Text("Add")
+                      child: Text(FlutterI18n.translate(context, "forms.buttons.add"))
                   ),
                 )
             ),
