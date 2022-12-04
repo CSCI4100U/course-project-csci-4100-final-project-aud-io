@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:group_project/statistics_classes/views/statistics_chart.dart';
 import 'package:group_project/user_classes/models/user_model.dart';
 import '../../MainScreen_Model/nav.dart';
@@ -27,7 +28,7 @@ class _Statistics_DataTableState extends State<Statistics_DataTable> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title!),
+        title: Text(FlutterI18n.translate(context, "titles.stats_table")),
         actions: [
           IconButton(
               onPressed: (){
@@ -52,8 +53,8 @@ class _Statistics_DataTableState extends State<Statistics_DataTable> {
       ),
       body: DataTable(
         columns: [
-          DataColumn(label: Text("Country")),
-          DataColumn(label: Text("Frequency")),
+          DataColumn(label: Text(FlutterI18n.translate(context, "forms.country"))),
+          DataColumn(label: Text(FlutterI18n.translate(context, "charts.freq"))),
         ],
         rows: frequencies!.map((CountryFrequency country) => DataRow(
             cells: [
