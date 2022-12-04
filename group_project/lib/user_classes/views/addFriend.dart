@@ -31,13 +31,9 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
   List<Profile> allFriends = [];
   late Stream userStream;
 
-  Profile currentUser = Profile();
-  String? currentUserEmail = FirebaseAuth.instance.currentUser!.email;
-
   @override
   void initState(){
     super.initState();
-    getCurrentUser(currentUserEmail!);
     loadUsers();
   }
 
@@ -156,12 +152,6 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
 
   getAllFriends() async{
     allFriends = await _model.getFriendsList(currentUser);
-  }
-
-  getCurrentUser(String email)async{
-    currentUser = await _model.getUserByEmail(email);
-    loadUsers();
-    print("CURRENT USER: $currentUser");
   }
 
   /*

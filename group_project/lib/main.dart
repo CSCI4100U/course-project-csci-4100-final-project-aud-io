@@ -10,13 +10,8 @@
 // *
 // * Description:
 // * This application allow you to add new friends
-// * (notification for friend request coming soon),
-// * and create and collaborate on music playlists
-// * using a Spotify SDK (Currently doing research).
-// *
-// * The user also can view their own profile and
-// * add genres (Local Storage). Also, the user
-// * can search for friends and add them (Cloud Storage).
+// * and view music others like and explore users
+// * around the world.
 // ********************************************************
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
@@ -24,11 +19,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:group_project/MainScreen_Views/notifications.dart';
 import 'package:group_project/music_classes/views/addPlaylist.dart';
+import 'package:group_project/user_classes/models/user_model.dart';
 import 'package:group_project/statistics_classes/views/statistics_chart.dart';
 import 'package:group_project/statistics_classes/views/statistics_datatable.dart';
 import 'package:group_project/user_classes/views/genre_form.dart';
 import 'package:group_project/user_classes/views/login_form.dart';
-import 'package:group_project/MainScreen_Views/side_menu_item.dart';
 import 'package:group_project/user_classes/views/addFriend.dart';
 import 'package:group_project/music_classes/views/playlist_view.dart';
 import 'package:group_project/user_classes/views/friends_list.dart';
@@ -46,8 +41,12 @@ import 'MainScreen_Views/settings_view.dart';
 import 'map_views/explore_page.dart';
 
 // Aud.io logo at the top of the menu
-Image logo = const Image(
-  image: AssetImage('lib/images/audio_alt_beige2.png'),
+Widget logo = Container(
+    padding: EdgeInsets.all(5.0),
+    child: const Image(
+      image: AssetImage('lib/images/audio_alt_beige2.png'),
+      height: 125,
+    ),
 );
 
 Future<void> main() async{
@@ -73,7 +72,7 @@ class MyApp extends StatelessWidget {
         home: buildSplashScreen(),
         routes: {
           '/home' : (context) => MyHomePage(title: logo,),
-          '/profile' : (context) => ProfileView(title: FlutterI18n.translate(context, "titles.profile"), currentUserEmail: FirebaseAuth.instance.currentUser!.email),
+          '/profile' : (context) => const ProfileView(title: "Profile"),
           '/friendsList' : (context) => FriendList(title: FlutterI18n.translate(context, "titles.friend"),),
           '/addFriend' : (context) => AddFriendSearch(title: FlutterI18n.translate(context, "titles.add_friend"),userNameEntered: ""),
           '/playlists' : (context) => PlayListView(title: FlutterI18n.translate(context, "titles.genre")),
@@ -119,34 +118,25 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  TextStyle style = const TextStyle(fontSize: 25);
+  var padding = const EdgeInsets.all(10.0);
+
   @override
   Widget build(BuildContext context) {
-    //final user = FirebaseAuth.instance.currentUser;
-
-    List sideMenuOptions = [
-      TextButton(
-        onPressed: (){
-          FirebaseAuth.instance.signOut();
-        },
-        child: Text(
-          FlutterI18n.translate(context, "forms.buttons.logout"),
-          style: TextStyle(fontSize: 30),
-        ),
-      ),
-      SideMenuItem(title:FlutterI18n.translate(context, "titles.profile"),route:"/profile"),
-      SideMenuItem(title:FlutterI18n.translate(context, "titles.friend"),route:"/friendsList"),
-      SideMenuItem(title:FlutterI18n.translate(context, "titles.genre"),route:"/playlists"),
-      SideMenuItem(title:FlutterI18n.translate(context, "titles.setting"),route:"/settings"),
-    ];
-    TextStyle style = TextStyle(fontSize: 25);
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 110,
+        toolbarHeight: 80,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: widget.title,
         actions: [
+          IconButton(
+            onPressed: (){
+              Navigator.pushNamed(context, '/favGenres');
+            },
+            icon: Icon(Icons.favorite_border),
+          ),
           IconButton(
             onPressed: (){
               Navigator.pushNamed(context, '/settings');
@@ -207,9 +197,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                         child: GestureDetector(
                           child: Container(
-                            padding: EdgeInsets.all(10.0),
+                            padding: padding,
                             width: 300,
-                            decoration: BoxDecoration(color: Color.fromRGBO(232, 173, 253, 1)),
+                            decoration: const BoxDecoration(color: Color.fromRGBO(232, 173, 253, 1)),
                             child: ListTile(
                                 title: Text(FlutterI18n.translate(context, "titles.profile"),style: style,),
                                 subtitle: Text(FlutterI18n.translate(context, "main.view_profile"), style: style,),
@@ -225,9 +215,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                         child: GestureDetector(
                           child: Container(
-                            padding: EdgeInsets.all(10.0),
+                            padding: padding,
                             width: 300,
-                            decoration: BoxDecoration(color: Color.fromRGBO(118, 149, 255, 1)),
+                            decoration: const BoxDecoration(color: Color.fromRGBO(118, 149, 255, 1)),
                             child: ListTile(
                                 title: Text(FlutterI18n.translate(context, "titles.friend"), style: style,),
                                 subtitle: Text(FlutterI18n.translate(context, "main.view_friend"), style: style,),
@@ -243,9 +233,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                         child: GestureDetector(
                           child: Container(
-                            padding: EdgeInsets.all(10.0),
+                            padding: padding,
                             width: 300,
-                            decoration: BoxDecoration(color: Color.fromRGBO(167, 173, 253, 1)),
+                            decoration: const BoxDecoration(color: Color.fromRGBO(167, 173, 253, 1)),
                             child: ListTile(
                                 title: Text(FlutterI18n.translate(context, "titles.genre"), style: style,),
                                 subtitle: Text(FlutterI18n.translate(context, "main.view_genre"), style: style,),
@@ -261,14 +251,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                         child: GestureDetector(
                           child: Container(
-                            padding: EdgeInsets.all(8.0),
+                            padding: padding,
                             width: 300,
-                            decoration: BoxDecoration(color: Color.fromRGBO(
+                            decoration: const BoxDecoration(color: Color.fromRGBO(
                                 149, 215, 250, 1.0)),
                             child: ListTile(
                                 title: Text(FlutterI18n.translate(context, "titles.explore"), style: style,),
                                 subtitle: Text(FlutterI18n.translate(context, "main.view_explore"), style: style,),
-                                trailing: Icon(Icons.search)
+                                trailing: Icon(Icons.public)
                             ),
                           ),
                           onTap: (){
@@ -283,22 +273,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
               ),
         ],
-      ),
-
-      drawer: Drawer(
-        backgroundColor: Colors.black,
-        child: Container(
-          padding: const EdgeInsets.all(50),
-          child: ListView.separated(
-              itemBuilder: (context,index){
-                return sideMenuOptions[index];
-              },
-              separatorBuilder: (context,index){
-                return Divider();
-              },
-              itemCount: sideMenuOptions.length
-          ),
-        ),
       ),
     );
 

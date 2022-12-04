@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import '../../MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../models/profile.dart';
 import '../models/user_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:group_project/MainScreen_Model/nav.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
@@ -25,15 +24,13 @@ class _FriendListState extends State<FriendList> {
   TextStyle style = const TextStyle(fontSize: 30);
 
   final _model = UserModel();
-  Profile currentUser = Profile();
-  String? currentUserEmail = FirebaseAuth.instance.currentUser!.email;
   late Stream friendListStream;
 
   @override
   void initState(){
     super.initState();
     friendListStream = _model.getFriendStream(currentUser);
-    getCurrentUser(currentUserEmail!);
+    loadFriends();
   }
 
   @override
@@ -220,14 +217,6 @@ class _FriendListState extends State<FriendList> {
           );
         }
     );
-  }
-
-  /*
-  * Function loads the Profile variable of the current user
-  * */
-  getCurrentUser(String email)async{
-    currentUser = await _model.getUserByEmail(email);
-    loadFriends();
   }
 
   /*

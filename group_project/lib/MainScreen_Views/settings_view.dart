@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:group_project/MainScreen_Model/nav.dart';
 
@@ -13,16 +14,25 @@ class _SettingsViewState extends State<SettingsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBarForSubPages(context, widget.title!),
-      body: Column(
+      body: ListView(
         children: [
-          Text("This is our Project hope you enjoy!", style: TextStyle(fontSize: 30),),
-          ElevatedButton(
+           ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, "/statistics");
               },
-              child: Text("Statistics", style: TextStyle(fontSize: 30)))
-
-        ],
+              child: Text("Statistics", style: TextStyle(fontSize: 30))
+           ),
+          TextButton(
+            onPressed: (){
+              FirebaseAuth.instance.signOut();
+              Navigator.of(context).pop();
+            },
+            child: const Text(
+              "Logout",
+              style: TextStyle(fontSize: 30),
+            ),
+          )
+         ],
       ),
     );
   }

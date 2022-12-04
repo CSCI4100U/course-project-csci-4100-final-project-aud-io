@@ -11,7 +11,17 @@ import 'dart:async';
 import 'profile.dart';
 import 'package:latlong2/latlong.dart';
 
+Profile currentUser = Profile();
+
 class UserModel{
+  static initializeCurrentUser() async{
+    print("Initializing current user...");
+    if(FirebaseAuth.instance.currentUser != null){
+      currentUser = await UserModel().getUserByEmail(FirebaseAuth.instance.currentUser!.email!);
+    }
+
+  }
+
   /*
   * Insert newly signed up user into database
   * */
@@ -147,11 +157,11 @@ class UserModel{
       child:
       Container(
         padding: EdgeInsets.all(10),
-        child: const CircleAvatar(
+        child: CircleAvatar(
           backgroundColor: Colors.black,
           radius: 25,
           //Todo: Replace with profile photo
-          child: Icon(Icons.person),
+          child: Text(user.userName![0].toUpperCase()),
         ),
       ),
       onTap: (){
@@ -159,7 +169,7 @@ class UserModel{
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ProfileView(
                 title: "${user.userName}'s ${FlutterI18n.translate(context, "titles.profile")}",
-                currentUserEmail: "${user.email}",
+                otherUserEmail: "${user.email}",
             ))
         );
       },
