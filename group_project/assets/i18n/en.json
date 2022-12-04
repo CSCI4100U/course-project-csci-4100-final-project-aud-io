@@ -8,7 +8,9 @@
     "setting" : "Settings",
     "friend" : "Friends",
     "add_friend" : "Add Friends",
-    "explore" : "Explore"
+    "explore" : "Explore",
+    "stats_table" :  "Statistics Data Table",
+    "stats_chart" : "Statistics Chart"
   },
   "forms": {
     "email" : "Email",
@@ -25,13 +27,15 @@
       "forgot" : "Forgot Password?",
       "search" : "Search",
       "logout" : "Logout",
-      "add" : "Add"
+      "add" : "Add",
+      "stats" : "Statistics"
     },
     "texts" : {
       "have_account" : "Have an Account?\t\t\t",
       "no_account" : "Not Signed Up?\t\t\t",
       "enter_email" : "Enter a valid email\nto reset your password :D",
-      "no_friend" : "Looks like you have no\nfriends :("
+      "no_friend" : "Looks like you have no\nfriends :(",
+      "project" : "This is our Project hope you enjoy!"
     },
     "errors" : {
       "valid_email" : "Enter a valid email",
@@ -47,5 +51,9 @@
     "view_friend" : "View friends!",
     "view_genre" : "View genre!",
     "view_explore" : "Travel the world!"
+  },
+  "charts" : {
+    "country" : "Country",
+    "freq" :"Frequency"
   }
 }
