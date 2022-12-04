@@ -36,7 +36,9 @@
       "no_account" : "¿No Estás Registrado?\t\t\t",
       "enter_email" : "Ingrese un correo electrónico\nválido para restablecer su contraseña :D",
       "no_friend" : "Parece que no tienes\namigos :(",
-      "project" : "Este es nuestro proyecto ¡Espero que lo disfrutes!"
+      "project" : "Este es nuestro proyecto ¡Espero que lo disfrutes!",
+      "add_fav" : "Añadir género favorito",
+      "user_current" : "Usuario actualmente a:"
     },
     "errors" : {
       "valid_email" : "Introduzca una dirección de correo electrónico válida",

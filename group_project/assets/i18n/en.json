@@ -36,7 +36,9 @@
       "no_account" : "Not Signed Up?\t\t\t",
       "enter_email" : "Enter a valid email\nto reset your password :D",
       "no_friend" : "Looks like you have no\nfriends :(",
-      "project" : "This is our Project hope you enjoy!"
+      "project" : "This is our Project hope you enjoy!",
+      "add_fav" : "Add Favourite Genre",
+      "user_current" : "User currently at:"
     },
     "errors" : {
       "valid_email" : "Enter a valid email",
@@ -54,7 +56,6 @@
     "view_explore" : "Travel the world!"
   },
   "charts" : {
-    "country" : "Country",
     "freq" :"Frequency"
   }
 }
