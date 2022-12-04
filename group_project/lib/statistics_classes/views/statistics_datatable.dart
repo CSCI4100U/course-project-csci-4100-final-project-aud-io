@@ -18,10 +18,15 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
   var allUsers = [];
   List<CountryFrequency> frequencies = [];
   final UserModel _model = UserModel();
+  int? _sortColumnIndex;
+  bool? _sortAscending;
+
   @override
   void initState() {
     super.initState();
     getAllUsers();
+    _sortColumnIndex=0;
+    _sortAscending=true;
   }
 
   @override
@@ -52,9 +57,45 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
         ],
       ),
       body: DataTable(
+        sortColumnIndex: _sortColumnIndex,
+        sortAscending: _sortAscending!,
         columns: [
-          DataColumn(label: Text(FlutterI18n.translate(context, "forms.country"))),
-          DataColumn(label: Text(FlutterI18n.translate(context, "charts.freq"))),
+          DataColumn(
+            label: Text(FlutterI18n.translate(context, "forms.country")),
+            tooltip: "Country",
+              onSort: (index, ascending) {
+                setState(() {
+                  _sortColumnIndex = index;
+                  _sortAscending = ascending;
+                  frequencies!.sort(
+                          (a,b) {
+                        if (ascending){
+                          return a.country!.compareTo(b.country!);
+                        }
+                        return b.country!.compareTo(a.country!);
+                      }
+                  );
+                });
+              }
+          ),
+          DataColumn(
+            label: Text(FlutterI18n.translate(context, "charts.freq")),
+            tooltip: "Frequency",
+            onSort: (index, ascending) {
+              setState(() {
+                _sortColumnIndex = index;
+                _sortAscending = ascending;
+                frequencies!.sort(
+                        (a,b) {
+                      if (ascending){
+                        return a.frequency!.compareTo(b.frequency!);
+                      }
+                      return b.frequency!.compareTo(a.frequency!);
+                    }
+                );
+              });
+            }
+          ),
         ],
         rows: frequencies!.map((CountryFrequency country) => DataRow(
             cells: [
