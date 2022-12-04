@@ -71,15 +71,15 @@ class MyApp extends StatelessWidget {
         home: buildSplashScreen(),
         routes: {
           '/home' : (context) => MyHomePage(title: logo,),
-          '/profile' : (context) => ProfileView(title: "Profile", currentUserEmail: FirebaseAuth.instance.currentUser!.email),
-          '/friendsList' : (context) => const FriendList(title: "Friends",),
-          '/addFriend' : (context) => AddFriendSearch(title: "Add Friends",userNameEntered: ""),
-          '/playlists' : (context) => PlayListView(title: "Playlists"),
+          '/profile' : (context) => ProfileView(title: FlutterI18n.translate(context, "titles.profile"), currentUserEmail: FirebaseAuth.instance.currentUser!.email),
+          '/friendsList' : (context) => FriendList(title: FlutterI18n.translate(context, "titles.friend"),),
+          '/addFriend' : (context) => AddFriendSearch(title: FlutterI18n.translate(context, "titles.add_friend"),userNameEntered: ""),
+          '/playlists' : (context) => PlayListView(title: FlutterI18n.translate(context, "titles.genre")),
           '/addPlaylist' : (context) => AddPlaylistView(title: "Add Playlist",),
-          '/settings' : (context) => const SettingsView(title: "Settings"),
+          '/settings' : (context) => SettingsView(title: FlutterI18n.translate(context, "titles.setting")),
           '/addGenre' : (context) => const GenreForm(title: "Add a Favourite Genre"),
-          '/notifications' : (context) => const NotificationsView(title: "Notifications",),
-          '/explore' : (context) => const ExplorePage(title: "Explore",),
+          '/notifications' : (context) => const NotificationsView(title: "Notifications",), //TO DELETE
+          '/explore' : (context) => ExplorePage(title: FlutterI18n.translate(context, "titles.explore"),),
         },
         localizationsDelegates: [
           FlutterI18nDelegate(
@@ -124,15 +124,15 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: (){
           FirebaseAuth.instance.signOut();
         },
-        child: const Text(
-          "Logout",
+        child: Text(
+          FlutterI18n.translate(context, "forms.buttons.logout"),
           style: TextStyle(fontSize: 30),
         ),
       ),
-      SideMenuItem(title:"Profile",route:"/profile"),
-      SideMenuItem(title:"Friends",route:"/friendsList"),
-      SideMenuItem(title:"Playlists",route:"/playlists"),
-      SideMenuItem(title:"Settings",route:"/settings"),
+      SideMenuItem(title:FlutterI18n.translate(context, "titles.profile"),route:"/profile"),
+      SideMenuItem(title:FlutterI18n.translate(context, "titles.friend"),route:"/friendsList"),
+      SideMenuItem(title:FlutterI18n.translate(context, "titles.genre"),route:"/playlists"),
+      SideMenuItem(title:FlutterI18n.translate(context, "titles.setting"),route:"/settings"),
     ];
     TextStyle style = TextStyle(fontSize: 25);
 
@@ -145,16 +145,48 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           IconButton(
             onPressed: (){
-              //Call async function that goes to route "/notifications"
-              Navigator.pushNamed(context, '/notifications');
-            },
-            icon: const Icon(Icons.notifications),
-          ),
-          IconButton(
-            onPressed: (){
               Navigator.pushNamed(context, '/settings');
             },
             icon: Icon(Icons.settings_outlined),
+          ),
+          SizedBox(
+            width: 37,
+            child: PopupMenuButton(
+              itemBuilder: (context) => [
+                const PopupMenuItem(
+                    value: 1,
+                    child: Text('Change to EN')
+                ),
+                const PopupMenuItem(
+                    value: 2,
+                    child: Text('Change to FR')
+                ),
+                const PopupMenuItem(
+                    value: 3,
+                    child: Text('Change to ES')
+                ),
+              ],
+              onSelected: (value) {
+                if (value == 1){
+                  print('Swapping to English');
+                  Locale newLocale = Locale('en');
+                  setState(() {
+                    FlutterI18n.refresh(context, newLocale);
+                  });
+                } else if (value == 2){
+                  print('Swapping to French');
+                  Locale newLocale = Locale('fr');
+                  setState(() {
+                    FlutterI18n.refresh(context, newLocale);
+                  });
+                } else if (value == 3) {
+                  print('Swapping to Spanish');
+                  Locale newLocale = Locale('es');
+                  setState(() {
+                    FlutterI18n.refresh(context, newLocale);
+                  });                }
+              },
+            ),
           ),
         ],
       ),
@@ -175,8 +207,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             width: 300,
                             decoration: BoxDecoration(color: Color.fromRGBO(232, 173, 253, 1)),
                             child: ListTile(
-                                title: Text("Profile",style: style,),
-                                subtitle: Text("View profile!", style: style,),
+                                title: Text(FlutterI18n.translate(context, "titles.profile"),style: style,),
+                                subtitle: Text(FlutterI18n.translate(context, "main.view_profile"), style: style,),
                                 trailing: Icon(Icons.person_pin_rounded)
                             ),
                           ),
@@ -193,8 +225,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             width: 300,
                             decoration: BoxDecoration(color: Color.fromRGBO(118, 149, 255, 1)),
                             child: ListTile(
-                                title: Text("Friends", style: style,),
-                                subtitle: Text("View friends!", style: style,),
+                                title: Text(FlutterI18n.translate(context, "titles.friend"), style: style,),
+                                subtitle: Text(FlutterI18n.translate(context, "main.view_friend"), style: style,),
                                 trailing: Icon(Icons.groups)
                             ),
                           ),
@@ -211,8 +243,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             width: 300,
                             decoration: BoxDecoration(color: Color.fromRGBO(167, 173, 253, 1)),
                             child: ListTile(
-                                title: Text("Playlists", style: style,),
-                                subtitle: Text("View playlists!", style: style,),
+                                title: Text(FlutterI18n.translate(context, "titles.genre"), style: style,),
+                                subtitle: Text(FlutterI18n.translate(context, "main.view_genre"), style: style,),
                                 trailing: Icon(Icons.music_note)
                             ),
                           ),
@@ -230,8 +262,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             decoration: BoxDecoration(color: Color.fromRGBO(
                                 149, 215, 250, 1.0)),
                             child: ListTile(
-                                title: Text("Explore", style: style,),
-                                subtitle: Text("Travel the world!", style: style,),
+                                title: Text(FlutterI18n.translate(context, "titles.explore"), style: style,),
+                                subtitle: Text(FlutterI18n.translate(context, "main.view_explore"), style: style,),
                                 trailing: Icon(Icons.search)
                             ),
                           ),
