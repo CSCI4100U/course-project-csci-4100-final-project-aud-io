@@ -196,7 +196,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                           child: Row(
                                             children: [
                                               Icon(Icons.person,color: Colors.white,),
-                                               Text(numFriends! != 1 ?"$numFriends Friends": "1 Friend",
+                                               Text(numFriends! != 1 ?"$numFriends ${FlutterI18n.translate(context, "titles.friend")}": "1 ${FlutterI18n.translate(context, "titles.friend_sing")}",
                                                 style: TextStyle(
                                                     fontSize: 20,
                                                     color: Colors.white
@@ -238,7 +238,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
         currentUser.location = "${userLocation.latitude},${userLocation.longitude}";
         if(!locationLoaded){
           UserModel().updateUser(currentUser);
-          showSnackBar("User currently at: ${places[0].subThoroughfare!} ${places[0].thoroughfare!}");
+          showSnackBar("${FlutterI18n.translate(context, "forms.texts.user_current")} ${places[0].subThoroughfare!} ${places[0].thoroughfare!}");
           getAllFriends(currentUser);
         }
         getAllUserMarkers();
