@@ -37,13 +37,15 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
   late LatLng currentLocation;
   List<UserLocation> mapMarkers = [];
   bool locationLoaded = false;
+  double zoomValue = 5;
+  double maxZoom = 18;
+  double minZoom = 5;
 
   @override
   void initState() {
     super.initState();
     pageController = PageController();
     mapController = MapController();
-    getAllUserMarkers();
     _askForLocation();
   }
 
@@ -51,15 +53,41 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: buildAppBarForSubPages(context, widget.title),
+      appBar: AppBar(
+        title: Text(widget.title),
+        actions: [
+          IconButton(
+            onPressed: (){
+              setState(() {
+                if(zoomValue < maxZoom){
+                  zoomValue++;
+                  mapController.move(mapController.center, zoomValue);
+                }
+              });
+            },
+            icon: const Icon(Icons.zoom_in),
+          ),
+          IconButton(
+            onPressed: (){
+              setState(() {
+                if(zoomValue > minZoom){
+                  zoomValue--;
+                  mapController.move(mapController.center, zoomValue);
+                }
+              });
+            },
+            icon: const Icon(Icons.zoom_out),
+          ),
+        ],
+      ),
       body: locationLoaded ? Stack(
         children: [
           FlutterMap(
             mapController: mapController,
             options: MapOptions(
-                minZoom: 5,
-                maxZoom: 18,
-                zoom: 13,
+                minZoom: minZoom,
+                maxZoom: maxZoom,
+                zoom: zoomValue,
                 center: currentLocation ?? MapConstants.defaultLocation
             ),
             layers: [
@@ -83,7 +111,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                   backgroundColor: selectedIndex == i ?
                                   Colors.white : Colors.black,
                                   //Todo: Replace with profile photo
-                                  child: Icon(Icons.person),
+                                  child: Text(mapMarkers[i].user!.userName![0].toUpperCase()),
                                 ),
                               ),
                               onTap: (){
@@ -193,12 +221,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
             ),
           ),
         ]
-      ) : Center(
-        child: Container(
-          padding: const EdgeInsets.all(10.0),
-          child: const CircularProgressIndicator(),
-        ),
-      ),
+      ) : const CustomCircularProgressIndicator(),
     );
   }
 
@@ -212,11 +235,12 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
       setState(() {
         currentLocation = LatLng(userLocation.latitude, userLocation.longitude);
         currentUser.location = "${userLocation.latitude},${userLocation.longitude}";
-        UserModel().updateUser(currentUser);
         if(!locationLoaded){
+          UserModel().updateUser(currentUser);
           showSnackBar("User currently at: ${places[0].subThoroughfare!} ${places[0].thoroughfare!}");
           getAllFriends(currentUser);
         }
+        getAllUserMarkers();
         locationLoaded = true;
       });
     }
@@ -248,12 +272,14 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
   getAllUserMarkers() async{
     List<Profile> allUsers = await _model.getAllUsers();
     for(Profile user in allUsers){
-      if(user.location != null){
-        mapMarkers.add(getUserLocation(user));
+      final userLocation = getUserLocation(user);
+      var existingLocation = mapMarkers.firstWhere((element) => element.user!.userName == userLocation.user!.userName, orElse: () => UserLocation());
+      if(user.location != null && !mapMarkers.contains(existingLocation)){
+        mapMarkers.add(userLocation);
       }
     }
     setState(() {
-      print("MARKERS: $mapMarkers");
+
     });
   }
 

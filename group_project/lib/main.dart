@@ -50,7 +50,6 @@ Widget logo = Container(
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await UserModel.initializeCurrentUser();
   runApp(const MyApp());
 }
 
@@ -71,7 +70,7 @@ class MyApp extends StatelessWidget {
         home: buildSplashScreen(),
         routes: {
           '/home' : (context) => MyHomePage(title: logo,),
-          '/profile' : (context) => ProfileView(title: "Profile", currentUserEmail: FirebaseAuth.instance.currentUser!.email),
+          '/profile' : (context) => const ProfileView(title: "Profile"),
           '/friendsList' : (context) => const FriendList(title: "Friends",),
           '/addFriend' : (context) => AddFriendSearch(title: "Add Friends",userNameEntered: ""),
           '/playlists' : (context) => PlayListView(title: "Genres"),
@@ -115,7 +114,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  TextStyle style = TextStyle(fontSize: 25);
+  TextStyle style = const TextStyle(fontSize: 25);
+  var padding = const EdgeInsets.all(10.0);
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +127,12 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: widget.title,
         actions: [
+          IconButton(
+            onPressed: (){
+              Navigator.pushNamed(context, '/favGenres');
+            },
+            icon: Icon(Icons.favorite_border),
+          ),
           IconButton(
             onPressed: (){
               Navigator.pushNamed(context, '/settings');
@@ -148,13 +154,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                         child: GestureDetector(
                           child: Container(
-                            padding: EdgeInsets.all(10.0),
+                            padding: padding,
                             width: 300,
-                            decoration: BoxDecoration(color: Color.fromRGBO(232, 173, 253, 1)),
+                            decoration: const BoxDecoration(color: Color.fromRGBO(232, 173, 253, 1)),
                             child: ListTile(
                                 title: Text("Profile",style: style,),
                                 subtitle: Text("View profile!", style: style,),
-                                trailing: Icon(Icons.person_pin_rounded)
+                                trailing: const Icon(Icons.person_pin_rounded)
                             ),
                           ),
                           onTap: (){
@@ -166,13 +172,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                         child: GestureDetector(
                           child: Container(
-                            padding: EdgeInsets.all(10.0),
+                            padding: padding,
                             width: 300,
-                            decoration: BoxDecoration(color: Color.fromRGBO(118, 149, 255, 1)),
+                            decoration: const BoxDecoration(color: Color.fromRGBO(118, 149, 255, 1)),
                             child: ListTile(
                                 title: Text("Friends", style: style,),
                                 subtitle: Text("View friends!", style: style,),
-                                trailing: Icon(Icons.groups)
+                                trailing: const Icon(Icons.groups)
                             ),
                           ),
                           onTap: (){
@@ -184,13 +190,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                         child: GestureDetector(
                           child: Container(
-                            padding: EdgeInsets.all(10.0),
+                            padding: padding,
                             width: 300,
-                            decoration: BoxDecoration(color: Color.fromRGBO(167, 173, 253, 1)),
+                            decoration: const BoxDecoration(color: Color.fromRGBO(167, 173, 253, 1)),
                             child: ListTile(
                                 title: Text("Genres", style: style,),
                                 subtitle: Text("View genres!", style: style,),
-                                trailing: Icon(Icons.music_note)
+                                trailing: const Icon(Icons.music_note)
                             ),
                           ),
                           onTap: (){
@@ -202,14 +208,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                         child: GestureDetector(
                           child: Container(
-                            padding: EdgeInsets.all(8.0),
+                            padding: padding,
                             width: 300,
-                            decoration: BoxDecoration(color: Color.fromRGBO(
+                            decoration: const BoxDecoration(color: Color.fromRGBO(
                                 149, 215, 250, 1.0)),
                             child: ListTile(
                                 title: Text("Explore", style: style,),
                                 subtitle: Text("Travel the world!", style: style,),
-                                trailing: Icon(Icons.public)
+                                trailing: const Icon(Icons.public)
                             ),
                           ),
                           onTap: (){

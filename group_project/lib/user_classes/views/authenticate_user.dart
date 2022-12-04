@@ -10,6 +10,7 @@ import 'dart:async';
 import 'package:group_project/user_classes/models/utils.dart';
 import '../../main.dart';
 import '../models/notifications.dart';
+import '../models/user_model.dart';
 import 'auth_page.dart';
 import 'forgot_password.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -205,7 +206,7 @@ class _LoginWidgetState extends State<LoginWidget> {
 
       Utils.showSnackBar(e.message);
     }
-
+    await UserModel.initializeCurrentUser();
     navigatorKey.currentState!.pop();
 
   }

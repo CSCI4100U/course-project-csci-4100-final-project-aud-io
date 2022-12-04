@@ -19,6 +19,7 @@ class _SettingsViewState extends State<SettingsView> {
           TextButton(
             onPressed: (){
               FirebaseAuth.instance.signOut();
+              Navigator.of(context).pop();
             },
             child: const Text(
               "Logout",
