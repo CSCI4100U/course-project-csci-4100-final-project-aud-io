@@ -4,6 +4,7 @@
     "signup" : "Sign-up",
     "reset" : "Reset Password",
     "profile" : "Profile",
+    "genre" : "Genre",
     "setting" : "Settings",
     "friend" : "Friends",
     "add_friend" : "Add Friends",
@@ -22,7 +23,9 @@
       "login_here" : "Login Here",
       "signup_here" : "SignUp Here",
       "forgot" : "Forgot Password?",
-      "search" : "Search"
+      "search" : "Search",
+      "logout" : "Logout",
+      "add" : "Add"
     },
     "texts" : {
       "have_account" : "Have an Account?\t\t\t",

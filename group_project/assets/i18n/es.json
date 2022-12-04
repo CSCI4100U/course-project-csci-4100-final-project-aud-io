@@ -4,6 +4,7 @@
     "signup" : "Inscribirse",
     "reset" : "Restablecer su Contraseña",
     "profile" : "Perfil",
+    "genre" : "Género",
     "setting" : "Ajustes",
     "friend" : "Amigos",
     "add_friend" : "Agregar Amigos",
@@ -22,7 +23,9 @@
       "login_here" : "Entre Aquí",
       "signup_here" : "Registrate Aquí",
       "forgot" : "¿Has Olvidado tu Contraseña?",
-      "search" : "Búsqueda"
+      "search" : "Búsqueda",
+      "logout" : "Cerrar sesión",
+      "add" : "Agregar"
     },
     "texts" : {
       "have_account" : "¿Tener una Cuenta?\t\t\t",

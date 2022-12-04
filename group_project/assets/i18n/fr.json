@@ -4,6 +4,7 @@
     "signup" : "S'inscrire",
     "reset" : "Réinitialiser le mot de Passe",
     "profile" : "Profil",
+    "genre" : "Genre",
     "setting" : "Réglages",
     "friend" : "Amis",
     "add_friend" : "Ajouter des Amis",
@@ -22,7 +23,9 @@
       "login_here" : "Connectez-vous ici",
       "signup_here" : "Inscrivez-vous ici",
       "forgot" : "Mot de Passe Oublié?",
-      "search" : "Chercher"
+      "search" : "Chercher",
+      "logout" : "Se déconnecter",
+      "add" : "Ajouter"
     },
     "texts" : {
       "have_account" : "Avoir un compte?\t\t\t",
