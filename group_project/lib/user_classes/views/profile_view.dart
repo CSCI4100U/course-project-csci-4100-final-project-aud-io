@@ -43,7 +43,7 @@ class _ProfileViewState extends State<ProfileView> {
     else{
       userBeingViewed = currentUser;
     }
-    getGenres();
+    //getGenres();
   }
 
 
@@ -121,17 +121,17 @@ class _ProfileViewState extends State<ProfileView> {
     });
   }
 
-  Future _addGenre() async{
-    Genre newGenre = await Navigator.pushNamed(context, '/addGenre') as Genre;
-    print(newGenre);
-      _lastInsertedGenre = await db.insertGenre(newGenre);
-    setState(() {
-      getGenres();
-    });
-  }
-
-  getGenres() async{
-    allGenres = await db.getAllGenres();
-    setState(() {});
-  }
+  // Future _addGenre() async{
+  //   Genre newGenre = await Navigator.pushNamed(context, '/addGenre') as Genre;
+  //   print(newGenre);
+  //     _lastInsertedGenre = await db.insertGenre(newGenre);
+  //   setState(() {
+  //     getGenres();
+  //   });
+  // }
+  //
+  // getGenres() async{
+  //   allGenres = await db.getAllGenres();
+  //   setState(() {});
+  // }
 }

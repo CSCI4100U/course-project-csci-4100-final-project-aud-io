@@ -1,3 +1,7 @@
+/*
+* Author: Alessandro Prataviera
+* */
+
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:group_project/MainScreen_Model/navigation_bar.dart';
@@ -17,9 +21,16 @@ class _StatisticsChartState extends State<StatisticsChart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBarForSubPages(
-          context,
-        (FlutterI18n.translate(context, "titles.stats_chart")),
+      appBar: AppBar(
+        title: Text((FlutterI18n.translate(context, "titles.stats_chart"))),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('/home');
+            },
+            icon: Icon(Icons.home),
+          ),
+        ]
       ),
       body: Container(
           padding: padding,

@@ -19,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:group_project/MainScreen_Views/fav_genres_view.dart';
 import 'package:group_project/statistics_classes/views/statistics_chart.dart';
 import 'package:group_project/statistics_classes/views/statistics_datatable.dart';
-import 'package:group_project/user_classes/views/add_genre.dart';
 import 'package:group_project/user_classes/views/login_form.dart';
 import 'package:group_project/user_classes/views/addFriend.dart';
 import 'package:group_project/music_classes/views/genre_view.dart';
@@ -70,10 +69,10 @@ class MyApp extends StatelessWidget {
           '/profile' : (context) => const ProfileView(title: "Profile"),
           '/friendsList' : (context) => FriendList(title: FlutterI18n.translate(context, "titles.friend"),),
           '/addFriend' : (context) => AddFriendSearch(title: FlutterI18n.translate(context, "titles.add_friend"),userNameEntered: ""),
-          '/genre' : (context) => genreView(title: FlutterI18n.translate(context, "titles.genre")),
+          '/genre' : (context) => genreView(title: FlutterI18n.translate(context, "titles.genre",), heartBool: false,),
+          '/heartGenre' : (context) => genreView(title: FlutterI18n.translate(context, "titles.genre",), heartBool: true,),
           '/settings' : (context) => SettingsView(title: FlutterI18n.translate(context, "titles.setting")),
-          '/addGenre' : (context) => const AddGenre(title: "Add Genre"),
-          '/favGenres' : (context) => const FavoriteGenresView(title: "Liked Genres",),
+          '/favGenres' : (context) => FavoriteGenresView(title: "Liked Genres",),
           '/explore' : (context) => ExplorePage(title: FlutterI18n.translate(context, "titles.explore"),),
           '/statistics' : (context) => StatisticsDataTable(title: FlutterI18n.translate(context, "titles.stats_table"),),
           '/statisticsChart' : (context) => StatisticsChart(title: FlutterI18n.translate(context, "titles.stats_chart"), frequencies: [],),
@@ -127,12 +126,6 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             icon: const Icon(Icons.favorite_border),
           ),
-          IconButton(
-            onPressed: (){
-              Navigator.pushNamed(context, '/settings');
-            },
-            icon: const Icon(Icons.settings_outlined),
-          ),
           SizedBox(
             width: 37,
             child: PopupMenuButton(
@@ -172,6 +165,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   });                }
               },
             ),
+          ),
+          IconButton(
+            onPressed: (){
+              Navigator.pushNamed(context, '/settings');
+            },
+            icon: const Icon(Icons.settings_outlined),
           ),
         ],
       ),
@@ -258,14 +257,12 @@ class _MyHomePageState extends State<MyHomePage> {
                           },
                         ),
                     ),
-
                   ],
                 ),
               ),
         ],
       ),
     );
-
   }
 }
 
