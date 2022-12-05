@@ -33,27 +33,36 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(FlutterI18n.translate(context, "titles.stats_table")),
+        title: Text(
+            FlutterI18n.translate(context, "titles.stats_table"),
+              style: TextStyle(fontSize: 15),
+          ),
         actions: [
-          IconButton(
-              onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => StatisticsChart(
-                        frequencies: frequencies
-                    ))
-                );
-              },
-              tooltip: 'chart',
-              icon: const Icon(Icons.bar_chart)
+          SizedBox(
+            width: 37,
+            child: IconButton(
+                onPressed: (){
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => StatisticsChart(
+                          frequencies: frequencies
+                      ))
+                  );
+                },
+                tooltip: 'chart',
+                icon: const Icon(Icons.bar_chart)
+            ),
           ),
-          IconButton(
-              onPressed: (){
-                //Call async function that goes to route "/home"
-                Navigator.pushNamed(context, '/home');
-              },
-              tooltip: 'Home',
-              icon: const Icon(Icons.home)
-          ),
+          SizedBox(
+            width: 37,
+            child: IconButton(
+                onPressed: (){
+                  //Call async function that goes to route "/home"
+                  Navigator.pushNamed(context, '/home');
+                },
+                tooltip: 'Home',
+                icon: const Icon(Icons.home)
+            ),
+          )
         ],
       ),
       body: DataTable(

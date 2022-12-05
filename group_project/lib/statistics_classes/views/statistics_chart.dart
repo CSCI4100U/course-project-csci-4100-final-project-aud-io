@@ -16,7 +16,10 @@ class _StatisticsChartState extends State<StatisticsChart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBarForSubPages(context, FlutterI18n.translate(context, "titles.stats_chart")),
+      appBar: buildAppBarForSubPages(
+          context,
+        (FlutterI18n.translate(context, "titles.stats_chart")),
+      ),
       body: Container(
           padding: EdgeInsets.all(20),
           child: SizedBox(
