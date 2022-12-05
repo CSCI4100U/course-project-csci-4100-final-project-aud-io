@@ -3,8 +3,8 @@
 * */
 
 import 'package:sqflite/sqflite.dart';
-import 'db_utils.dart';
-import 'genre.dart';
+import '../../music_classes/models/db_utils.dart';
+import '../../music_classes/models/genre.dart';
 import 'dart:async';
 
 class GenreModel{

@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
-import '../models/genre.dart';
+import '../../music_classes/models/genre.dart';
 import '../models/genre_model.dart';
 import '../models/profile.dart';
 import '../models/user_model.dart';
@@ -43,7 +43,6 @@ class _ProfileViewState extends State<ProfileView> {
       userBeingViewed = currentUser;
     }
     getGenres();
-    genresLength = allGenres.length;
   }
 
 
@@ -69,41 +68,41 @@ class _ProfileViewState extends State<ProfileView> {
                 title: Text("${FlutterI18n.translate(context, "forms.email")}: ${userBeingViewed.email}"),
               ),
             ),
-            Flexible(
-                child: ListView.builder(
-                    itemCount: allGenres.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: selectedIndex == index ? Colors.blue : null,
-                        ),
-                        child: GestureDetector(
-                          child: ListTile(
-                            title: Text('${allGenres[index].genre}'),
-                          ),
-                          onTap: () {
-                            setState(() {
-                              if(selectedIndex == index) {
-                                selectedIndex = -1;
-                              } else {
-                                selectedIndex = index;
-                              }
-                            });
-                          },
-                        ),
-                      );
-                    }
-                )
-            ),
-            Container(
-                child: ListTile(
-                  title: Text(FlutterI18n.translate(context, "forms.texts.add_fav")),
-                  trailing: ElevatedButton(
-                      onPressed: _addGenre,
-                      child: Text(FlutterI18n.translate(context, "forms.buttons.add"))
-                  ),
-                )
-            ),
+            // Flexible(
+            //     child: ListView.builder(
+            //         itemCount: allGenres.length,
+            //         itemBuilder: (context, index) {
+            //           return Container(
+            //             decoration: BoxDecoration(
+            //               color: selectedIndex == index ? Colors.blue : null,
+            //             ),
+            //             child: GestureDetector(
+            //               child: ListTile(
+            //                 title: Text('${allGenres[index].genre}'),
+            //               ),
+            //               onTap: () {
+            //                 setState(() {
+            //                   if(selectedIndex == index) {
+            //                     selectedIndex = -1;
+            //                   } else {
+            //                     selectedIndex = index;
+            //                   }
+            //                 });
+            //               },
+            //             ),
+            //           );
+            //         }
+            //     )
+            // ),
+            // Container(
+            //     child: ListTile(
+            //       title: Text(FlutterI18n.translate(context, "forms.texts.add_fav")),
+            //       trailing: ElevatedButton(
+            //           onPressed: _addGenre,
+            //           child: Text(FlutterI18n.translate(context, "forms.buttons.add"))
+            //       ),
+            //     )
+            // ),
           ],
         ),
       );

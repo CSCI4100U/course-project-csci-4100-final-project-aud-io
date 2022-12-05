@@ -10,9 +10,10 @@ import 'package:group_project/MainScreen_Model/nav.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 class FriendList extends StatefulWidget {
-  const FriendList({Key? key,this.title}) : super(key: key);
+  const FriendList({Key? key,this.title,this.userFromExplore}) : super(key: key);
 
   final String? title;
+  final Profile? userFromExplore;
 
   @override
   State<FriendList> createState() => _FriendListState();
@@ -29,6 +30,9 @@ class _FriendListState extends State<FriendList> {
   @override
   void initState(){
     super.initState();
+    if(widget.userFromExplore != null){
+      _addFriend(widget.userFromExplore);
+    }
     friendListStream = _model.getFriendStream(currentUser);
     loadFriends();
   }
@@ -110,7 +114,9 @@ class _FriendListState extends State<FriendList> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addFriend,
+        onPressed: (){
+          _addFriend(Profile());
+        },
         tooltip: 'Add Friend',
         child: const Icon(Icons.person_add_alt_1),
       ),
@@ -123,10 +129,9 @@ class _FriendListState extends State<FriendList> {
   * friendsList and subsequently adds the current user
   * to the other user's friendsList
   * */
-  Future<void> _addFriend() async{
-    Profile? friend = await Navigator
+  Future<void> _addFriend(Profile? friend) async{
+    friend = await Navigator
         .pushNamed(context, '/addFriend') as Profile?;
-
     if(friend != null && friend.userName != null){
       //Todo: send friend a notification to add
 
