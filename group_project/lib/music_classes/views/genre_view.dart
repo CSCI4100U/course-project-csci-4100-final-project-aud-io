@@ -21,7 +21,23 @@ class genreView extends StatefulWidget {
 
 class _genreViewState extends State<genreView> {
   final _model = GenreModel();
+<<<<<<< Updated upstream
   List allgenres = [];
+=======
+  List allGenres = [];
+  List clicked = [false,false,false,false,false,false,false,false];
+  List<FavGenre> tempGenres = [];
+  var colors = [
+    Colors.red[100],
+    Colors.blue[100],
+    Colors.cyan[100],
+    Colors.green[100],
+    Colors.yellow[100],
+    Colors.orange[100],
+    Colors.purple[100],
+    Colors.teal[100],
+  ];
+>>>>>>> Stashed changes
 
   @override
   void initState() {
@@ -39,6 +55,7 @@ class _genreViewState extends State<genreView> {
         padding: EdgeInsets.zero,
         itemCount: allgenres.length,
         itemBuilder: (context, index){
+<<<<<<< Updated upstream
           String genre = allgenres[index];
           return Container(
             height: 50,
@@ -46,6 +63,36 @@ class _genreViewState extends State<genreView> {
             child: TextButton(
               onPressed: (){
                 Navigator.of(context).push(MaterialPageRoute(builder: (context)=> SongsList(title: genre,)));
+=======
+          String genre = allGenres[index];
+          return Column(
+            children: [
+              Container(
+                padding: padding,
+                width: 250,
+                color: colors[index],
+                child: Row(
+                  children: [
+                    TextButton(
+                      onPressed: (){
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context)=> SongsList(title: genre,)));
+                      },
+                      child: Text("${genre.toUpperCase()}",
+                        style: const TextStyle(fontSize: fontSize,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+>>>>>>> Stashed changes
 
               },
               child: Text("${genre.toUpperCase()}",
