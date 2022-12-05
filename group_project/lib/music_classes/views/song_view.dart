@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:group_project/music_classes/models/genre_model.dart';
 import '../../MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../models/song.dart';
+import '../models/song_model.dart';
 
 class SongsList extends StatefulWidget {
   const SongsList({Key? key, required this.title }) : super(key: key);
@@ -17,6 +18,7 @@ class _SongsListState extends State<SongsList> {
   List<Song> allSongs = [];
 
   final _model = GenreModel();
+  final _songModel = SongModel();
   late Stream songStream;
   late String genreSelected = widget.title;
 
@@ -50,16 +52,24 @@ class _SongsListState extends State<SongsList> {
                       return Container(
                           child: ListTile(
                             title: Text(allSongs[index].name!),
-                            subtitle: Text(allSongs[index].duration!),
+                            subtitle: Text("${allSongs[index].artist!} ${allSongs[index].duration!}"),
                             trailing: IconButton(
                               onPressed: () {
-
-                              },
+                                  Song song = Song();
+                                  song = Song(
+                                    name: allSongs[index].name!,
+                                    duration: allSongs[index].duration!,
+                                    artist: allSongs[index].artist!,
+                                    link: allSongs[index].link
+                                  );
+                                  addSong(song);
+                                  Navigator.of(context).pushNamed("/playlist");
+                                },
                               icon: Icon(Icons.add),
                             ),
-                          )
+                          ),
                       );
-                },
+                  },
                 );
               }
             }
@@ -88,7 +98,7 @@ class _SongsListState extends State<SongsList> {
     allSongs = await _model.getSongList(genreSelected);
   }
 
-  addSong() async {
-
+  addSong(Song song) async {
+    await _songModel.insertSongLocal(song);
   }
 }
