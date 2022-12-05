@@ -17,6 +17,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:group_project/MainScreen_Views/fav_genres_view.dart';
+import 'package:group_project/music_classes/views/playlist_view.dart';
 import 'package:group_project/statistics_classes/views/statistics_chart.dart';
 import 'package:group_project/statistics_classes/views/statistics_datatable.dart';
 import 'package:group_project/user_classes/views/login_form.dart';
@@ -76,6 +77,8 @@ class MyApp extends StatelessWidget {
           '/explore' : (context) => ExplorePage(title: FlutterI18n.translate(context, "titles.explore"),),
           '/statistics' : (context) => StatisticsDataTable(title: FlutterI18n.translate(context, "titles.stats_table"),),
           '/statisticsChart' : (context) => StatisticsChart(title: FlutterI18n.translate(context, "titles.stats_chart"), frequencies: [],),
+          '/playlist' : (context) => PlaylistView(title: "My Playlist"),
+
         },
         localizationsDelegates: [
           FlutterI18nDelegate(
@@ -256,6 +259,25 @@ class _MyHomePageState extends State<MyHomePage> {
                             Navigator.pushNamed(context, '/explore');
                           },
                         ),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        child: Container(
+                          padding: padding,
+                          width: 300,
+                          decoration: const BoxDecoration(color: Color.fromRGBO(
+                              149, 215, 250, 1.0)),
+                          child: ListTile(
+                              title: Text("Playlist", style: style,),
+                              subtitle: Text("Check out your playlist", style: style,),
+                              trailing: const Icon(Icons.playlist_add_check_outlined)
+                          ),
+                        ),
+                        onTap: (){
+                          // Go to playlists Page
+                          Navigator.pushNamed(context, '/playlist');
+                        },
+                      ),
                     ),
                   ],
                 ),

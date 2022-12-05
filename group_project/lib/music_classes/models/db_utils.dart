@@ -22,3 +22,21 @@ class DBUtils{
     return database;
   }
 }
+
+class SongDBUtils {
+  static Future init() async{
+    //set up the database
+    var database = openDatabase(
+      path.join(await getDatabasesPath(), 'playlist_database.db'),
+      onCreate: (db, version){
+        db.execute(
+            'CREATE TABLE playlist_items(id INTEGER PRIMARY KEY, name TEXT, artist TEXT, duration TEXT, link TEXT)'
+        );
+      },
+      version: 1,
+    );
+
+    print("Created DB $database");
+    return database;
+  }
+}
