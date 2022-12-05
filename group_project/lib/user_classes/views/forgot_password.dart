@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../MainScreen_Model/app_constants.dart';
 import '../../MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../models/notifications.dart';
 import '../models/utils.dart';
@@ -51,14 +52,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20),
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               TextFormField(
                 style: TextStyle(fontSize: 20),
                 controller: emailController,
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
                     labelText: FlutterI18n.translate(context, "forms.email"),
-                    icon: Icon(Icons.email)),
+                    icon: const Icon(Icons.email)),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (email) {
                   email != null && !EmailValidator.validate(email)
@@ -66,15 +67,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       : null;
                 },
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               ElevatedButton.icon(
                 onPressed: resetPassword,
-                icon: Icon(Icons.send, size: 20,),
+                icon: const Icon(Icons.send, size: 20,),
                 label: Text(
                   FlutterI18n.translate(context, "titles.reset"),
-                  style: TextStyle(fontSize: 20),),
+                  style: style,),
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size.fromHeight(50),
+                  minimumSize: const Size.fromHeight(50),
                 ),
               )
             ],
@@ -87,7 +88,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => Center(child: CustomCircularProgressIndicator()));
+        builder: (context) => const CustomCircularProgressIndicator());
 
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(

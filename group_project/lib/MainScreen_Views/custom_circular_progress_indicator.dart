@@ -4,6 +4,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../MainScreen_Model/app_constants.dart';
+
 class CustomCircularProgressIndicator extends StatelessWidget {
   const CustomCircularProgressIndicator({Key? key}) : super(key: key);
 
@@ -11,8 +13,8 @@ class CustomCircularProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.all(10),
-      child: CircularProgressIndicator(),
+      padding: padding,
+      child: const CircularProgressIndicator(),
     );
   }
 }

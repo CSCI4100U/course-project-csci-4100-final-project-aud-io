@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:group_project/statistics_classes/views/statistics_chart.dart';
 import 'package:group_project/user_classes/models/user_model.dart';
-import '../../MainScreen_Model/nav.dart';
+import '../../MainScreen_Model/app_constants.dart';
+import '../../MainScreen_Model/navigation_bar.dart';
 import 'package:group_project/statistics_classes/models/countries.dart';
 
 import '../models/countries.dart';
@@ -35,7 +36,7 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
       appBar: AppBar(
         title: Text(
             FlutterI18n.translate(context, "titles.stats_table"),
-              style: TextStyle(fontSize: 15),
+              style: style,
           ),
         actions: [
           SizedBox(

@@ -5,11 +5,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
+import '../../MainScreen_Model/app_constants.dart';
 import '../../music_classes/models/genre.dart';
 import '../models/genre_model.dart';
 import '../models/profile.dart';
 import '../models/user_model.dart';
-import 'package:group_project/MainScreen_Model/nav.dart';
+import 'package:group_project/MainScreen_Model/navigation_bar.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({Key? key, required this.title, this.otherUserEmail}) : super(key: key);
@@ -54,9 +55,10 @@ class _ProfileViewState extends State<ProfileView> {
         body: Column(
           children: [
             CircleAvatar(
-              child: Text(userBeingViewed.userName![0].toUpperCase(),
-              style: TextStyle(fontSize: 30),),
               radius: 50,
+              child: Text(userBeingViewed.userName![0].toUpperCase(),
+                style: style,
+              ),
             ),
             Container(
               child: ListTile(

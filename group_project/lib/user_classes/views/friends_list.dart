@@ -3,10 +3,11 @@
 * */
 
 import 'package:flutter/material.dart';
+import '../../MainScreen_Model/app_constants.dart';
 import '../../MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../models/profile.dart';
 import '../models/user_model.dart';
-import 'package:group_project/MainScreen_Model/nav.dart';
+import 'package:group_project/MainScreen_Model/navigation_bar.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 class FriendList extends StatefulWidget {
@@ -22,7 +23,6 @@ class FriendList extends StatefulWidget {
 class _FriendListState extends State<FriendList> {
 
   List<Profile> allFriends = [];
-  TextStyle style = const TextStyle(fontSize: 30);
 
   final _model = UserModel();
   late Stream friendListStream;
@@ -78,12 +78,12 @@ class _FriendListState extends State<FriendList> {
                                               style: style,
                                             ),
                                             trailing: IconButton(
-                                              highlightColor: Color.fromRGBO(118, 149, 255, 1),
+                                              highlightColor: const Color.fromRGBO(118, 149, 255, 1),
                                                 onPressed: (){
                                                   //open delete dialog for currentFriend
                                                   _showDeleteFriendAlert(context,currentFriend);
                                                 },
-                                                icon: Icon(Icons.person_remove,size: 30,),
+                                                icon: const Icon(Icons.person_remove,size: 30,),
                                             ),
                                           )
                                       ),
@@ -98,9 +98,7 @@ class _FriendListState extends State<FriendList> {
                 }
                 else{
                   return Container(
-                    // decoration: BoxDecoration(color: gradeColors[index]),
-                      padding: const EdgeInsets.all(10.0),
-
+                      padding: padding,
                       child: Text(
                         FlutterI18n.translate(context, "forms.texts.no_friend"),
                         style: style,

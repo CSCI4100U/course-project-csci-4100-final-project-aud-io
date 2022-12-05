@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
-
 import 'package:group_project/music_classes/models/genre_model.dart';
 import '../../MainScreen_Views/custom_circular_progress_indicator.dart';
-import '../../user_classes/models/profile.dart';
 import '../models/song.dart';
 
 class SongsList extends StatefulWidget {
-  const SongsList({Key? key, this.title }) : super(key: key);
-  final String? title;
+  const SongsList({Key? key, required this.title }) : super(key: key);
+  final String title;
 
   @override
   State<SongsList> createState() => _SongsListState();
@@ -18,26 +15,26 @@ class SongsList extends StatefulWidget {
 class _SongsListState extends State<SongsList> {
 
   List<Song> allSongs = [];
-  TextStyle style = const TextStyle(fontSize: 30);
 
   final _model = GenreModel();
-  late Stream SongListStream;
+  late Stream songStream;
+  late String genreSelected = widget.title;
 
   @override
   void initState(){
     super.initState();
-    SongListStream = _model.getGenre(widget.title!);
+    songStream = _model.getSongStream(genreSelected);
     loadSongs();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title!),),
+      appBar: AppBar(title: Text(genreSelected),),
       body: Container(
         child:
         StreamBuilder(
-            stream: SongListStream,
+            stream: songStream,
             builder: (BuildContext context, AsyncSnapshot snapshot){
               print("Snapshot: $snapshot");
               if(!snapshot.hasData){
@@ -57,9 +54,7 @@ class _SongsListState extends State<SongsList> {
                 },
                 );
               }
-
             }
-
         ),
       ),
 
@@ -76,7 +71,7 @@ class _SongsListState extends State<SongsList> {
   * List of all the friends of the current user
   * */
   getAllSongs() async{
-    SongListStream = _model.getGenre(widget.title!);
-    allSongs = await _model.getSongList(widget.title!);
+    songStream = _model.getSongStream(genreSelected);
+    allSongs = await _model.getSongList(genreSelected);
   }
 }

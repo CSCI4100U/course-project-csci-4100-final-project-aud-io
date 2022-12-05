@@ -5,10 +5,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
-import '../../MainScreen_Model/nav.dart';
+import '../../MainScreen_Model/navigation_bar.dart';
 import '../models/profile.dart';
 import '../models/user_model.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:group_project/MainScreen_Model/app_constants.dart';
 
 class AddFriendSearch extends StatefulWidget {
   AddFriendSearch({Key? key, this.title, required this.userNameEntered}) : super(key: key);
@@ -24,9 +25,6 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
   var formKey = GlobalKey<FormState>();
   late String userNameEntered = widget.userNameEntered;
   final _model = UserModel();
-
-  TextStyle style = TextStyle(fontSize: 30);
-
   List<Profile> allUsers = [];
   List<Profile> allFriends = [];
   late Stream userStream;
@@ -44,7 +42,7 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
       body: Column(
         children: [
           TextFormField(
-              style: TextStyle(fontSize: 30),
+              style: style,
               decoration: InputDecoration(
                   label: Text(FlutterI18n.translate(context, "forms.search")),
                   hintText: "john123"
@@ -88,10 +86,10 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
                                         padding: const EdgeInsets.all(10.0),
                                         child: ListTile(
                                             title: Text("${userFound.userName}",
-                                              style: TextStyle(fontSize: 30),
+                                              style: style,
                                             ),
                                             subtitle: Text("${userFound.country}",
-                                              style: TextStyle(fontSize: 30),
+                                              style: style,
                                             ),
                                             trailing: IconButton(
                                                 onPressed: (){
@@ -99,7 +97,7 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
                                                     Navigator.of(context).pop(userFound);
                                                   });
                                                 },
-                                                icon: Icon(Icons.person_add,size: 30,)
+                                                icon: const Icon(Icons.person_add,size: 30,)
                                             )
                                         ),
                                       ),
@@ -119,7 +117,7 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
                     else{
                       return Expanded(
                           child: Container(
-                            padding: EdgeInsets.all(8.0),
+                            padding: padding,
                             child: Text("No results found.",
                               style: style,
                             ),

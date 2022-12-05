@@ -3,7 +3,8 @@
 * */
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:group_project/MainScreen_Model/nav.dart';
+import 'package:group_project/MainScreen_Model/app_constants.dart';
+import 'package:group_project/MainScreen_Model/navigation_bar.dart';
 import 'package:group_project/music_classes/models/genre_model.dart';
 import 'package:group_project/music_classes/models/song_model.dart';
 import 'package:group_project/music_classes/views/song_view.dart';
@@ -45,11 +46,12 @@ class _genreViewState extends State<genreView> {
             color: Colors.red[100+(index*100)],
             child: TextButton(
               onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=> SongsList(title: genre,)));
-
+                Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context)=> SongsList(title: genre,)));
               },
               child: Text("${genre.toUpperCase()}",
-                style: const TextStyle(fontSize: 30,
+                style: const TextStyle(fontSize: fontSize,
                     color: Colors.black,
 
                 ),

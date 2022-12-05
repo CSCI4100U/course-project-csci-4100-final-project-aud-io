@@ -6,8 +6,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
 import 'dart:async';
 import 'package:group_project/user_classes/models/utils.dart';
+import '../../MainScreen_Model/app_constants.dart';
 import '../../main.dart';
 import '../models/notifications.dart';
 import '../models/user_model.dart';
@@ -33,7 +35,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   final passwordController = TextEditingController();
   final _notifications = Notifications();
   var when;
-  Locale sharedLocale = Locale('en');
+  Locale sharedLocale = english;
 
   @override
   void dispose(){
@@ -57,35 +59,35 @@ class _LoginWidgetState extends State<LoginWidget> {
               itemBuilder: (context) => [
                 const PopupMenuItem(
                     value: 1,
-                    child: Text('Change to EN')
+                    child: Text('English')
                 ),
                 const PopupMenuItem(
                     value: 2,
-                    child: Text('Change to FR')
+                    child: Text('French')
                 ),
                 const PopupMenuItem(
                     value: 3,
-                    child: Text('Change to ES')
+                    child: Text('Spanish')
                 ),
               ],
               onSelected: (value) {
                 if (value == 1){
                   print('Swapping to English');
-                  Locale newLocale = Locale('en');
+                  Locale newLocale = english;
                   sharedLocale = newLocale;
                   setState(() {
                     FlutterI18n.refresh(context, newLocale);
                   });
                 } else if (value == 2){
                   print('Swapping to French');
-                  Locale newLocale = Locale('fr');
+                  Locale newLocale = french;
                   sharedLocale = newLocale;
                   setState(() {
                     FlutterI18n.refresh(context, newLocale);
                   });
                 } else if (value == 3) {
                   print('Swapping to Spanish');
-                  Locale newLocale = Locale('es');
+                  Locale newLocale = spanish;
                   sharedLocale = newLocale;
                   setState(() {
                     FlutterI18n.refresh(context, newLocale);
@@ -100,42 +102,42 @@ class _LoginWidgetState extends State<LoginWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 20,),
-            Image(image: AssetImage('lib/images/audio_no_bg.png')),
-            SizedBox(height:20,),
+            const SizedBox(height: 20,),
+            const Image(image: AssetImage('lib/images/audio_no_bg.png')),
+            const SizedBox(height:20,),
             TextField(
-              style: TextStyle(fontSize: 20),
+              style: style,
               controller: emailController,
               cursorColor: Colors.white,
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
                   labelText: FlutterI18n.translate(context, "forms.email"),
-                  icon: Icon(Icons.email)
+                  icon: const Icon(Icons.email)
               ),
             ),
-            SizedBox(height: 14,),
+            const SizedBox(height: 14,),
             TextField(
-              style: TextStyle(fontSize: 20),
+              style: style,
               controller: passwordController,
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
-                  icon: Icon(Icons.password),
+                  icon: const Icon(Icons.password),
                   labelText: FlutterI18n.translate(context, "forms.password")),
               obscureText: true,
             ),
-            SizedBox(height: 14,),
+            const SizedBox(height: 14,),
             ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size.fromHeight(50),
+                  minimumSize: const Size.fromHeight(50),
                 ),
                 onPressed: signIn,
-                icon: Icon(Icons.lock_open, size: 20),
+                icon: const Icon(Icons.lock_open, size: 20),
                 label: Text(
                   FlutterI18n.translate(context, "titles.signin"),
-                  style: TextStyle(fontSize: 20),
+                  style: style,
                 )
             ),
-            SizedBox(height: 14,),
+            const SizedBox(height: 14,),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -150,7 +152,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                   onTap: (){
                     _notifications.sendNotificationNow("Aud.io - Password Reset", "Please Fill in the Form to Reset Your Password");
-                    when = tz.TZDateTime.now(tz.local).add(Duration(minutes: 2));
+                    when = tz.TZDateTime.now(tz.local).add(const Duration(minutes: 2));
                     _notifications.scheduleNotificationLater(
                         "Aud.io - Password Reset",
                         "If you have not received an email, please resubmit the form",
@@ -164,10 +166,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                 ),
               ],
             ),
-            SizedBox(height: 14,),
+            const SizedBox(height: 14,),
             RichText(
                 text: TextSpan(
-                    style: TextStyle(color: Colors.deepPurple, fontSize: 20),
+                    style: const TextStyle(color: Colors.deepPurple, fontSize: fontSize),
                     text: FlutterI18n.translate(context, "forms.texts.no_account"),
                     children: [
                       TextSpan(
@@ -193,7 +195,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => Center(child: CircularProgressIndicator()),
+        builder: (context) => const CustomCircularProgressIndicator(),
     );
 
     try {

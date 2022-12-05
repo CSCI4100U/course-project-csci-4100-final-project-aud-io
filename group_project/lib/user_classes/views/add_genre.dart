@@ -3,6 +3,7 @@
 * */
 
 import 'package:flutter/material.dart';
+import '../../MainScreen_Model/app_constants.dart';
 import '../../music_classes/models/genre.dart';
 
 class AddGenre extends StatefulWidget {
@@ -25,10 +26,10 @@ class _AddGenreState extends State<AddGenre> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
               child: Row(
                 children: [
-                  Text('Favourite Genre:', style: TextStyle(fontSize: 30)),
+                  const Text('Favourite Genre:', style: style),
                   Flexible(
                       child: TextField(
                         onChanged: (value) {

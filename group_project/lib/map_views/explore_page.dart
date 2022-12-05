@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:group_project/MainScreen_Model/nav.dart';
+import 'package:group_project/MainScreen_Model/navigation_bar.dart';
 import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
 import 'package:group_project/map_model/userLocation.dart';
 import 'package:geolocator/geolocator.dart';
@@ -11,6 +11,7 @@ import 'package:group_project/map_model/map_constants.dart';
 import 'package:group_project/user_classes/models/user_model.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../MainScreen_Model/app_constants.dart';
 import '../user_classes/models/profile.dart';
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key, required this.title}) : super(key: key);
@@ -106,7 +107,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                             return GestureDetector(
                               child:
                               Container(
-                                padding: EdgeInsets.all(10),
+                                padding: padding,
                                 child: CircleAvatar(
                                   radius: 40,
                                   backgroundColor: selectedIndex == i ?
@@ -118,7 +119,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                               onTap: (){
                                 pageController.animateToPage(
                                     i,
-                                    duration: Duration(milliseconds: 500),
+                                    duration: const Duration(milliseconds: 500),
                                     curve: Curves.easeInOut
                                 );
                                 selectedIndex = i;
@@ -153,7 +154,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                   getAllFriends(user!);
 
                   return Padding(
-                    padding: EdgeInsets.all(15),
+                    padding: padding,
                     child: Card(
                       elevation: 5,
                       shape: RoundedRectangleBorder(
@@ -181,7 +182,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                                     child: Text(
                                                       user?.userName ?? '',
                                                       style: const TextStyle(
-                                                          fontSize: 20,
+                                                          fontSize: fontSize,
                                                           fontWeight: FontWeight.bold,
                                                           color: Colors.white
                                                       ),
@@ -196,8 +197,8 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                             children: [
                                               Icon(Icons.person,color: Colors.white,),
                                                Text(numFriends! != 1 ? "$numFriends ${FlutterI18n.translate(context, "titles.friend")}": "1 ${FlutterI18n.translate(context, "titles.friend_sing")}",
-                                                style: TextStyle(
-                                                    fontSize: 20,
+                                                style: const TextStyle(
+                                                    fontSize: fontSize,
                                                     color: Colors.white
                                                 ),
                                               )
@@ -206,7 +207,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                         )
                                       ],
                                     )
-                                ) : CustomCircularProgressIndicator()
+                                ) : const CustomCircularProgressIndicator()
                               ],
                             ),
                           ),
