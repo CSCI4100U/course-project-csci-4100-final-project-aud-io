@@ -4,7 +4,7 @@
 
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
-
+//TODO: change genre_items to favorite_genres
 class DBUtils{
   static Future init() async{
     //set up the database

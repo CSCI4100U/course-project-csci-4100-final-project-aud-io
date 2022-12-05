@@ -3,16 +3,16 @@
 * */
 
 import 'package:flutter/material.dart';
-import '../models/genre.dart';
+import '../../music_classes/models/genre.dart';
 
-class GenreForm extends StatefulWidget {
-  const GenreForm({Key? key, this.title}) : super(key: key);
+class AddGenre extends StatefulWidget {
+  const AddGenre({Key? key, this.title}) : super(key: key);
   final String? title;
   @override
-  State<GenreForm> createState() => _GenreFormState();
+  State<AddGenre> createState() => _AddGenreState();
 }
 
-class _GenreFormState extends State<GenreForm> {
+class _AddGenreState extends State<AddGenre> {
   var favGenre;
 
   @override

@@ -17,11 +17,12 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:group_project/MainScreen_Views/notifications.dart';
+import 'package:group_project/MainScreen_Views/fav_genres_view.dart';
+import 'package:group_project/music_classes/views/addPlaylist.dart';
 import 'package:group_project/user_classes/models/user_model.dart';
 import 'package:group_project/statistics_classes/views/statistics_chart.dart';
 import 'package:group_project/statistics_classes/views/statistics_datatable.dart';
-import 'package:group_project/user_classes/views/genre_form.dart';
+import 'package:group_project/user_classes/views/add_genre.dart';
 import 'package:group_project/user_classes/views/login_form.dart';
 import 'package:group_project/user_classes/views/addFriend.dart';
 import 'package:group_project/music_classes/views/genre_view.dart';
@@ -76,8 +77,8 @@ class MyApp extends StatelessWidget {
           '/addFriend' : (context) => AddFriendSearch(title: FlutterI18n.translate(context, "titles.add_friend"),userNameEntered: ""),
           '/genre' : (context) => genreView(title: FlutterI18n.translate(context, "titles.genre")),
           '/settings' : (context) => SettingsView(title: FlutterI18n.translate(context, "titles.setting")),
-          '/addGenre' : (context) => const GenreForm(title: "Add a Favourite Genre"),
-          '/notifications' : (context) => const NotificationsView(title: "Notifications",),
+          '/addGenre' : (context) => const AddGenre(title: "Add Genre"),
+          '/favGenres' : (context) => const FavoriteGenresView(title: "Liked Genres",),
           '/explore' : (context) => ExplorePage(title: FlutterI18n.translate(context, "titles.explore"),),
           '/statistics' : (context) => StatisticsDataTable(title: FlutterI18n.translate(context, "titles.stats_table"),),
           '/statisticsChart' : (context) => StatisticsChart(title: FlutterI18n.translate(context, "titles.stats_chart"), frequencies: [],),
@@ -124,6 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         toolbarHeight: 80,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
