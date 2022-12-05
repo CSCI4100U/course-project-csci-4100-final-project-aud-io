@@ -31,32 +31,36 @@ class _genreViewState extends State<genreView> {
     allgenres= _model.genres;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBarForSubPages(context, widget.title!),
       body: ListView.builder(
-        padding: EdgeInsets.zero,
+        padding: padding,
         itemCount: allgenres.length,
         itemBuilder: (context, index){
           String genre = allgenres[index];
-          return Container(
-            height: 50,
-            color: Colors.red[100+(index*100)],
-            child: TextButton(
-              onPressed: (){
-                Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context)=> SongsList(title: genre,)));
-              },
-              child: Text("${genre.toUpperCase()}",
-                style: const TextStyle(fontSize: fontSize,
-                    color: Colors.black,
+          return Column(
+            children: [
+              Container(
+                padding: padding,
+                width: 250,
+                color: Colors.red[100+(index*100)],
+                child: TextButton(
+                  onPressed: (){
+                    Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context)=> SongsList(title: genre,)));
+                  },
+                  child: Text("${genre.toUpperCase()}",
+                    style: const TextStyle(fontSize: fontSize,
+                        color: Colors.black,
 
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           );
         },
       ),
