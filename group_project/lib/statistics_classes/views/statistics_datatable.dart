@@ -1,12 +1,13 @@
+/*
+* Author: Alessandro Prataviera
+* */
+
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:group_project/statistics_classes/views/statistics_chart.dart';
 import 'package:group_project/user_classes/models/user_model.dart';
 import '../../MainScreen_Model/app_constants.dart';
-import '../../MainScreen_Model/navigation_bar.dart';
 import 'package:group_project/statistics_classes/models/countries.dart';
-
-import '../models/countries.dart';
 
 class StatisticsDataTable extends StatefulWidget {
   const StatisticsDataTable({Key? key, this.title}) : super(key: key);
@@ -57,7 +58,6 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
             width: 37,
             child: IconButton(
                 onPressed: (){
-                  //Call async function that goes to route "/home"
                   Navigator.pushNamed(context, '/home');
                 },
                 tooltip: 'Home',

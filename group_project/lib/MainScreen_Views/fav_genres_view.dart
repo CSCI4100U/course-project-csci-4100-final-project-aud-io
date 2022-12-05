@@ -1,16 +1,14 @@
 /*
-* Author: Rajiv Williams
+* Author: Rajiv Williams and Alessandro
 * */
 
 import 'package:flutter/material.dart';
-import 'package:group_project/MainScreen_Model/navigation_bar.dart';
-
 import '../music_classes/models/genre.dart';
 import '../user_classes/models/genre_model.dart';
 import 'dart:math';
 
 class FavoriteGenresView extends StatefulWidget {
-  const FavoriteGenresView({Key? key, this.title}) : super(key: key);
+  FavoriteGenresView({Key? key, this.title}) : super(key: key);
   final String? title;
   @override
   State<FavoriteGenresView> createState() => _FavoriteGenresViewState();
@@ -18,9 +16,11 @@ class FavoriteGenresView extends StatefulWidget {
 
 class _FavoriteGenresViewState extends State<FavoriteGenresView> {
 
-  var allGenres = [];
   GenreModel db = GenreModel();
   List<Color> genreColors = [];
+  List allGenres = [];
+  int selectedGenre = 0;
+  int isSelected = 0;
 
   @override
   void initState(){
@@ -40,7 +40,28 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
       );
     }
     return Scaffold(
-      appBar: buildAppBarForSubPages(context, widget.title!),
+      appBar: AppBar(
+        title: Text(widget.title!),
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  if(isSelected != -1) {
+                    deleteGenre(selectedGenre);
+                    isSelected = -1;
+                  }
+                });
+              },
+              icon: Icon(Icons.delete)
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed('/home');
+            },
+            icon: Icon(Icons.home),
+          ),
+        ],
+      ),
       body: ListView.builder(
           padding: EdgeInsets.all(10),
           itemCount: allGenres.length,
@@ -49,16 +70,32 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
               children: [
                 Container(
                   width: 250,
-                  color: genreColors[index],
+                  decoration: BoxDecoration(
+                    color: genreColors[index],
+                    border: Border.all(
+                        color: isSelected == index ? Colors.black : genreColors[index],
+                        width: 5
+                    ),
+                    ),
                   child: GestureDetector(
                     child: ListTile(
                       title: Text('${allGenres[index].genre.toString().toUpperCase()}',
                       style: TextStyle(
                           fontSize: 30
                       ), textAlign: TextAlign.center,),
+                      tileColor: isSelected == index ? Colors.black : Colors.blue,
                     ),
                     onTap: () {
-
+                      setState(() {
+                        print(allGenres[index].id);
+                        selectedGenre = allGenres[index].id;
+                        if(isSelected == index){
+                          isSelected = -1;
+                        } else {
+                          isSelected = index;
+                        }
+                        //print(isSelected);
+                      });
                     },
                   ),
                 ),
@@ -66,7 +103,6 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
             );
           }
       ),
-      //TODO: Change this functionality to hearts beside genres in GenresView
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: _addGenre,
@@ -75,9 +111,18 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
   }
 
   Future _addGenre() async{
-    Genre newGenre = await Navigator.pushNamed(context, '/addGenre') as Genre;
-
+    FavGenre newGenre = await Navigator.pushNamed(context, '/heartGenre') as FavGenre;
     print(newGenre);
+    for (int i = 0; i < allGenres.length; i++) {
+      if (newGenre.genre == allGenres[i].genre) {
+        final snackBar = SnackBar(
+            content: Text("you already have ${newGenre.genre} favourited")
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        return print("this is not allowed");
+      }
+    }
+
     await db.insertGenre(newGenre);
     setState(() {
       getGenres();
@@ -87,5 +132,13 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
   getGenres() async{
     allGenres = await db.getAllGenres();
     setState(() {});
+  }
+
+  void deleteGenre(int id) async {
+    await db.deleteGenreById(id);
+    setState(() {
+      allGenres.length - 1;
+      getGenres();
+    });
   }
 }
