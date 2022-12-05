@@ -10,6 +10,7 @@ class Song {
   Song({this.name, this.duration, this.artist, this.link});
 
   Song.fromMap(var map, {this.reference}){
+
     this.name = map['name'];
     this.duration = map['duration'];
     this.artist = map['artist'];
