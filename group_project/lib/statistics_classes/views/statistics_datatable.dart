@@ -34,9 +34,9 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            FlutterI18n.translate(context, "titles.stats_table"),
-              style: TextStyle(fontSize: 15),
-          ),
+          FlutterI18n.translate(context, "titles.stats_table"),
+          style: TextStyle(fontSize: 15),
+        ),
         actions: [
           SizedBox(
             width: 37,
@@ -70,8 +70,8 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
         sortAscending: _sortAscending!,
         columns: [
           DataColumn(
-            label: Text(FlutterI18n.translate(context, "forms.country")),
-            tooltip: "Country",
+              label: Text(FlutterI18n.translate(context, "forms.country")),
+              tooltip: "Country",
               onSort: (index, ascending) {
                 setState(() {
                   _sortColumnIndex = index;
@@ -88,29 +88,29 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
               }
           ),
           DataColumn(
-            label: Text(FlutterI18n.translate(context, "charts.freq")),
-            tooltip: "Frequency",
-            onSort: (index, ascending) {
-              setState(() {
-                _sortColumnIndex = index;
-                _sortAscending = ascending;
-                frequencies!.sort(
-                        (a,b) {
-                      if (ascending){
-                        return a.frequency!.compareTo(b.frequency!);
+              label: Text(FlutterI18n.translate(context, "charts.freq")),
+              tooltip: "Frequency",
+              onSort: (index, ascending) {
+                setState(() {
+                  _sortColumnIndex = index;
+                  _sortAscending = ascending;
+                  frequencies!.sort(
+                          (a,b) {
+                        if (ascending){
+                          return a.frequency!.compareTo(b.frequency!);
+                        }
+                        return b.frequency!.compareTo(a.frequency!);
                       }
-                      return b.frequency!.compareTo(a.frequency!);
-                    }
-                );
-              });
-            }
+                  );
+                });
+              }
           ),
         ],
         rows: frequencies!.map((CountryFrequency country) => DataRow(
             cells: [
               DataCell(Text(country.country!.toString())),
               DataCell(
-                  Text(country.frequency!.toString()),
+                Text(country.frequency!.toString()),
               ),
             ]
         )
@@ -168,6 +168,5 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
   }
 
 }
-
 
 
