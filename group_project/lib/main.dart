@@ -25,7 +25,7 @@ import 'package:group_project/statistics_classes/views/statistics_datatable.dart
 import 'package:group_project/user_classes/views/add_genre.dart';
 import 'package:group_project/user_classes/views/login_form.dart';
 import 'package:group_project/user_classes/views/addFriend.dart';
-import 'package:group_project/music_classes/views/playlist_view.dart';
+import 'package:group_project/music_classes/views/genre_view.dart';
 import 'package:group_project/user_classes/views/friends_list.dart';
 import 'package:group_project/user_classes/models/utils.dart';
 import 'package:group_project/user_classes/views/profile_view.dart';
@@ -75,8 +75,7 @@ class MyApp extends StatelessWidget {
           '/profile' : (context) => const ProfileView(title: "Profile"),
           '/friendsList' : (context) => FriendList(title: FlutterI18n.translate(context, "titles.friend"),),
           '/addFriend' : (context) => AddFriendSearch(title: FlutterI18n.translate(context, "titles.add_friend"),userNameEntered: ""),
-          '/playlists' : (context) => PlayListView(title: FlutterI18n.translate(context, "titles.genre")),
-          '/addPlaylist' : (context) => AddPlaylistView(title: "Add Playlist",),
+          '/genre' : (context) => genreView(title: FlutterI18n.translate(context, "titles.genre")),
           '/settings' : (context) => SettingsView(title: FlutterI18n.translate(context, "titles.setting")),
           '/addGenre' : (context) => const AddGenre(title: "Add Genre"),
           '/favGenres' : (context) => const FavoriteGenresView(title: "Liked Genres",),
@@ -245,7 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           onTap: (){
                             // Go to playlists Page
-                            Navigator.pushNamed(context, '/playlists');
+                            Navigator.pushNamed(context, '/genre');
                           },
                         ),
                     ),

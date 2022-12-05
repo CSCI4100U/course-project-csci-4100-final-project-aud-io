@@ -18,43 +18,93 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
   var allUsers = [];
   List<CountryFrequency> frequencies = [];
   final UserModel _model = UserModel();
+  int? _sortColumnIndex;
+  bool? _sortAscending;
+
   @override
   void initState() {
     super.initState();
     getAllUsers();
+    _sortColumnIndex=0;
+    _sortAscending=true;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(FlutterI18n.translate(context, "titles.stats_table")),
+        title: Text(
+            FlutterI18n.translate(context, "titles.stats_table"),
+              style: TextStyle(fontSize: 15),
+          ),
         actions: [
-          IconButton(
-              onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => StatisticsChart(
-                        frequencies: frequencies
-                    ))
-                );
-              },
-              tooltip: 'chart',
-              icon: const Icon(Icons.bar_chart)
+          SizedBox(
+            width: 37,
+            child: IconButton(
+                onPressed: (){
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => StatisticsChart(
+                          frequencies: frequencies
+                      ))
+                  );
+                },
+                tooltip: 'chart',
+                icon: const Icon(Icons.bar_chart)
+            ),
           ),
-          IconButton(
-              onPressed: (){
-                //Call async function that goes to route "/home"
-                Navigator.pushNamed(context, '/home');
-              },
-              tooltip: 'Home',
-              icon: const Icon(Icons.home)
-          ),
+          SizedBox(
+            width: 37,
+            child: IconButton(
+                onPressed: (){
+                  //Call async function that goes to route "/home"
+                  Navigator.pushNamed(context, '/home');
+                },
+                tooltip: 'Home',
+                icon: const Icon(Icons.home)
+            ),
+          )
         ],
       ),
       body: DataTable(
+        sortColumnIndex: _sortColumnIndex,
+        sortAscending: _sortAscending!,
         columns: [
-          DataColumn(label: Text(FlutterI18n.translate(context, "forms.country"))),
-          DataColumn(label: Text(FlutterI18n.translate(context, "charts.freq"))),
+          DataColumn(
+            label: Text(FlutterI18n.translate(context, "forms.country")),
+            tooltip: "Country",
+              onSort: (index, ascending) {
+                setState(() {
+                  _sortColumnIndex = index;
+                  _sortAscending = ascending;
+                  frequencies!.sort(
+                          (a,b) {
+                        if (ascending){
+                          return a.country!.compareTo(b.country!);
+                        }
+                        return b.country!.compareTo(a.country!);
+                      }
+                  );
+                });
+              }
+          ),
+          DataColumn(
+            label: Text(FlutterI18n.translate(context, "charts.freq")),
+            tooltip: "Frequency",
+            onSort: (index, ascending) {
+              setState(() {
+                _sortColumnIndex = index;
+                _sortAscending = ascending;
+                frequencies!.sort(
+                        (a,b) {
+                      if (ascending){
+                        return a.frequency!.compareTo(b.frequency!);
+                      }
+                      return b.frequency!.compareTo(a.frequency!);
+                    }
+                );
+              });
+            }
+          ),
         ],
         rows: frequencies!.map((CountryFrequency country) => DataRow(
             cells: [
