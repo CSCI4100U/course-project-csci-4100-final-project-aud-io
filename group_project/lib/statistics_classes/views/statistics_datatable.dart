@@ -163,7 +163,6 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
         usersFrequencies.add(country);
       }
     }
-
     print(usersFrequencies);
     return usersFrequencies;
   }

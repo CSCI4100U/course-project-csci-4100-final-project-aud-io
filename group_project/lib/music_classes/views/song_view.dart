@@ -48,8 +48,16 @@ class _SongsListState extends State<SongsList> {
                     itemCount: allSongs.length,
                   itemBuilder: (context, index) {
                       return Container(
-                          child: Text("${allSongs[index].name}")
+                          child: ListTile(
+                            title: Text(allSongs[index].name!),
+                            subtitle: Text(allSongs[index].duration!),
+                            trailing: IconButton(
+                              onPressed: () {
 
+                              },
+                              icon: Icon(Icons.add),
+                            ),
+                          )
                       );
                 },
                 );
@@ -57,7 +65,12 @@ class _SongsListState extends State<SongsList> {
             }
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
 
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
   loadSongs(){
@@ -73,5 +86,9 @@ class _SongsListState extends State<SongsList> {
   getAllSongs() async{
     songStream = _model.getSongStream(genreSelected);
     allSongs = await _model.getSongList(genreSelected);
+  }
+
+  addSong() async {
+
   }
 }

@@ -15,9 +15,8 @@ class SongModel{
   ];
 
   String songCollectionID = "qH6SDHlnOTIVWWuBjnWP";
-  /*
-  * Insert newly signed up user into database
-  * */
+
+
   Future insertSong(Song song, String genre) async{
 
     song.genre = genre;
