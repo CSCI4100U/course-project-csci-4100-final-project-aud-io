@@ -8,8 +8,10 @@ import 'package:flutter/gestures.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:group_project/user_classes/models/countries_list.dart';
 import 'package:group_project/user_classes/models/profile.dart';
 import 'package:group_project/user_classes/models/utils.dart';
+import '../models/countries_list.dart';
 import '../../main.dart';
 import '../models/user_model.dart';
 
@@ -180,21 +182,47 @@ class _SignUpFormState extends State<SignUpForm> {
                         }
                     ),
                     SizedBox(height: 14,),
-                    TextFormField(
-                        style: TextStyle(fontSize: 20),
-                        textInputAction: TextInputAction.next,
+                    DropdownButtonFormField(
+                        style: TextStyle(fontSize: 20, color: Colors.black),
                         decoration: InputDecoration(
                             labelText: FlutterI18n.translate(context, "forms.country"),
                             icon: Icon(Icons.location_on)),
-                        validator: (value) {
-                          if (value == null || value.length < 2) {
+                        items: countries_form
+                            .map<DropdownMenuItem>((String value){
+                              return DropdownMenuItem(
+                                value: value,
+                                  child: Text(value),
+                              );
+                        }).toList(),
+                        isExpanded: true,
+                        onChanged: (value) {
+                          print("Country: $value");
+                        },
+                        validator: (value){
+                          if (value == null) {
                             return FlutterI18n.translate(context, "forms.errors.valid_country");
                           } else {
-                            country = value;
+                            country = value.toString();
                             return null;
                           }
                         }
                     ),
+                    // TextFormField(
+                    //     style: TextStyle(fontSize: 20),
+                    //     textInputAction: TextInputAction.next,
+                    //     decoration: InputDecoration(
+                    //         labelText: FlutterI18n.translate(context, "forms.country"),
+                    //         icon: Icon(Icons.location_on)
+                    //     ),
+                    //     validator: (value) {
+                    //       if (value == null || value.length < 2) {
+                    //         return FlutterI18n.translate(context, "forms.errors.valid_country");
+                    //       } else {
+                    //         country = value;
+                    //         return null;
+                    //       }
+                    //     }
+                    // ),
                     SizedBox(height: 14),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
