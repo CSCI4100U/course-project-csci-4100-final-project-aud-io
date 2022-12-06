@@ -8,6 +8,8 @@ import 'package:group_project/music_classes/models/genre_model.dart';
 import 'package:group_project/music_classes/views/song_view.dart';
 import 'package:group_project/music_classes/models/fav_genre.dart';
 
+import '../../user_classes/models/user_model.dart';
+
 class GenreView extends StatefulWidget {
   const GenreView({Key? key,this.title, required this.heartBool}) : super(key: key);
 
@@ -153,9 +155,8 @@ class _GenreViewState extends State<GenreView> {
 
   getFavGenres() async{
     allFavGenres = await db.getAllGenres();
-    setState(() {
-
-    });
+    UserModel().updateFavGenres(allFavGenres);
+    setState(() {});
   }
 
   Future _addGenre(FavGenre genre) async{

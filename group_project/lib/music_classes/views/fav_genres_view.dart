@@ -4,9 +4,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:group_project/music_classes/models/fav_genre.dart';
-import '../MainScreen_Model/app_constants.dart';
-import '../music_classes/models/genre_model.dart';
-import '../music_classes/views/song_view.dart';
+import '../../MainScreen_Model/app_constants.dart';
+import '../../user_classes/models/user_model.dart';
+import '../models/genre_model.dart';
+import 'song_view.dart';
 
 class FavoriteGenresView extends StatefulWidget {
   FavoriteGenresView({Key? key, this.title}) : super(key: key);
@@ -111,6 +112,7 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
 
   getGenres() async{
     allGenres = await db.getAllGenres();
+    UserModel().updateFavGenres(allGenres);
     setState(() {});
   }
 

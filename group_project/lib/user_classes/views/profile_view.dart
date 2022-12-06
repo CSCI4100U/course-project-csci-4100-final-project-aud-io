@@ -23,7 +23,7 @@ class _ProfileViewState extends State<ProfileView> {
   List<Profile> myProfile = [];
   late String? currentUserEmail;
   final _model = UserModel();
-  Profile userBeingViewed = Profile();
+  late Profile userBeingViewed = Profile();
   var allGenres = [];
   var _lastInsertedGenre;
   var selectedIndex = -1;
@@ -40,33 +40,129 @@ class _ProfileViewState extends State<ProfileView> {
     else{
       userBeingViewed = currentUser;
     }
-    //getGenres();
   }
-
+  String? phoneNum;
+  String? country;
+  String? city;
+  String? email;
+  String? birthday;
 
   @override
   Widget build(BuildContext context) {
     if(userBeingViewed.userName!=null){
+      List<String> translations = [
+        "forms.username",
+        "forms.email",
+        "forms.city",
+        "forms.country",
+        "forms.phone",
+        "forms.buttons.birthday",
+        "forms.favGenres"
+      ];
+      Map<String,String> userInformation = {
+        translations[0]:userBeingViewed.userName!,
+        translations[1]:userBeingViewed.email!,
+        translations[2]:userBeingViewed.city!,
+        translations[3]:userBeingViewed.country!,
+        translations[4]:userBeingViewed.phoneNum!,
+        translations[5]:userBeingViewed.birthday!,
+        translations[6]:userBeingViewed.favGenres!.toString(),
+      };
       return Scaffold(
-        appBar: buildAppBarForSubPages(context, FlutterI18n.translate(context, "titles.profile")),
+        appBar: buildAppBarForSubPages(context, widget.title!),
         body: Column(
           children: [
-            CircleAvatar(
-              radius: 50,
-              child: Text(userBeingViewed.userName![0].toUpperCase(),
-                style: style,
-              ),
+            Expanded(
+              flex: 1,
+                child: CircleAvatar(
+                  radius: 50,
+                  child: Text(userBeingViewed.userName![0].toUpperCase(),
+                    style: style,
+                  ),
+                ),
             ),
-            Container(
-              child: ListTile(
-                title: Text("${FlutterI18n.translate(context, "forms.username")}: ${userBeingViewed.userName}"),
-              ),
-            ),
-            Container(
-              child: ListTile(
-                title: Text("${FlutterI18n.translate(context, "forms.email")}: ${userBeingViewed.email}"),
-              ),
-            ),
+            Expanded(
+              flex: 4,
+              child: ListView.builder(
+                  itemCount: userInformation.length,
+                  itemBuilder: (context,index){
+                return Container(
+                    padding: padding,
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 1
+                          )
+                        ]
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: Text("${FlutterI18n.translate(context, translations[index])
+                                .toUpperCase()}:",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: fontSize-5,
+                              ),
+                              textAlign: TextAlign.center,
+                            )
+                        ),
+                        Expanded(
+                            flex: 2,
+                            child: Text(userInformation[translations[index]]!,
+                              style: TextStyle(fontSize: fontSize-5),
+                            )
+                        )
+                      ],
+                    )
+                );
+              }),
+            )
+            // Container(
+            //     padding: padding,
+            //   decoration: BoxDecoration(
+            //       color: Colors.white,
+            //       boxShadow: [
+            //         BoxShadow(
+            //             blurRadius: 1
+            //         )
+            //       ]
+            //   ),
+            //   child: Row(
+            //     children: [
+            //       Expanded(
+            //           child: Text("${FlutterI18n.translate(context, "forms.username")
+            //               .toUpperCase()}:")
+            //       ),
+            //       Expanded(
+            //           child: Text(userBeingViewed.userName!)
+            //       )
+            //     ],
+            //   )
+            // ),
+            // Container(
+            //     padding: padding,
+            //     decoration: BoxDecoration(
+            //         color: Colors.white,
+            //         boxShadow: [
+            //           BoxShadow(
+            //               blurRadius: 1
+            //           )
+            //         ]
+            //     ),
+            //     child: Row(
+            //       children: [
+            //         Expanded(
+            //             child: Text("${FlutterI18n.translate(context, "forms.email").toUpperCase()
+            //                 .toUpperCase()}:")
+            //         ),
+            //         Expanded(
+            //             child: Text(userBeingViewed.email!)
+            //         )
+            //       ],
+            //     )
+            // ),
           ],
         ),
       );

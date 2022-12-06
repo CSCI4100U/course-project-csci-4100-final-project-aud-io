@@ -16,7 +16,7 @@
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:group_project/MainScreen_Views/fav_genres_view.dart';
+import 'package:group_project/music_classes/views/fav_genres_view.dart';
 import 'package:group_project/music_classes/views/addSong.dart';
 import 'package:group_project/music_classes/views/playlist_view.dart';
 import 'package:group_project/statistics_classes/views/statistics_chart.dart';
@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
         home: buildSplashScreen(),
         routes: {
           '/home' : (context) => MyHomePage(title: logo,),
-          '/profile' : (context) => const ProfileView(title: "Profile"),
+          '/profile' : (context) => ProfileView(title: FlutterI18n.translate(context, "titles.profile")),
           '/friendsList' : (context) => FriendList(title: FlutterI18n.translate(context, "titles.friend"),),
           '/addFriend' : (context) => AddFriendSearch(title: FlutterI18n.translate(context, "titles.add_friend"),userNameEntered: ""),
 

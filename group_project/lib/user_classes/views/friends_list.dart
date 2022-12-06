@@ -58,20 +58,28 @@ class _FriendListState extends State<FriendList> {
 
                 if(allFriends.isNotEmpty){
                   return Expanded(
-                    child: Container (
-                      child: ListView.builder(
-                          padding: const EdgeInsets.all(8.0),
-                          itemCount: allFriends.length,
-                          itemBuilder: (context,index){
+                    child: ListView.builder(
+                        padding: const EdgeInsets.all(8.0),
+                        itemCount: allFriends.length,
+                        itemBuilder: (context,index){
 
-                            Profile currentFriend = allFriends[index];
+                          Profile currentFriend = allFriends[index];
 
-                            return Row(
+                          return Container(
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 1
+                                  )
+                                ]
+                            ),
+                            child: Row(
                                 children: [
                                   _model.buildUserAvatar(currentFriend,context),
                                   Expanded(
                                       child: Container(
-                                          padding: const EdgeInsets.all(10.0),
+                                          padding: padding,
                                           child: ListTile(
                                             title: Text("${currentFriend.userName}",
                                               style: style,
@@ -92,9 +100,9 @@ class _FriendListState extends State<FriendList> {
                                   )
                                 ],
 
-                            );
-                          }
-                      ),
+                            ),
+                          );
+                        }
                     ),
                   );
                 }
@@ -142,8 +150,6 @@ class _FriendListState extends State<FriendList> {
       _model.addToFriendList(friend, currentUser);
 
       loadFriends();
-
-      Utils.showSnackBar("Just added ${friend.userName} as a friend :)",Colors.black);
     }
   }
 

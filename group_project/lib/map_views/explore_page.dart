@@ -31,7 +31,8 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
 
   // User Variables
   final _model = UserModel();
-  List<Profile> allFriends = [];
+  List<Profile> otherUserFriendsList = [];
+  List<Profile> currentUserFriendsList = [];
   int? numFriends;
 
   // Map Variables
@@ -179,25 +180,54 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               _model.buildUserAvatar(user!, context),
-                                              SizedBox(
-                                                    child: Text(
-                                                      user?.userName ?? '',
-                                                      style: const TextStyle(
-                                                          fontSize: fontSize,
-                                                          fontWeight: FontWeight.bold,
-                                                          color: Colors.white
-                                                      ),
-                                               )
+                                              Expanded(
+                                                child: SizedBox(
+                                                      child: Text(
+                                                        user?.userName ?? '',
+                                                        style: const TextStyle(
+                                                            fontSize: fontSize,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.white
+                                                        ),
+                                                 )
+                                                ),
+                                              ),
+                                              isAFriend(user) || _model.isCurrentUser(user) ?
+                                              const Icon(Icons.mobile_friendly,color: Colors.white,) :
+                                              IconButton(
+                                                  onPressed: (){
+                                                    setState(() {
+                                                      _model.addToFriendList(currentUser, user);
+                                                      numFriends = null;
+                                                    });
+                                                  },
+                                                  icon: Icon(Icons.person_add_alt_1,color: Colors.white,)
                                               )
                                             ],
                                           ),
                                         ),
                                         Container(
-                                          padding: const EdgeInsets.all(10.0),
+                                          padding: padding,
                                           child: Row(
                                             children: [
-                                              Icon(Icons.person,color: Colors.white,),
+                                              const Icon(Icons.person,color: Colors.white,),
                                                Text(numFriends! != 1 ? "$numFriends ${FlutterI18n.translate(context, "titles.friend")}": "1 ${FlutterI18n.translate(context, "titles.friend_sing")}",
+                                                style: const TextStyle(
+                                                    fontSize: fontSize,
+                                                    color: Colors.white
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: padding,
+                                          child: Row(
+                                            children: [
+                                              const Icon(Icons.favorite_border,color: Colors.white,),
+                                              Text(getGenresInCommon(user) != "" ?
+                                              "Likes ${getGenresInCommon(user)}" :
+                                              "No Genres in common",
                                                 style: const TextStyle(
                                                     fontSize: fontSize,
                                                     color: Colors.white
@@ -238,6 +268,11 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
         currentLocation = LatLng(userLocation.latitude, userLocation.longitude);
         currentUser.location = "${userLocation.latitude},${userLocation.longitude}";
         if(!locationLoaded){
+          String userAddress = "${places[0].subThoroughfare!} "
+              "${places[0].thoroughfare!}";
+          if(userAddress == " "){
+            userAddress = "Unknown address";
+          }
           UserModel().updateUser(currentUser);
           Utils.showSnackBar("${FlutterI18n.translate(
               context, "forms.texts.user_current")} "
@@ -291,17 +326,41 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
   * List of all the friends of the current user
   * */
   getAllFriends(Profile user) async{
-    allFriends = await _model.getFriendsList(user);
-    numFriends = allFriends.length;
+    otherUserFriendsList = await _model.getFriendsList(user);
+    currentUserFriendsList = await _model.getFriendsList(currentUser);
+    numFriends = otherUserFriendsList.length;
   }
 
-  isAFriend(Profile user){
-    for(Profile friend in allFriends){
+  bool isAFriend(Profile user){
+    for(Profile friend in currentUserFriendsList){
       if(friend.userName == user.userName){
         return true;
       }
     }
     return false;
+  }
+
+  getGenresInCommon(Profile user){
+
+    if(user.favGenres != null && currentUser.favGenres != null){
+      String genresInCommon = "";
+
+      var currUserFavGenres = currentUser.favGenres;
+      var otherUserFavGenres = user.favGenres;
+
+      for(int i = 0; i < otherUserFavGenres.length; i++){
+        if(currUserFavGenres.contains(otherUserFavGenres[i])){
+          if(genresInCommon == ""){
+            genresInCommon += otherUserFavGenres[i];
+          }
+          else{
+            genresInCommon += ", ${otherUserFavGenres[i]}";
+          }
+        }
+      }
+      return genresInCommon;
+    }
+    return "";
   }
 
   UserLocation getUserLocation(Profile user){
