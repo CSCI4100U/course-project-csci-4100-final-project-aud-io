@@ -84,10 +84,10 @@ class _SongsListState extends State<SongsList> {
                                       Navigator.of(context).pushNamed("/playlist");
                                     },
                                   icon: Icon(Icons.add),
-
+                                )
                             )
-                           ])
-                          
+                           ]
+                      );
                   },
                 );
               }
