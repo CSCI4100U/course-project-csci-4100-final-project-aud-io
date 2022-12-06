@@ -16,17 +16,17 @@ class _LanguageMenuState extends State<LanguageMenu> {
       child: PopupMenuButton(
         itemBuilder: (context) => [
           //TODO: Translate these texts as well
-          const PopupMenuItem(
+          PopupMenuItem(
               value: 1,
-              child: Text('English')
+              child: Text(FlutterI18n.translate(context, "forms.languages.english"))
           ),
-          const PopupMenuItem(
+          PopupMenuItem(
               value: 2,
-              child: Text('French')
+              child: Text(FlutterI18n.translate(context, "forms.languages.french"))
           ),
-          const PopupMenuItem(
+          PopupMenuItem(
               value: 3,
-              child: Text('Spanish')
+              child: Text(FlutterI18n.translate(context, "forms.languages.spanish"))
           ),
         ],
         onSelected: (value) {
