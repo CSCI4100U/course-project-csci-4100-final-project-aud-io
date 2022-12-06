@@ -4,6 +4,10 @@
 
 import 'package:flutter/material.dart';
 
+/*
+  * Class which helps us with displaying the snackbars of a particular
+  * page, whether it be success or error messages.
+  * */
 class Utils{
   static final messengerKey = GlobalKey<ScaffoldMessengerState>();
 
