@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:group_project/music_classes/models/genre_model.dart';
 import '../../MainScreen_Views/custom_circular_progress_indicator.dart';
@@ -38,6 +39,7 @@ class _SongsListState extends State<SongsList> {
           IconButton(
             onPressed: () {
 
+              Navigator.of(context).pushNamed("/addSongs");
             },
             icon: Icon(Icons.playlist_add),
           )
@@ -69,6 +71,7 @@ class _SongsListState extends State<SongsList> {
                                 trailing: Text(allSongs[index].duration!)
                               ),
                             ),
+
                             Expanded(
                               flex: 1,
                                 child: IconButton(
@@ -113,5 +116,10 @@ class _SongsListState extends State<SongsList> {
 
   addSong(Song song) async {
     await _songModel.insertSongLocal(song);
+  }
+
+  addSongToCloudStorage() async{
+    var song = await Navigator.of(context).pushNamed('/addSongs');
+    
   }
 }
