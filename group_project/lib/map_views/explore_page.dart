@@ -28,6 +28,7 @@ class ExplorePage extends StatefulWidget {
 class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin{
 
   int selectedIndex = 0;
+  bool permissionDenied = false;
 
   // User Variables
   final _model = UserModel();
@@ -254,6 +255,17 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
             ),
           ),
         ]
+      ) : permissionDenied
+          ? AlertDialog(
+        title: Text(FlutterI18n.translate(context, "dialogs.permission_denied")),
+        actions: [
+          TextButton(
+              onPressed: (){
+                Navigator.of(context).pop();
+              },
+              child: Text(FlutterI18n.translate(context, "dialogs.understand"))
+          ),
+        ],
       ) : const CustomCircularProgressIndicator(),
     );
   }
@@ -296,14 +308,23 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
             (LocationPermission permission)
         {
           print("Check Location Permission: $permission");
+          if(permission.toString().contains('denied')){
+            permissionDenied = true;
+            if(mounted){
+              setState(() {
+
+              });
+            }
+          }
         }
     );
-
-    Geolocator.getPositionStream(
-      locationSettings: const LocationSettings(
-          accuracy: LocationAccuracy.best
-      ),
-    ).listen(_updateLocationStream);
+    if(!permissionDenied){
+      Geolocator.getPositionStream(
+        locationSettings: const LocationSettings(
+            accuracy: LocationAccuracy.best
+        ),
+      ).listen(_updateLocationStream);
+    }
   }
 
   getAllUserMarkers() async{

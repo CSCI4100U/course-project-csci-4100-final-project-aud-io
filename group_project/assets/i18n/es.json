@@ -86,7 +86,9 @@
     "cancel" : "Cancelar",
     "remove_genre" : "Quitar de Géneros Favoritos",
     "remove_playlist" : "Eliminar de la Lista de Reproducción",
-    "remove_friend" : "¿Eliminar Amigo?"
+    "remove_friend" : "¿Eliminar Amigo?",
+    "permission_denied": "Verifique los permisos de ubicación en la configuración del dispositivo",
+    "understand": "Entiendo"
   },
   "snackbars" : {
     "reset_confirm" : "Correo electrónico de restablecimiento de contraseña enviado",

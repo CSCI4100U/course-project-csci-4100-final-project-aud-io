@@ -66,7 +66,8 @@ class _ProfileViewState extends State<ProfileView> {
         translations[3]:userBeingViewed.country!,
         translations[4]:userBeingViewed.phoneNum!,
         translations[5]:userBeingViewed.birthday!,
-        translations[6]:userBeingViewed.favGenres!= null
+        translations[6]:userBeingViewed.favGenres!= null ||
+            userBeingViewed.favGenres.toString().isNotEmpty
             ? userBeingViewed.favGenres!.toString()
             : FlutterI18n.translate(context, "forms.texts.none"),
       };
