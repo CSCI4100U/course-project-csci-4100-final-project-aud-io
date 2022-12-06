@@ -8,22 +8,20 @@ import 'package:group_project/music_classes/models/genre_model.dart';
 import 'package:group_project/music_classes/views/song_view.dart';
 import 'package:group_project/music_classes/models/genre.dart';
 
-class genreView extends StatefulWidget {
-  const genreView({Key? key,this.title, required this.heartBool}) : super(key: key);
+class GenreView extends StatefulWidget {
+  const GenreView({Key? key,this.title, required this.heartBool}) : super(key: key);
 
   final String? title;
   final bool heartBool;
 
   @override
-  State<genreView> createState() => _genreViewState();
+  State<GenreView> createState() => _GenreViewState();
 }
 
-class _genreViewState extends State<genreView> {
-  final _model = GenreModel();
-
+class _GenreViewState extends State<GenreView> {
+  final db = GenreModel();
   List allGenres = [];
-  List clicked = [false,false,false,false,false,false,false,false];
-  List<FavGenre> tempGenres = [];
+  late var allFavGenres = [];
   var colors = [
     Colors.red[100],
     Colors.blue[100],
@@ -38,79 +36,56 @@ class _genreViewState extends State<genreView> {
   @override
   void initState() {
     super.initState();
-    allGenres = _model.genres;
+    allGenres = db.genres;
+    getFavGenres();
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.heartBool? genreHeartList(): genreList();
+    return genreList();
   }
 
   Widget genreList() {
     return Scaffold(
-      appBar: buildAppBarForSubPages(context, widget.title!),
+      appBar: AppBar(
+        title: Text(widget.title!),
+        actions: [
+          IconButton(
+              onPressed: (){
+                Navigator.of(context).pushNamed('/favGenres');
+              },
+              icon: Icon(Icons.favorite_border)
+          )
+        ],
+      ),
       body: ListView.builder(
         padding: padding,
         itemCount: allGenres.length,
         itemBuilder: (context, index){
-
-          String genre = allGenres[index];
+          String genreOnDisplay = allGenres[index];
+          bool isHearted = false;
+          FavGenre? favGenreToBeDeleted;
+          for (int i = 0; i < allFavGenres.length; i++) {
+            if (genreOnDisplay == allFavGenres[i].genre) {
+              favGenreToBeDeleted = FavGenre(genre: genreOnDisplay,id: allFavGenres[i].id);
+              isHearted = true;
+            }
+          }
           return Column(
             children: [
               Container(
                 padding: padding,
                 width: 250,
                 color: colors[index],
-
                 child: Row(
                   children: [
                     TextButton(
                       onPressed: (){
                         Navigator.of(context).push(
                             MaterialPageRoute(
-                                builder: (context)=> SongsList(title: genre,)));
+                                builder: (context)=> SongsList(title: genreOnDisplay,)));
                       },
-                      child: Text("${genre.toUpperCase()}",
-                        style: const TextStyle(fontSize: fontSize,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-
-
-    );
-  }
-
-  Widget genreHeartList() {
-    return Scaffold(
-      appBar: buildAppBarForSubPages(context, widget.title!),
-      body: ListView.builder(
-        padding: padding,
-        itemCount: allGenres.length,
-        itemBuilder: (context, index){
-          String genre = allGenres[index];
-          return Column(
-            children: [
-              Container(
-                padding: padding,
-                width: 250,
-                color: Colors.red[100+(index*100)],
-                child: Row(
-                  children: [
-                    TextButton(
-                      onPressed: (){
-                        Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context)=> SongsList(title: genre,)));
-                      },
-                      child: Text("${genre.toUpperCase()}",
+                      child: Text("${genreOnDisplay.toUpperCase()}",
                         style: const TextStyle(fontSize: fontSize,
                           color: Colors.black,
 
@@ -120,21 +95,23 @@ class _genreViewState extends State<genreView> {
                     IconButton(
                         onPressed: () {
                           setState(() {
-                            if (clicked[index] == false) {
-                              clicked[index] = true;
-                              FavGenre genre = FavGenre();
-                              genre = FavGenre(genre: allGenres[index]);
-                              print(allGenres[index]);
-                              Navigator.of(context).pop(genre);
+                            if (!isHearted) {
+                              // add to database
+                              FavGenre favGenre = FavGenre();
+                              favGenre = FavGenre(genre: genreOnDisplay);
+                              _addGenre(favGenre);
                             }
-                            else {
-                              clicked[index] = false;
-                              Navigator.of(context).pop(allGenres[index]);
+                            else{
+                              //remove from database
+                              if(favGenreToBeDeleted != null){
+                                _deleteGenre(favGenreToBeDeleted.id!);
+                              }
                             }
-                            print(clicked[index]);
                           });
                         },
-                        icon: clicked[index]? Icon(Icons.favorite) : Icon(Icons.favorite_border)),
+                        icon: isHearted ? const Icon(Icons.favorite)
+                            : const Icon(Icons.favorite_border)
+                    ),
                   ],
                 ),
               ),
@@ -143,5 +120,23 @@ class _genreViewState extends State<genreView> {
         },
       ),
     );
+  }
+
+  getFavGenres() async{
+    allFavGenres = await db.getAllGenres();
+    setState(() {
+
+    });
+  }
+
+  Future _addGenre(FavGenre genre) async{
+    //FavGenre? newGenre = await Navigator.pushNamed(context, '/heartGenre') as FavGenre?;
+
+    await db.insertGenre(genre);
+    getFavGenres();
+  }
+  Future _deleteGenre(int id) async {
+    await db.deleteGenreById(id);
+    getFavGenres();
   }
 }

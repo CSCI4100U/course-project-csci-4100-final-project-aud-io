@@ -71,9 +71,11 @@ class MyApp extends StatelessWidget {
           '/profile' : (context) => const ProfileView(title: "Profile"),
           '/friendsList' : (context) => FriendList(title: FlutterI18n.translate(context, "titles.friend"),),
           '/addFriend' : (context) => AddFriendSearch(title: FlutterI18n.translate(context, "titles.add_friend"),userNameEntered: ""),
-          '/genre' : (context) => genreView(title: FlutterI18n.translate(context, "titles.genre",), heartBool: false,),
-          '/heartGenre' : (context) => genreView(title: FlutterI18n.translate(context, "titles.genre",), heartBool: true,),
+
           '/addSongs' : (context) => AddSongs(title: FlutterI18n.translate(context, "titles.add_friend"),),
+          '/genre' : (context) => GenreView(title: FlutterI18n.translate(context, "titles.genre",), heartBool: false,),
+          '/heartGenre' : (context) => GenreView(title: FlutterI18n.translate(context, "titles.genre",), heartBool: true,),
+
           '/settings' : (context) => SettingsView(title: FlutterI18n.translate(context, "titles.setting")),
           '/favGenres' : (context) => FavoriteGenresView(title: "Liked Genres",),
           '/explore' : (context) => ExplorePage(title: FlutterI18n.translate(context, "titles.explore"),),
@@ -268,7 +270,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           padding: padding,
                           width: 300,
                           decoration: const BoxDecoration(color: Color.fromRGBO(
-                              149, 215, 250, 1.0)),
+                              149, 250, 226, 1.0)),
                           child: ListTile(
                               title: Text("Playlist", style: style,),
                               subtitle: Text("Check out your playlist", style: style,),

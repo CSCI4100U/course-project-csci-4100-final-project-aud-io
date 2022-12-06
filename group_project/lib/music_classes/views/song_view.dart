@@ -33,14 +33,13 @@ class _SongsListState extends State<SongsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         title: Text(genreSelected),
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).pushNamed("/addSongs");
 
+              Navigator.of(context).pushNamed("/addSongs");
             },
             icon: Icon(Icons.playlist_add),
           )
@@ -62,39 +61,41 @@ class _SongsListState extends State<SongsList> {
                 return ListView.builder(
                     itemCount: allSongs.length,
                   itemBuilder: (context, index) {
-                      return Container(
-                          child: ListTile(
-                            title: Text(allSongs[index].name!),
-                            subtitle: Text("${allSongs[index].artist!} ${allSongs[index].duration!}"),
-                            trailing: IconButton(
-                              onPressed: () {
-                                  Song song = Song();
-                                  song = Song(
-                                    name: allSongs[index].name!,
-                                    duration: allSongs[index].duration!,
-                                    artist: allSongs[index].artist!,
-                                    link: allSongs[index].link
-                                  );
-                                  addSong(song);
-                                  Navigator.of(context).pushNamed("/playlist");
-                                },
-                              icon: Icon(Icons.add),
+                      return Row(
+                          children: [
+                            Expanded(
+                              flex: 6,
+                              child: ListTile(
+                                title: Text(allSongs[index].name!),
+                                subtitle: Text(allSongs[index].artist!),
+                                trailing: Text(allSongs[index].duration!)
+                              ),
                             ),
-                          ),
 
-
+                            Expanded(
+                              flex: 1,
+                                child: IconButton(
+                                  onPressed: () {
+                                      Song song = Song();
+                                      song = Song(
+                                        name: allSongs[index].name!,
+                                        duration: allSongs[index].duration!,
+                                        artist: allSongs[index].artist!,
+                                        link: allSongs[index].link
+                                      );
+                                      addSong(song);
+                                      Navigator.of(context).pushNamed("/playlist");
+                                    },
+                                  icon: Icon(Icons.add),
+                                )
+                            )
+                           ]
                       );
                   },
                 );
               }
             }
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-
-        },
-        child: Icon(Icons.add),
       ),
     );
   }
