@@ -22,6 +22,16 @@ class _GenreViewState extends State<GenreView> {
   final db = GenreModel();
   List allGenres = [];
   late var allFavGenres = [];
+  var colors = [
+    Colors.red[100],
+    Colors.blue[100],
+    Colors.cyan[100],
+    Colors.green[100],
+    Colors.yellow[100],
+    Colors.orange[100],
+    Colors.purple[100],
+    Colors.teal[100],
+  ];
 
   @override
   void initState() {
@@ -36,7 +46,6 @@ class _GenreViewState extends State<GenreView> {
   }
 
   Widget genreList() {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title!),
@@ -67,7 +76,7 @@ class _GenreViewState extends State<GenreView> {
               Container(
                 padding: padding,
                 width: 250,
-                color: Colors.red[100+(index*100)],
+                color: colors[index],
                 child: Row(
                   children: [
                     TextButton(
