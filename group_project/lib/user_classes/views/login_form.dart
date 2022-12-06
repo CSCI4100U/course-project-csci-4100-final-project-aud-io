@@ -8,6 +8,11 @@ import '../../main.dart';
 import '../models/user_model.dart';
 import 'auth_page.dart';
 
+/*
+  * Class which detects if the user has previously logged onto the app on
+  * their current device. If so it will automatically log them
+  * into their account. If not route user to the login authorization page
+  * */
 class LoginForm extends StatelessWidget {
   LoginForm({Key? key, required this.title}) : super(key: key);
 
@@ -31,6 +36,9 @@ class LoginForm extends StatelessWidget {
     );
   }
 
+  /*
+  * Function which initializes the current user loading proper credentials
+  * */
   initializeCurrentUser()async{
     await UserModel.initializeCurrentUser();
   }

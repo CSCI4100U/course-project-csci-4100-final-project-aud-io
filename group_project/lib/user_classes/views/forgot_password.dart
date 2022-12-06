@@ -11,6 +11,11 @@ import '../models/notifications.dart';
 import '../models/utils.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
+/*
+  * Class which is displayed if the user requests to reset their password.
+  * They will enter their valid registered email within the form field to
+  * receive an email to reset their password.
+  * */
 class ForgotPassword extends StatefulWidget {
   ForgotPassword({Key? key, required this.locale}) : super(key: key);
 
@@ -84,6 +89,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       );
   }
 
+  /*
+  * Function which occurs asynchronously. This will validate the email
+  * entered into the text form field. If valid email associated
+  * to a user, the user will receive an email to allow them to reset
+  * their password
+  * */
   Future resetPassword() async{
     showDialog(
         context: context,
