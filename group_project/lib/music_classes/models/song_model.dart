@@ -17,6 +17,11 @@ class SongModel{
 
   String songCollectionID = "qH6SDHlnOTIVWWuBjnWP";
 
+
+  /*
+    Gets the stream of our songs for a specific genre from our
+    cloud storage
+   */
   Stream getSongStream(String genre) async* {
     print("retrieving genres");
     yield await FirebaseFirestore.instance.collection('songs')
@@ -24,7 +29,9 @@ class SongModel{
         .collection(genre).get();
   }
 
-
+  /*
+    Gets the list of songs from a specific genre from our cloud storage
+   */
   Future<List<Song>> getSongList(String genre) async {
     QuerySnapshot songs = await FirebaseFirestore.instance.collection('songs')
         .doc(songCollectionID)
@@ -40,7 +47,9 @@ class SongModel{
     return allSongs;
   }
 
-
+  /*
+    When a use wants to add a song to our list on the cloud they can do so using this function
+   */
   Future insertSong(Song song, String genre) async{
 
     song.genre = genre;
@@ -55,6 +64,9 @@ class SongModel{
 
   }
 
+  /*
+    gets all songs in your local storage
+   */
   Future getAllSongs() async {
     final db = await SongDBUtils.init();
     final List maps = await db.query('playlist_songs');
@@ -68,6 +80,10 @@ class SongModel{
     return result;
   }
 
+  /*
+    inserts a song into your local storage so that it can be displayed in the
+    playlist view
+   */
   Future<int> insertSongLocal(Song song) async{
     final db = await SongDBUtils.init();
     return db.insert(
@@ -77,6 +93,9 @@ class SongModel{
     );
   }
 
+  /*
+    deletes a song from your local storage
+   */
   Future<int> deleteSongByID(int id) async {
     final db = await SongDBUtils.init();
     return db.delete(
