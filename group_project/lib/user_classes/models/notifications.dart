@@ -1,6 +1,13 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart';
 
+/*
+  * Class which handles the notification requests of the user. This is used
+  * primarily in the password reset function. This would send the user a "now"
+  * notification telling them to fill out a form and a "later" notification
+  * to remind them that if an email has not been sent please check your spam
+  * folder or resend a request.
+  * */
 class Notifications{
 
   final channelID = "passwordNotif";
@@ -39,17 +46,29 @@ class Notifications{
     );
   }
 
+  /*
+  * Function that works asynchronously to check notification status
+  * */
   Future onDidReceiveNotificationResponse(NotificationResponse notificationResponse) async{
     if (notificationResponse != null){
       print("onDidReceiveNotificationResponse::payload = ${notificationResponse.payload}");
     }
   }
 
+  /*
+  * Function that sends a notification at the current
+  * time to the user, asking them to fill the form
+  * */
   void sendNotificationNow(String title, String body){
     print(_flutterLocalNotificationsPlugin.toString());
     _flutterLocalNotificationsPlugin.show(_notificationID++, title, body, _platformChannelInfo);
   }
 
+  /*
+  * Function that sends a notification two minutes later
+  * reminding the user to check their email and if not received to resend
+  * the password request.
+  * */
   scheduleNotificationLater(String title, String body, TZDateTime when){
     return _flutterLocalNotificationsPlugin.zonedSchedule(
         _notificationID++,
