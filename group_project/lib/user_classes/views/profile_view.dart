@@ -66,8 +66,7 @@ class _ProfileViewState extends State<ProfileView> {
         translations[3]:userBeingViewed.country!,
         translations[4]:userBeingViewed.phoneNum!,
         translations[5]:userBeingViewed.birthday!,
-        translations[6]:userBeingViewed.favGenres!= null ||
-            userBeingViewed.favGenres.toString().isNotEmpty
+        translations[6]:userBeingViewed.favGenres!= null && userBeingViewed.favGenres.toString().isNotEmpty
             ? userBeingViewed.favGenres!.toString()
             : FlutterI18n.translate(context, "forms.texts.none"),
       };
@@ -104,7 +103,7 @@ class _ProfileViewState extends State<ProfileView> {
                         Expanded(
                             child: Text("${FlutterI18n.translate(context, translations[index])
                                 .toUpperCase()}:",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: fontSize-5,
                               ),
@@ -114,7 +113,7 @@ class _ProfileViewState extends State<ProfileView> {
                         Expanded(
                             flex: 2,
                             child: Text(userInformation[translations[index]]!,
-                              style: TextStyle(fontSize: fontSize-5),
+                              style: const TextStyle(fontSize: fontSize-5),
                             )
                         )
                       ],

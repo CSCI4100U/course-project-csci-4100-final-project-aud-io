@@ -199,11 +199,12 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                                   onPressed: (){
                                                     setState(() {
                                                       _model.addToFriendList(currentUser, user);
+                                                      _model.addToFriendList(user, currentUser);
                                                       numFriends = null;
                                                       Utils.showSnackBar("${FlutterI18n.translate(context, "snackbars.just_added")} ${user.userName} ${FlutterI18n.translate(context, "snackbars.as_friend")}",Colors.black);
                                                     });
                                                   },
-                                                  icon: Icon(Icons.person_add_alt_1,color: Colors.white,)
+                                                  icon: const Icon(Icons.person_add_alt_1,color: Colors.white,)
                                               )
                                             ],
                                           ),
@@ -331,9 +332,11 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
     List<Profile> allUsers = await _model.getAllUsers();
     for(Profile user in allUsers){
       final userLocation = getUserLocation(user);
-      var existingLocation = mapMarkers.firstWhere((element) => element.user!.userName == userLocation.user!.userName, orElse: () => UserLocation());
-      if(user.location != null && !mapMarkers.contains(existingLocation)){
-        mapMarkers.add(userLocation);
+      if(userLocation.user!=null){
+        var existingLocation = mapMarkers.firstWhere((element) => element.user!.userName == userLocation.user!.userName, orElse: () => UserLocation());
+        if(user.location != null && !mapMarkers.contains(existingLocation)){
+          mapMarkers.add(userLocation);
+        }
       }
     }
     if(mounted){
@@ -351,6 +354,11 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
     otherUserFriendsList = await _model.getFriendsList(user);
     currentUserFriendsList = await _model.getFriendsList(currentUser);
     numFriends = otherUserFriendsList.length;
+    if(mounted) {
+      setState(() {
+
+      });
+    }
   }
 
   bool isAFriend(Profile user){
@@ -387,12 +395,18 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
 
   UserLocation getUserLocation(Profile user){
     List<String> locationFromDatabase = user.location.toString().split(",");
-    double latitude = double.parse(locationFromDatabase[0]);
-    double longitude = double.parse(locationFromDatabase[1]);
-    return UserLocation(
-        latlng: LatLng(latitude, longitude),
-        user: user
-    );
+
+    if(user.location != null){
+      double latitude = double.parse(locationFromDatabase[0]);
+      double longitude = double.parse(locationFromDatabase[1]);
+      return UserLocation(
+          latlng: LatLng(latitude, longitude),
+          user: user
+      );
+    }
+    else{
+      return UserLocation();
+    }
   }
 
   /*
