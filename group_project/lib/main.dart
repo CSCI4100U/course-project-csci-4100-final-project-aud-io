@@ -246,31 +246,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                     ),
                     Expanded(
-                        child: GestureDetector(
-                          child: Container(
-                            padding: padding,
-                            width: 300,
-                            decoration: const BoxDecoration(color: Color.fromRGBO(
-                                149, 215, 250, 1.0)),
-                            child: ListTile(
-                                title: Text(FlutterI18n.translate(context, "titles.explore"), style: style,),
-                                subtitle: Text(FlutterI18n.translate(context, "main.view_explore"), style: style,),
-                                trailing: const Icon(Icons.public)
-                            ),
-                          ),
-                          onTap: (){
-                            // Go to playlists Page
-                            Navigator.pushNamed(context, '/explore');
-                          },
-                        ),
-                    ),
-                    Expanded(
                       child: GestureDetector(
                         child: Container(
                           padding: padding,
                           width: 300,
-                          decoration: const BoxDecoration(color: Color.fromRGBO(
-                              149, 250, 226, 1.0)),
+                          decoration: const BoxDecoration(color: Color.fromRGBO(149, 215, 250, 1.0)),
                           child: const ListTile(
                               title: Text("Playlist", style: style,),
                               subtitle: Text("Check out your playlist", style: style,),
@@ -280,6 +260,25 @@ class _MyHomePageState extends State<MyHomePage> {
                         onTap: (){
                           // Go to playlists Page
                           Navigator.pushNamed(context, '/playlist');
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        child: Container(
+                          padding: padding,
+                          width: 300,
+                          decoration: const BoxDecoration(color: Color.fromRGBO(
+                              149, 250, 226, 1.0)),
+                          child: ListTile(
+                              title: Text(FlutterI18n.translate(context, "titles.explore"), style: style,),
+                              subtitle: Text(FlutterI18n.translate(context, "main.view_explore"), style: style,),
+                              trailing: const Icon(Icons.public)
+                          ),
+                        ),
+                        onTap: (){
+                          // Go to playlists Page
+                          Navigator.pushNamed(context, '/explore');
                         },
                       ),
                     ),
