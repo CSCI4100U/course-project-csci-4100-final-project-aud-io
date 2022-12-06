@@ -86,7 +86,9 @@
     "cancel" : "Cancel",
     "remove_genre" : "Remove from Favorite Genres",
     "remove_playlist" : "Remove from Playlist",
-    "remove_friend" : "Remove Friend?"
+    "remove_friend" : "Remove Friend?",
+    "permission_denied": "Check Location Permissions in Device Settings",
+    "understand": "I understand"
   },
   "snackbars" : {
     "reset_confirm" : "Password Reset Email Sent",

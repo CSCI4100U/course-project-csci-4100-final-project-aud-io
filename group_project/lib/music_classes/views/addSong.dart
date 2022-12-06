@@ -141,7 +141,6 @@ class _AddSongsState extends State<AddSongs> {
                       artist: songArtistEntered,
                       duration: songDurationEntered
                   );
-                  songModel.insertSong(song,genreEntered);
                   Navigator.of(context).pop(song);
                 },
                     icon: const Icon(Icons.arrow_forward, size: 20),

@@ -86,7 +86,9 @@
     "cancel" : "Annuler",
     "remove_genre" : "Supprimer des genres favoris",
     "remove_playlist" : "Retirer de Sélection de Chansons",
-    "remove_friend" : "Supprimer un ami?"
+    "remove_friend" : "Supprimer un ami?",
+    "permission_denied": "Vérifier les autorisations de localisation dans les paramètres de l'appareil",
+    "understand": "je comprends"
   },
   "snackbars" : {
     "reset_confirm" : "E-mail de réinitialisation du mot de passe envoyé",

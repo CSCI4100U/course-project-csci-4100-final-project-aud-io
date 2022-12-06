@@ -28,8 +28,7 @@ class _SongsListState extends State<SongsList> {
   @override
   void initState(){
     super.initState();
-    songStream = _songModel.getSongStream(genreSelected);
-    loadSongs();
+    getAllSongs();
   }
 
   @override
@@ -45,9 +44,7 @@ class _SongsListState extends State<SongsList> {
             icon: const Icon(Icons.view_list_rounded),
           ),
           IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed("/addSongs");
-            },
+            onPressed: _addSongToCloudStorage,
             icon: const Icon(Icons.playlist_add),
           )
         ],
@@ -97,7 +94,7 @@ class _SongsListState extends State<SongsList> {
                                         artist: songOnDisplay.artist!,
                                         link: songOnDisplay.link
                                     );
-                                    addSong(song);
+                                    _addSongToLocalStorage(song);
                                   },
                                 icon: const Icon(Icons.add),
                               )
@@ -125,15 +122,19 @@ class _SongsListState extends State<SongsList> {
   getAllSongs() async{
     songStream = _songModel.getSongStream(genreSelected);
     allSongs = await _songModel.getSongList(genreSelected);
+    setState(() {
+
+    });
   }
 
-  addSong(Song song) async {
+  _addSongToLocalStorage(Song song) async {
     await _songModel.insertSongLocal(song);
     Utils.showSnackBar("${FlutterI18n.translate(context, "snackbars.added")} ${song.name} ${FlutterI18n.translate(context, "snackbars.to_playlist")}",Colors.black);
   }
 
-  addSongToCloudStorage() async{
-    var song = await Navigator.of(context).pushNamed('/addSongs');
-    
+  _addSongToCloudStorage() async{
+    var song = await Navigator.of(context).pushNamed('/addSongs') as Song;
+    _songModel.insertSong(song,genreSelected);
+    getAllSongs();
   }
 }
