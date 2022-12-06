@@ -11,7 +11,11 @@
     "add_friend" : "Add Friends",
     "explore" : "Explore",
     "stats_table" :  "Statistics Data Table",
-    "stats_chart" : "Statistics Chart"
+    "stats_chart" : "Statistics Chart",
+    "playlist" : "Playlist",
+    "my_playlist" : "My Playlist",
+    "liked_genre" : "Liked Genres",
+    "add_song" : "Add Song"
   },
   "forms": {
     "email" : "Email",
@@ -22,6 +26,9 @@
     "country" : "Country",
     "favGenres": "Favorite Genres",
     "search" : "Search username",
+    "song_name" : "Song Name",
+    "song_artist" : "Song Artist",
+    "song_duration" : "Song Duration",
     "buttons" : {
       "birthday" : "Birthday",
       "login_here" : "Login Here",
@@ -32,6 +39,11 @@
       "add" : "Add",
       "stats" : "Statistics"
     },
+    "languages" : {
+      "english" : "English",
+      "french" : "French",
+      "spanish" : "Spanish"
+    },
     "texts" : {
       "have_account" : "Have an Account?\t\t\t",
       "no_account" : "Not Signed Up?\t\t\t",
@@ -39,7 +51,12 @@
       "no_friend" : "Looks like you have no\nfriends :(",
       "project" : "This is our Project hope you enjoy!",
       "add_fav" : "Add Favourite Genre",
-      "user_current" : "User currently at:"
+      "user_current" : "User currently at:",
+      "user_unknown" : "Unknown Location",
+      "no_results" : "No Results Found",
+      "likes" : "Likes",
+      "no_genres" : "No Genres in Common",
+      "none" : "NONE"
     },
     "errors" : {
       "valid_email" : "Enter a valid email",
@@ -47,16 +64,41 @@
       "valid_user" : "Enter a Valid Username",
       "valid_num" : "Enter a Valid Phone Number",
       "valid_city" : "Enter a Valid City Name",
-      "valid_country" : "Enter a Valid Country Name"
+      "valid_country" : "Enter a Valid Country Name",
+      "valid_song_name" : "Enter a Valid Song Name",
+      "valid_song_artist" : "Enter a Valid Artist Name",
+      "valid_duration" : "Enter a Valid Duration",
+      "valid_genre" : "Enter a Valid Genre"
     }
   },
   "main" : {
     "view_profile" : "View profile!",
     "view_friend" : "View friends!",
-    "view_genre" : "View genre!",
-    "view_explore" : "Travel the world!"
+    "view_genre" : "View genres!",
+    "view_explore" : "Travel the world!",
+    "view_playlist" : "Checkout your playlist!"
   },
   "charts" : {
-    "freq" :"Frequency"
+    "freq" : "Frequency"
+  },
+  "dialogs" : {
+    "remove" : "Remove",
+    "cancel" : "Cancel",
+    "remove_genre" : "Remove from Favorite Genres",
+    "remove_playlist" : "Remove from Playlist",
+    "remove_friend" : "Remove Friend?"
+  },
+  "snackbars" : {
+    "reset_confirm" : "Password Reset Email Sent",
+    "added" : "Added",
+    "to_playlist" : "to playlist!",
+    "deleted" : "Deleted",
+    "as_friend" : "as a friend",
+    "just_added" : "Just Added"
+  },
+  "notifs" : {
+    "header" : "Aud.io - Password Reset",
+    "notif_now" : "Please Fill in the Form to Reset Your Password",
+    "notif_later" : "If you have not received an email, please resubmit the form"
   }
 }
