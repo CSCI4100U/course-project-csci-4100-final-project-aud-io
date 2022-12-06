@@ -206,7 +206,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     } on FirebaseAuthException catch (e) {
       print(e);
 
-      Utils.showSnackBar(e.message);
+      Utils.showSnackBar(e.message, Colors.red);
     }
     await UserModel.initializeCurrentUser();
     navigatorKey.currentState!.pop();

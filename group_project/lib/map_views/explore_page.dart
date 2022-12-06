@@ -13,6 +13,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../MainScreen_Model/app_constants.dart';
 import '../user_classes/models/profile.dart';
+import '../user_classes/models/utils.dart';
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key, required this.title}) : super(key: key);
 
@@ -238,7 +239,12 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
         currentUser.location = "${userLocation.latitude},${userLocation.longitude}";
         if(!locationLoaded){
           UserModel().updateUser(currentUser);
-          showSnackBar("${FlutterI18n.translate(context, "forms.texts.user_current")} ${places[0].subThoroughfare!} ${places[0].thoroughfare!}");
+          Utils.showSnackBar("${FlutterI18n.translate(
+              context, "forms.texts.user_current")} "
+              "${places[0].subThoroughfare!} "
+              "${places[0].thoroughfare!}",
+              Colors.black);
+
           getAllFriends(currentUser);
         }
         getAllUserMarkers();
@@ -273,9 +279,11 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
         mapMarkers.add(userLocation);
       }
     }
-    setState(() {
+    if(mounted){
+      setState(() {
 
-    });
+      });
+    }
   }
 
   /*
@@ -310,14 +318,14 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
   * Function shows a snackBar given a
   * string content
   * */
-  showSnackBar(String content){
-    ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(content,
-              style: const TextStyle(fontSize: 20),)
-        )
-    );
-  }
+  // showSnackBar(String content){
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //           content: Text(content,
+  //             style: const TextStyle(fontSize: 20),)
+  //       )
+  //   );
+  // }
 
   /*
   * Completely Stolen Code from the Internet

@@ -1,16 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Song {
+  int? id;
   String? name;
   String? duration;
   String? artist;
   String? link;
   String? _genre;
   DocumentReference? reference;
-  Song({this.name, this.duration, this.artist, this.link});
+  Song({this.id,this.name, this.duration, this.artist, this.link});
 
   Song.fromMap(var map, {this.reference}){
-
+    this.id = map['id'];
     this.name = map['name'];
     this.duration = map['duration'];
     this.artist = map['artist'];
@@ -20,6 +21,7 @@ class Song {
 
   Map<String,Object?> toMap(){
     return {
+      'id': this.id,
       'name': this.name,
       'duration': this.duration,
       'artist': this.artist,
@@ -35,7 +37,7 @@ class Song {
 
   @override
   String toString() {
-    return "'$name' by $artist - ($duration) - Genre: $genre ";
+    return "{$id} '$name' by $artist - ($duration) - Genre: $genre ";
   }
 
 

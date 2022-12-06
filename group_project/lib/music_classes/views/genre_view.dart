@@ -6,7 +6,7 @@ import 'package:group_project/MainScreen_Model/app_constants.dart';
 import 'package:group_project/MainScreen_Model/navigation_bar.dart';
 import 'package:group_project/music_classes/models/genre_model.dart';
 import 'package:group_project/music_classes/views/song_view.dart';
-import 'package:group_project/music_classes/models/genre.dart';
+import 'package:group_project/music_classes/models/fav_genre.dart';
 
 class GenreView extends StatefulWidget {
   const GenreView({Key? key,this.title, required this.heartBool}) : super(key: key);
@@ -130,11 +130,10 @@ class _GenreViewState extends State<GenreView> {
   }
 
   Future _addGenre(FavGenre genre) async{
-    //FavGenre? newGenre = await Navigator.pushNamed(context, '/heartGenre') as FavGenre?;
-
     await db.insertGenre(genre);
     getFavGenres();
   }
+
   Future _deleteGenre(int id) async {
     await db.deleteGenreById(id);
     getFavGenres();
