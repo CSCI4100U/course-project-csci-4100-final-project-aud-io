@@ -150,8 +150,6 @@ class _FriendListState extends State<FriendList> {
       _model.addToFriendList(friend, currentUser);
 
       loadFriends();
-
-      Utils.showSnackBar("Just added ${friend.userName} as a friend :)",Colors.black);
     }
   }
 

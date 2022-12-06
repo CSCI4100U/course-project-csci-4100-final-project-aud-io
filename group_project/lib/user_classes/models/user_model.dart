@@ -6,8 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:group_project/user_classes/models/utils.dart';
 import 'package:group_project/user_classes/views/profile_view.dart';
 import 'dart:async';
+import '../../music_classes/models/fav_genre.dart';
 import 'profile.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -125,6 +127,8 @@ class UserModel{
     print("Adding '${friend.userName}' to ${user.userName}'s friendsList...");
     FirebaseFirestore.instance.collection('users')
         .doc(user.reference!.id).collection('friendsList').doc().set(friend.toMap());
+
+    Utils.showSnackBar("Just added ${friend.userName} as a friend :)",Colors.black);
   }
 
   Future updateUser(Profile user) async{
@@ -166,13 +170,28 @@ class UserModel{
       ),
       onTap: (){
         // go to profile page of friend
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ProfileView(
+        if(!isCurrentUser(user)){
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ProfileView(
                 title: "${user.userName}'s ${FlutterI18n.translate(context, "titles.profile")}",
                 otherUserEmail: "${user.email}",
-            ))
-        );
+              ))
+          );
+        }
       },
     );
+  }
+
+  isCurrentUser(Profile user){
+    return user.userName == currentUser.userName;
+  }
+
+  updateFavGenres(List<dynamic> allGenres){
+    List<String> genres = [];
+    for(FavGenre genre in allGenres){
+      genres.add(genre.genre!.toUpperCase());
+    }
+    currentUser.favGenres = genres;
+    UserModel().updateUser(currentUser);
   }
 }

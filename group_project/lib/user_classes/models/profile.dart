@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:group_project/music_classes/models/fav_genre.dart';
 
 class Profile{
   String? userName;
@@ -8,10 +11,17 @@ class Profile{
   String? email;
   String? birthday;
   String? _location;
+  List<dynamic>? _favGenres;
   DocumentReference? reference;
 
   Profile({this.userName,this.phoneNum,this.country,this.city,this.birthday,this.email});
 
+  set favGenres(favGenres){
+    _favGenres = favGenres;
+  }
+  get favGenres{
+    return _favGenres;
+  }
   set location(location){
     _location = location;
   }
@@ -27,6 +37,7 @@ class Profile{
     this.birthday = map['birthday'];
     this.email = map['email'];
     this._location = map['location'];
+    this.favGenres = map['favGenres'];
   }
 
   Map<String,Object?> toMap(){
@@ -37,7 +48,8 @@ class Profile{
       'city': this.city,
       'birthday': this.birthday,
       'email': this.email,
-      'location': this._location
+      'location': this._location,
+      'favGenres': this.favGenres
     };
   }
   @override

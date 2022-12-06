@@ -16,7 +16,7 @@
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:group_project/MainScreen_Views/fav_genres_view.dart';
+import 'package:group_project/music_classes/views/fav_genres_view.dart';
 import 'package:group_project/music_classes/views/addSong.dart';
 import 'package:group_project/music_classes/views/playlist_view.dart';
 import 'package:group_project/statistics_classes/views/statistics_chart.dart';

@@ -23,7 +23,7 @@ class _ProfileViewState extends State<ProfileView> {
   List<Profile> myProfile = [];
   late String? currentUserEmail;
   final _model = UserModel();
-  Profile userBeingViewed = Profile();
+  late Profile userBeingViewed = Profile();
   var allGenres = [];
   var _lastInsertedGenre;
   var selectedIndex = -1;
@@ -49,23 +49,25 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> translations = [
-      "forms.username",
-      "forms.email",
-      "forms.city",
-      "forms.country",
-      "forms.phone",
-      "forms.buttons.birthday"
-    ];
-    Map<String,String> userInformation = {
-      translations[0]:userBeingViewed.userName!,
-      translations[1]:userBeingViewed.email!,
-      translations[2]:userBeingViewed.city!,
-      translations[3]:userBeingViewed.country!,
-      translations[4]:userBeingViewed.phoneNum!,
-      translations[5]:userBeingViewed.birthday!,
-    };
     if(userBeingViewed.userName!=null){
+      List<String> translations = [
+        "forms.username",
+        "forms.email",
+        "forms.city",
+        "forms.country",
+        "forms.phone",
+        "forms.buttons.birthday",
+        "forms.favGenres"
+      ];
+      Map<String,String> userInformation = {
+        translations[0]:userBeingViewed.userName!,
+        translations[1]:userBeingViewed.email!,
+        translations[2]:userBeingViewed.city!,
+        translations[3]:userBeingViewed.country!,
+        translations[4]:userBeingViewed.phoneNum!,
+        translations[5]:userBeingViewed.birthday!,
+        translations[6]:userBeingViewed.favGenres!.toString(),
+      };
       return Scaffold(
         appBar: buildAppBarForSubPages(context, widget.title!),
         body: Column(

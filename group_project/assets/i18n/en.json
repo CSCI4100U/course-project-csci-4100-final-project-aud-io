@@ -20,6 +20,7 @@
     "phone" : "Phone Number",
     "city" : "City",
     "country" : "Country",
+    "favGenres": "Favorite Genres",
     "search" : "Search username",
     "buttons" : {
       "birthday" : "Birthday",
