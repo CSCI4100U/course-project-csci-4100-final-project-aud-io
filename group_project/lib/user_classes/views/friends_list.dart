@@ -3,11 +3,11 @@
 * */
 
 import 'package:flutter/material.dart';
-import '../../MainScreen_Model/app_constants.dart';
-import '../../MainScreen_Views/custom_circular_progress_indicator.dart';
+import '../../mainScreen_classes/MainScreen_Model/app_constants.dart';
+import '../../mainScreen_classes/MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../models/profile.dart';
 import '../models/user_model.dart';
-import 'package:group_project/MainScreen_Model/navigation_bar.dart';
+import 'package:group_project/mainScreen_classes/MainScreen_Model/navigation_bar.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../models/utils.dart';

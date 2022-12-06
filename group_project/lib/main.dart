@@ -32,9 +32,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'MainScreen_Model/app_constants.dart';
-import 'MainScreen_Views/settings_view.dart';
-import 'map_views/explore_page.dart';
+import 'mainScreen_classes/MainScreen_Model/app_constants.dart';
+import 'mainScreen_classes/MainScreen_Views/settings_view.dart';
+import 'map_classes/map_views/explore_page.dart';
 
 // Aud.io logo at the top of the menu
 Widget logo = Container(

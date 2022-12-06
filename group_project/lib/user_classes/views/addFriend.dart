@@ -2,14 +2,13 @@
 * Author: Rajiv Williams
 * */
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
-import '../../MainScreen_Model/navigation_bar.dart';
+import 'package:group_project/mainScreen_classes/MainScreen_Views/custom_circular_progress_indicator.dart';
+import '../../mainScreen_classes/MainScreen_Model/navigation_bar.dart';
 import '../models/profile.dart';
 import '../models/user_model.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:group_project/MainScreen_Model/app_constants.dart';
+import 'package:group_project/mainScreen_classes/MainScreen_Model/app_constants.dart';
 
 class AddFriendSearch extends StatefulWidget {
   AddFriendSearch({Key? key, this.title, required this.userNameEntered}) : super(key: key);

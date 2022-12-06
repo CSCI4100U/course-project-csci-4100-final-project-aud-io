@@ -4,11 +4,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
-import '../../MainScreen_Model/app_constants.dart';
+import 'package:group_project/mainScreen_classes/MainScreen_Views/custom_circular_progress_indicator.dart';
+import '../../mainScreen_classes/MainScreen_Model/app_constants.dart';
 import '../models/profile.dart';
 import '../models/user_model.dart';
-import 'package:group_project/MainScreen_Model/navigation_bar.dart';
+import 'package:group_project/mainScreen_classes/MainScreen_Model/navigation_bar.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({Key? key, required this.title, this.otherUserEmail}) : super(key: key);
@@ -66,7 +66,7 @@ class _ProfileViewState extends State<ProfileView> {
         translations[3]:userBeingViewed.country!,
         translations[4]:userBeingViewed.phoneNum!,
         translations[5]:userBeingViewed.birthday!,
-        translations[6]:userBeingViewed.favGenres!= null ||
+        translations[6]:userBeingViewed.favGenres!= null &&
             userBeingViewed.favGenres.toString().isNotEmpty
             ? userBeingViewed.favGenres!.toString()
             : FlutterI18n.translate(context, "forms.texts.none"),

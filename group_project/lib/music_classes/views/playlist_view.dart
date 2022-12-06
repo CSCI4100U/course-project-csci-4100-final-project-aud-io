@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:group_project/music_classes/models/song_model.dart';
-
-import '../../MainScreen_Model/app_constants.dart';
-import '../../user_classes/models/utils.dart';
 import '../models/song.dart';
 
 

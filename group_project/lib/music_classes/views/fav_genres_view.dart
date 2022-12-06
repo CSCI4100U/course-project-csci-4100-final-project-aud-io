@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:group_project/music_classes/models/fav_genre.dart';
-import '../../MainScreen_Model/app_constants.dart';
+import '../../mainScreen_classes/MainScreen_Model/app_constants.dart';
 import '../../user_classes/models/user_model.dart';
 import '../models/genre_model.dart';
 import 'song_view.dart';
