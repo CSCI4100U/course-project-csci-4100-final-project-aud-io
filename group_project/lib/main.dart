@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
         home: buildSplashScreen(),
         routes: {
           '/home' : (context) => MyHomePage(title: logo,),
-          '/profile' : (context) => const ProfileView(title: "Profile"),
+          '/profile' : (context) => ProfileView(title: FlutterI18n.translate(context, "titles.profile")),
           '/friendsList' : (context) => FriendList(title: FlutterI18n.translate(context, "titles.friend"),),
           '/addFriend' : (context) => AddFriendSearch(title: FlutterI18n.translate(context, "titles.add_friend"),userNameEntered: ""),
 

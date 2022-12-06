@@ -238,6 +238,11 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
         currentLocation = LatLng(userLocation.latitude, userLocation.longitude);
         currentUser.location = "${userLocation.latitude},${userLocation.longitude}";
         if(!locationLoaded){
+          String userAddress = "${places[0].subThoroughfare!} "
+              "${places[0].thoroughfare!}";
+          if(userAddress == " "){
+            userAddress = "Unknown address";
+          }
           UserModel().updateUser(currentUser);
           Utils.showSnackBar("${FlutterI18n.translate(
               context, "forms.texts.user_current")} "

@@ -70,20 +70,28 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
                   if(usersFound.isNotEmpty){
                     return Expanded(
                       child:
-                        Container(
-                          child: ListView.builder(
-                            padding: const EdgeInsets.all(8.0),
-                            itemCount: usersFound.length,
-                            itemBuilder: (context,index){
+                        ListView.builder(
+                          padding: const EdgeInsets.all(8.0),
+                          itemCount: usersFound.length,
+                          itemBuilder: (context,index){
 
-                              Profile userFound = usersFound[index];
+                            Profile userFound = usersFound[index];
 
-                              return Row(
+                            return Container(
+                              decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        blurRadius: 1
+                                    )
+                                  ]
+                              ),
+                              child: Row(
                                 children: [
                                   _model.buildUserAvatar(userFound,context),
                                   Expanded(
                                       child: Container(
-                                        padding: const EdgeInsets.all(10.0),
+                                        padding: padding,
                                         child: ListTile(
                                             title: Text("${userFound.userName}",
                                               style: style,
@@ -103,9 +111,9 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
                                       ),
                                   ),
                                 ]
-                              );
-                            }
-                          ),
+                              ),
+                            );
+                          }
                         ),
                     );
                   }
