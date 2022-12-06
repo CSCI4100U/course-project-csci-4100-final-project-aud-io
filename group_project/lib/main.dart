@@ -133,6 +133,12 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             icon: const Icon(Icons.favorite_border),
           ),
+          IconButton(
+            onPressed: (){
+              Navigator.pushNamed(context, '/settings');
+            },
+            icon: const Icon(Icons.settings_outlined),
+          ),
           SizedBox(
             width: 37,
             child: PopupMenuButton(
@@ -172,12 +178,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   });                }
               },
             ),
-          ),
-          IconButton(
-            onPressed: (){
-              Navigator.pushNamed(context, '/settings');
-            },
-            icon: const Icon(Icons.settings_outlined),
           ),
         ],
       ),

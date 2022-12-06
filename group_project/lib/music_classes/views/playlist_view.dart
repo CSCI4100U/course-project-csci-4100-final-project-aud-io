@@ -29,38 +29,47 @@ class _PlaylistViewState extends State<PlaylistView> {
         title: Text(widget.title!),
       ),
       body: ListView.builder(
-        padding: padding,
         itemCount: mySongs.length,
         itemBuilder: (context, index){
           Song songOnDisplay = mySongs[index];
-          return Row(
-              children: [
-                Expanded(
-                  flex: 6,
-                  child: ListTile(
-                      title: Text(songOnDisplay.name!),
-                      subtitle: Text(songOnDisplay.artist!),
-                      trailing: Text(songOnDisplay.duration!)
+          return Container(
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      spreadRadius: 1
+                  )
+                ]
+            ),
+            child: Row(
+                children: [
+                  Expanded(
+                    flex: 6,
+                    child: ListTile(
+                        title: Text(songOnDisplay.name!),
+                        subtitle: Text(songOnDisplay.artist!),
+                        trailing: Text(songOnDisplay.duration!)
+                    ),
                   ),
-                ),
-                Expanded(
-                    flex: 1,
-                    child: IconButton(
-                      onPressed: () {
-                        Song song = Song();
-                        song = Song(
-                            id: songOnDisplay.id,
-                            name: songOnDisplay.name!,
-                            duration: songOnDisplay.duration!,
-                            artist: songOnDisplay.artist!,
-                            link: songOnDisplay.link
-                        );
-                        _showRemoveSongAlert(song);
-                      },
-                      icon: const Icon(Icons.delete),
-                    )
-                ),
-              ]
+                  Expanded(
+                      flex: 1,
+                      child: IconButton(
+                        onPressed: () {
+                          Song song = Song();
+                          song = Song(
+                              id: songOnDisplay.id,
+                              name: songOnDisplay.name!,
+                              duration: songOnDisplay.duration!,
+                              artist: songOnDisplay.artist!,
+                              link: songOnDisplay.link
+                          );
+                          _showRemoveSongAlert(song);
+                        },
+                        icon: const Icon(Icons.delete),
+                      )
+                  ),
+                ]
+            ),
           );
         },
       ),

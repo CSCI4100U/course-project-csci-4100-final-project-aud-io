@@ -3,8 +3,10 @@
 * */
 
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:group_project/music_classes/models/fav_genre.dart';
+import '../MainScreen_Model/app_constants.dart';
 import '../music_classes/models/genre_model.dart';
+import '../music_classes/views/song_view.dart';
 
 class FavoriteGenresView extends StatefulWidget {
   FavoriteGenresView({Key? key, this.title}) : super(key: key);
@@ -17,7 +19,7 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
 
   GenreModel db = GenreModel();
   List<Color> genreColors = [];
-  List allGenres = [];
+  List<FavGenre> allGenres = [];
   int selectedGenre = 0;
   int isSelected = 0;
 
@@ -30,68 +32,46 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
   @override
   Widget build(BuildContext context) {
     for(int i = 0; i < allGenres.length; i++){
-      genreColors.add(
-          Color.fromRGBO(
-              Random().nextInt(125)+130,
-              Random().nextInt(125)+130,
-              Random().nextInt(125)+130, 1
-          )
-      );
+      genreColors.add(db.genreColors[i]!);
     }
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title!),
-        actions: [
-          IconButton(
-              onPressed: () {
-                setState(() {
-                  if(isSelected != -1) {
-                    deleteGenre(selectedGenre);
-                    isSelected = -1;
-                  }
-                });
-              },
-              icon: Icon(Icons.delete)
-          ),
-        ],
       ),
       body: ListView.builder(
-          padding: EdgeInsets.all(10),
+          padding: padding,
           itemCount: allGenres.length,
           itemBuilder: (context, index) {
-            return Column(
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 250,
-                  decoration: BoxDecoration(
+                Expanded(
+                  flex: 9,
+                  child: Container(
+                    width: 250,
                     color: genreColors[index],
-                    border: Border.all(
-                        color: isSelected == index ? Colors.black : genreColors[index],
-                        width: 5
+                    child: GestureDetector(
+                      child: ListTile(
+                        title: Text(allGenres[index].genre.toString().toUpperCase(),
+                        style: style, textAlign: TextAlign.center,),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context)=> SongsList(title: allGenres[index].genre!,)));
+                      },
                     ),
-                    ),
-                  child: GestureDetector(
-                    child: ListTile(
-                      title: Text('${allGenres[index].genre.toString().toUpperCase()}',
-                      style: TextStyle(
-                          fontSize: 30
-                      ), textAlign: TextAlign.center,),
-                      tileColor: isSelected == index ? Colors.black : Colors.blue,
-                    ),
-                    onTap: () {
-                      setState(() {
-                        print(allGenres[index].id);
-                        selectedGenre = allGenres[index].id;
-                        if(isSelected == index){
-                          isSelected = -1;
-                        } else {
-                          isSelected = index;
-                        }
-                        //print(isSelected);
-                      });
-                    },
                   ),
                 ),
+                Expanded(
+                  flex: 1,
+                    child: IconButton(
+                      icon: const Icon(Icons.remove_circle_outline),
+                      onPressed: (){
+                        _showRemoveSongAlert(allGenres[index]);
+                      },
+                    )
+                )
               ],
             );
           }
@@ -99,25 +79,35 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
     );
   }
 
-  // Future _addGenre() async{
-  //   FavGenre? newGenre = await Navigator.pushNamed(context, '/heartGenre') as FavGenre?;
-  //
-  //   if(newGenre != null){
-  //     for (int i = 0; i < allGenres.length; i++) {
-  //       if (newGenre.genre == allGenres[i].genre) {
-  //         final snackBar = SnackBar(
-  //             content: Text("you already have ${newGenre.genre} favourited")
-  //         );
-  //         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  //         return print("this is not allowed");
-  //       }
-  //     }
-  //     await db.insertGenre(newGenre);
-  //     setState(() {
-  //       getGenres();
-  //     });
-  //   }
-  // }
+  _showRemoveSongAlert(FavGenre genre){
+    showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (context){
+          return AlertDialog(
+            title: const Text("Remove from Favorite Genres?"),
+            content: Text(genre.genre.toString().toUpperCase()),
+            actions: [
+              TextButton(
+                  onPressed: (){
+                    setState(() {
+                      deleteGenre(genre.id!);;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Remove")
+              ),
+              TextButton(
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Cancel")
+              )
+            ],
+          );
+        }
+    );
+  }
 
   getGenres() async{
     allGenres = await db.getAllGenres();

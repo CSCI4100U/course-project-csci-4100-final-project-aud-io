@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:group_project/music_classes/models/genre_model.dart';
+import '../../MainScreen_Model/app_constants.dart';
 import '../../MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../models/song.dart';
 import '../models/song_model.dart';
@@ -33,34 +34,47 @@ class _SongsListState extends State<SongsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(genreSelected),
+        title: Text(genreSelected.toUpperCase()),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed("/playlist");
+            },
+            icon: const Icon(Icons.view_list_rounded),
+          ),
           IconButton(
             onPressed: () {
               Navigator.of(context).pushNamed("/addSongs");
             },
-            icon: const Icon(Icons.view_list_rounded),
+            icon: const Icon(Icons.playlist_add),
           )
         ],
       ),
-      body: Container(
-        child:
-        StreamBuilder(
-            stream: songStream,
-            builder: (BuildContext context, AsyncSnapshot snapshot){
-              print("Snapshot: $snapshot");
-              if(!snapshot.hasData){
-                print("Data is missing from SongList");
-                return const CustomCircularProgressIndicator();
-              }
-              else{
-                print("Found data for SongList");
-                print(allSongs);
-                return ListView.builder(
-                  itemCount: allSongs.length,
-                  itemBuilder: (context, index) {
-                    Song songOnDisplay = allSongs[index];
-                    return Row(
+      body: StreamBuilder(
+          stream: songStream,
+          builder: (BuildContext context, AsyncSnapshot snapshot){
+            print("Snapshot: $snapshot");
+            if(!snapshot.hasData){
+              print("Data is missing from SongList");
+              return const CustomCircularProgressIndicator();
+            }
+            else{
+              print("Found data for SongList");
+              print(allSongs);
+              return ListView.builder(
+                itemCount: allSongs.length,
+                itemBuilder: (context, index) {
+                  Song songOnDisplay = allSongs[index];
+                  return Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          spreadRadius: 1
+                        )
+                      ]
+                    ),
+                    child: Row(
                         children: [
                           Expanded(
                             flex: 6,
@@ -87,12 +101,12 @@ class _SongsListState extends State<SongsList> {
                               )
                           ),
                          ]
-                    );
-                  },
-                );
-              }
+                    ),
+                  );
+                },
+              );
             }
-        ),
+          }
       ),
     );
   }
