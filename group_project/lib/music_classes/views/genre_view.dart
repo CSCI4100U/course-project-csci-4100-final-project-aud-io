@@ -20,9 +20,20 @@ class genreView extends StatefulWidget {
 
 class _genreViewState extends State<genreView> {
   final _model = GenreModel();
+
   List allGenres = [];
   List clicked = [false,false,false,false,false,false,false,false];
   List<FavGenre> tempGenres = [];
+  var colors = [
+    Colors.red[100],
+    Colors.blue[100],
+    Colors.cyan[100],
+    Colors.green[100],
+    Colors.yellow[100],
+    Colors.orange[100],
+    Colors.purple[100],
+    Colors.teal[100],
+  ];
 
   @override
   void initState() {
@@ -42,13 +53,15 @@ class _genreViewState extends State<genreView> {
         padding: padding,
         itemCount: allGenres.length,
         itemBuilder: (context, index){
+
           String genre = allGenres[index];
           return Column(
             children: [
               Container(
                 padding: padding,
                 width: 250,
-                color: Colors.red[100+(index*100)],
+                color: colors[index],
+
                 child: Row(
                   children: [
                     TextButton(
@@ -70,6 +83,7 @@ class _genreViewState extends State<genreView> {
           );
         },
       ),
+
 
     );
   }
