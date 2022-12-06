@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:group_project/MainScreen_Model/nav.dart';
+import 'package:group_project/MainScreen_Model/navigation_bar.dart';
+
+import '../MainScreen_Model/app_constants.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({Key? key, this.title}) : super(key: key);
@@ -17,11 +19,14 @@ class _SettingsViewState extends State<SettingsView> {
       appBar: buildAppBarForSubPages(context, widget.title!),
       body: ListView(
         children: [
-           ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "/statistics");
-              },
-              child: Text(FlutterI18n.translate(context, "forms.buttons.stats"), style: TextStyle(fontSize: 30))
+           Container(
+             padding: padding,
+             child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "/statistics");
+                },
+                child: Text(FlutterI18n.translate(context, "forms.buttons.stats"), style: style)
+             ),
            ),
           TextButton(
             onPressed: (){
@@ -30,7 +35,7 @@ class _SettingsViewState extends State<SettingsView> {
             },
             child: Text(
               FlutterI18n.translate(context, "forms.buttons.logout"),
-              style: TextStyle(fontSize: 30),
+              style: style,
             ),
           )
          ],

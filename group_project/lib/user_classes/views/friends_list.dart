@@ -3,16 +3,18 @@
 * */
 
 import 'package:flutter/material.dart';
+import '../../MainScreen_Model/app_constants.dart';
 import '../../MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../models/profile.dart';
 import '../models/user_model.dart';
-import 'package:group_project/MainScreen_Model/nav.dart';
+import 'package:group_project/MainScreen_Model/navigation_bar.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 class FriendList extends StatefulWidget {
-  const FriendList({Key? key,this.title}) : super(key: key);
+  const FriendList({Key? key,this.title,this.userFromExplore}) : super(key: key);
 
   final String? title;
+  final Profile? userFromExplore;
 
   @override
   State<FriendList> createState() => _FriendListState();
@@ -21,7 +23,6 @@ class FriendList extends StatefulWidget {
 class _FriendListState extends State<FriendList> {
 
   List<Profile> allFriends = [];
-  TextStyle style = const TextStyle(fontSize: 30);
 
   final _model = UserModel();
   late Stream friendListStream;
@@ -29,6 +30,9 @@ class _FriendListState extends State<FriendList> {
   @override
   void initState(){
     super.initState();
+    if(widget.userFromExplore != null){
+      _addFriend(widget.userFromExplore);
+    }
     friendListStream = _model.getFriendStream(currentUser);
     loadFriends();
   }
@@ -74,12 +78,12 @@ class _FriendListState extends State<FriendList> {
                                               style: style,
                                             ),
                                             trailing: IconButton(
-                                              highlightColor: Color.fromRGBO(118, 149, 255, 1),
+                                              highlightColor: const Color.fromRGBO(118, 149, 255, 1),
                                                 onPressed: (){
                                                   //open delete dialog for currentFriend
                                                   _showDeleteFriendAlert(context,currentFriend);
                                                 },
-                                                icon: Icon(Icons.person_remove,size: 30,),
+                                                icon: const Icon(Icons.person_remove,size: 30,),
                                             ),
                                           )
                                       ),
@@ -94,9 +98,7 @@ class _FriendListState extends State<FriendList> {
                 }
                 else{
                   return Container(
-                    // decoration: BoxDecoration(color: gradeColors[index]),
-                      padding: const EdgeInsets.all(10.0),
-
+                      padding: padding,
                       child: Text(
                         FlutterI18n.translate(context, "forms.texts.no_friend"),
                         style: style,
@@ -110,7 +112,9 @@ class _FriendListState extends State<FriendList> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addFriend,
+        onPressed: (){
+          _addFriend(Profile());
+        },
         tooltip: 'Add Friend',
         child: const Icon(Icons.person_add_alt_1),
       ),
@@ -123,10 +127,9 @@ class _FriendListState extends State<FriendList> {
   * friendsList and subsequently adds the current user
   * to the other user's friendsList
   * */
-  Future<void> _addFriend() async{
-    Profile? friend = await Navigator
+  Future<void> _addFriend(Profile? friend) async{
+    friend = await Navigator
         .pushNamed(context, '/addFriend') as Profile?;
-
     if(friend != null && friend.userName != null){
       //Todo: send friend a notification to add
 

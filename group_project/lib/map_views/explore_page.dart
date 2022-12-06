@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:group_project/MainScreen_Model/nav.dart';
+import 'package:group_project/MainScreen_Model/navigation_bar.dart';
 import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
 import 'package:group_project/map_model/userLocation.dart';
 import 'package:geolocator/geolocator.dart';
@@ -11,6 +11,7 @@ import 'package:group_project/map_model/map_constants.dart';
 import 'package:group_project/user_classes/models/user_model.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../MainScreen_Model/app_constants.dart';
 import '../user_classes/models/profile.dart';
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key, required this.title}) : super(key: key);
@@ -89,7 +90,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                 minZoom: minZoom,
                 maxZoom: maxZoom,
                 zoom: zoomValue,
-                center: currentLocation ?? MapConstants.defaultLocation
+                center: currentLocation
             ),
             layers: [
               TileLayerOptions(
@@ -106,7 +107,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                             return GestureDetector(
                               child:
                               Container(
-                                padding: EdgeInsets.all(10),
+                                padding: padding,
                                 child: CircleAvatar(
                                   radius: 40,
                                   backgroundColor: selectedIndex == i ?
@@ -118,12 +119,12 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                               onTap: (){
                                 pageController.animateToPage(
                                     i,
-                                    duration: Duration(milliseconds: 500),
+                                    duration: const Duration(milliseconds: 500),
                                     curve: Curves.easeInOut
                                 );
                                 selectedIndex = i;
                                 currentLocation = getUserLocation(mapMarkers[i].user!).latlng!;
-                                _animatedMapMove(currentLocation, 11.5);
+                                _animatedMapMove(currentLocation, mapController.zoom);
                               },
                             );
                           }
@@ -145,7 +146,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                     numFriends = null;
                     selectedIndex = value;
                     currentLocation = mapMarkers[value].latlng!;
-                    _animatedMapMove(currentLocation, 11.5);
+                    _animatedMapMove(currentLocation, mapController.zoom);
                   });
                 },
                 itemBuilder: (context,index){
@@ -153,7 +154,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                   getAllFriends(user!);
 
                   return Padding(
-                    padding: EdgeInsets.all(15),
+                    padding: padding,
                     child: Card(
                       elevation: 5,
                       shape: RoundedRectangleBorder(
@@ -177,12 +178,11 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               _model.buildUserAvatar(user!, context),
-                                              Container(
-                                                    width: 100,
+                                              SizedBox(
                                                     child: Text(
                                                       user?.userName ?? '',
                                                       style: const TextStyle(
-                                                          fontSize: 20,
+                                                          fontSize: fontSize,
                                                           fontWeight: FontWeight.bold,
                                                           color: Colors.white
                                                       ),
@@ -196,9 +196,9 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                           child: Row(
                                             children: [
                                               Icon(Icons.person,color: Colors.white,),
-                                               Text(numFriends! != 1 ?"$numFriends ${FlutterI18n.translate(context, "titles.friend")}": "1 ${FlutterI18n.translate(context, "titles.friend_sing")}",
-                                                style: TextStyle(
-                                                    fontSize: 20,
+                                               Text(numFriends! != 1 ? "$numFriends ${FlutterI18n.translate(context, "titles.friend")}": "1 ${FlutterI18n.translate(context, "titles.friend_sing")}",
+                                                style: const TextStyle(
+                                                    fontSize: fontSize,
                                                     color: Colors.white
                                                 ),
                                               )
@@ -207,7 +207,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                         )
                                       ],
                                     )
-                                ) : CustomCircularProgressIndicator()
+                                ) : const CustomCircularProgressIndicator()
                               ],
                             ),
                           ),
@@ -248,26 +248,20 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
   }
 
   _askForLocation() async{
-    bool permissionDenied = false;
-    Geolocator.isLocationServiceEnabled().then((value) => null);
-    Geolocator.requestPermission().then((value) => null);
-    Geolocator.checkPermission().then(
+    await Geolocator.isLocationServiceEnabled().then((value) => null);
+    await Geolocator.requestPermission().then((value) => null);
+    await Geolocator.checkPermission().then(
             (LocationPermission permission)
         {
           print("Check Location Permission: $permission");
-          if(permission == "LocationPermission.denied"){
-            permissionDenied = true;
-          }
         }
     );
 
-    if(!permissionDenied){
-      Geolocator.getPositionStream(
-        locationSettings: const LocationSettings(
-            accuracy: LocationAccuracy.best
-        ),
-      ).listen(_updateLocationStream);
-    }
+    Geolocator.getPositionStream(
+      locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.best
+      ),
+    ).listen(_updateLocationStream);
   }
 
   getAllUserMarkers() async{
@@ -301,7 +295,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
     }
     return false;
   }
-  
+
   UserLocation getUserLocation(Profile user){
     List<String> locationFromDatabase = user.location.toString().split(",");
     double latitude = double.parse(locationFromDatabase[0]);

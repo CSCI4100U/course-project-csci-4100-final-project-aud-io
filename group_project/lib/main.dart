@@ -15,13 +15,11 @@
 // ********************************************************
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:group_project/MainScreen_Views/notifications.dart';
-import 'package:group_project/user_classes/models/user_model.dart';
+import 'package:group_project/MainScreen_Views/fav_genres_view.dart';
+import 'package:group_project/music_classes/views/playlist_view.dart';
 import 'package:group_project/statistics_classes/views/statistics_chart.dart';
 import 'package:group_project/statistics_classes/views/statistics_datatable.dart';
-import 'package:group_project/user_classes/views/genre_form.dart';
 import 'package:group_project/user_classes/views/login_form.dart';
 import 'package:group_project/user_classes/views/addFriend.dart';
 import 'package:group_project/music_classes/views/genre_view.dart';
@@ -33,15 +31,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
-
+import 'MainScreen_Model/app_constants.dart';
 import 'MainScreen_Views/settings_view.dart';
 import 'map_views/explore_page.dart';
 
 // Aud.io logo at the top of the menu
 Widget logo = Container(
-    padding: EdgeInsets.all(5.0),
+    padding: padding,
     child: const Image(
       image: AssetImage('lib/images/audio_alt_beige2.png'),
       height: 125,
@@ -74,13 +70,15 @@ class MyApp extends StatelessWidget {
           '/profile' : (context) => const ProfileView(title: "Profile"),
           '/friendsList' : (context) => FriendList(title: FlutterI18n.translate(context, "titles.friend"),),
           '/addFriend' : (context) => AddFriendSearch(title: FlutterI18n.translate(context, "titles.add_friend"),userNameEntered: ""),
-          '/genre' : (context) => genreView(title: FlutterI18n.translate(context, "titles.genre")),
+          '/genre' : (context) => genreView(title: FlutterI18n.translate(context, "titles.genre",), heartBool: false,),
+          '/heartGenre' : (context) => genreView(title: FlutterI18n.translate(context, "titles.genre",), heartBool: true,),
           '/settings' : (context) => SettingsView(title: FlutterI18n.translate(context, "titles.setting")),
-          '/addGenre' : (context) => const GenreForm(title: "Add a Favourite Genre"),
-          '/notifications' : (context) => const NotificationsView(title: "Notifications",),
+          '/favGenres' : (context) => FavoriteGenresView(title: "Liked Genres",),
           '/explore' : (context) => ExplorePage(title: FlutterI18n.translate(context, "titles.explore"),),
           '/statistics' : (context) => StatisticsDataTable(title: FlutterI18n.translate(context, "titles.stats_table"),),
           '/statisticsChart' : (context) => StatisticsChart(title: FlutterI18n.translate(context, "titles.stats_chart"), frequencies: [],),
+          '/playlist' : (context) => PlaylistView(title: "My Playlist"),
+
         },
         localizationsDelegates: [
           FlutterI18nDelegate(
@@ -96,12 +94,12 @@ class MyApp extends StatelessWidget {
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
-        supportedLocales: [
-          Locale('en'),
-          Locale('fr'),
-          Locale('es'),
+        supportedLocales: const [
+          english,
+          french,
+          spanish,
         ],
-          );
+    );
   }
 }
 
@@ -116,69 +114,66 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  TextStyle style = const TextStyle(fontSize: 25);
-  var padding = const EdgeInsets.all(10.0);
-
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         toolbarHeight: 80,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: widget.title,
         actions: [
           IconButton(
             onPressed: (){
               Navigator.pushNamed(context, '/favGenres');
             },
-            icon: Icon(Icons.favorite_border),
-          ),
-          IconButton(
-            onPressed: (){
-              Navigator.pushNamed(context, '/settings');
-            },
-            icon: Icon(Icons.settings_outlined),
+            icon: const Icon(Icons.favorite_border),
           ),
           SizedBox(
             width: 37,
             child: PopupMenuButton(
               itemBuilder: (context) => [
+                //TODO: Translate these texts as well
                 const PopupMenuItem(
                     value: 1,
-                    child: Text('Change to EN')
+                    child: Text('English')
                 ),
                 const PopupMenuItem(
                     value: 2,
-                    child: Text('Change to FR')
+                    child: Text('French')
                 ),
                 const PopupMenuItem(
                     value: 3,
-                    child: Text('Change to ES')
+                    child: Text('Spanish')
                 ),
               ],
               onSelected: (value) {
                 if (value == 1){
                   print('Swapping to English');
-                  Locale newLocale = Locale('en');
+                  Locale newLocale = english;
                   setState(() {
                     FlutterI18n.refresh(context, newLocale);
                   });
                 } else if (value == 2){
                   print('Swapping to French');
-                  Locale newLocale = Locale('fr');
+                  Locale newLocale = french;
                   setState(() {
                     FlutterI18n.refresh(context, newLocale);
                   });
                 } else if (value == 3) {
                   print('Swapping to Spanish');
-                  Locale newLocale = Locale('es');
+                  Locale newLocale = spanish;
                   setState(() {
                     FlutterI18n.refresh(context, newLocale);
                   });                }
               },
             ),
+          ),
+          IconButton(
+            onPressed: (){
+              Navigator.pushNamed(context, '/settings');
+            },
+            icon: const Icon(Icons.settings_outlined),
           ),
         ],
       ),
@@ -201,7 +196,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: ListTile(
                                 title: Text(FlutterI18n.translate(context, "titles.profile"),style: style,),
                                 subtitle: Text(FlutterI18n.translate(context, "main.view_profile"), style: style,),
-                                trailing: Icon(Icons.person_pin_rounded)
+                                trailing: const Icon(Icons.person_pin_rounded)
                             ),
                           ),
                           onTap: (){
@@ -219,7 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: ListTile(
                                 title: Text(FlutterI18n.translate(context, "titles.friend"), style: style,),
                                 subtitle: Text(FlutterI18n.translate(context, "main.view_friend"), style: style,),
-                                trailing: Icon(Icons.groups)
+                                trailing: const Icon(Icons.groups)
                             ),
                           ),
                           onTap: (){
@@ -237,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: ListTile(
                                 title: Text(FlutterI18n.translate(context, "titles.genre"), style: style,),
                                 subtitle: Text(FlutterI18n.translate(context, "main.view_genre"), style: style,),
-                                trailing: Icon(Icons.music_note)
+                                trailing: const Icon(Icons.music_note)
                             ),
                           ),
                           onTap: (){
@@ -256,7 +251,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: ListTile(
                                 title: Text(FlutterI18n.translate(context, "titles.explore"), style: style,),
                                 subtitle: Text(FlutterI18n.translate(context, "main.view_explore"), style: style,),
-                                trailing: Icon(Icons.public)
+                                trailing: const Icon(Icons.public)
                             ),
                           ),
                           onTap: (){
@@ -265,15 +260,31 @@ class _MyHomePageState extends State<MyHomePage> {
                           },
                         ),
                     ),
-
+                    Expanded(
+                      child: GestureDetector(
+                        child: Container(
+                          padding: padding,
+                          width: 300,
+                          decoration: const BoxDecoration(color: Color.fromRGBO(
+                              149, 215, 250, 1.0)),
+                          child: ListTile(
+                              title: Text("Playlist", style: style,),
+                              subtitle: Text("Check out your playlist", style: style,),
+                              trailing: const Icon(Icons.playlist_add_check_outlined)
+                          ),
+                        ),
+                        onTap: (){
+                          // Go to playlists Page
+                          Navigator.pushNamed(context, '/playlist');
+                        },
+                      ),
+                    ),
                   ],
                 ),
-
               ),
         ],
       ),
     );
-
   }
 }
 

@@ -1,10 +1,10 @@
-class Genre {
+class FavGenre {
   int? id;
   String? genre;
 
-  Genre({this.id, this.genre});
+  FavGenre({this.id, this.genre});
 
-  Genre.fromMap(Map map){
+  FavGenre.fromMap(Map map){
     this.id = map['id'];
     this.genre = map['genre'];
   }
@@ -17,6 +17,6 @@ class Genre {
   }
 
   String toString(){
-    return 'Genre[id: $id], genre: $genre';
+    return 'FavGenre[id: $id], genre: $genre';
   }
 }

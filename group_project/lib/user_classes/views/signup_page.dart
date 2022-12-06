@@ -8,9 +8,12 @@ import 'package:flutter/gestures.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
 import 'package:group_project/user_classes/models/profile.dart';
 import 'package:group_project/user_classes/models/utils.dart';
+import '../../MainScreen_Model/app_constants.dart';
 import '../../main.dart';
+import '../../statistics_classes/models/countries.dart';
 import '../models/user_model.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -56,33 +59,33 @@ class _SignUpFormState extends State<SignUpForm> {
               itemBuilder: (context) => [
                 const PopupMenuItem(
                     value: 1,
-                    child: Text('Change to EN')
+                    child: Text('English')
                 ),
                 const PopupMenuItem(
                     value: 2,
-                    child: Text('Change to FR')
+                    child: Text('French')
                 ),
                 const PopupMenuItem(
                     value: 3,
-                    child: Text('Change to ES')
+                    child: Text('Spanish')
                 ),
               ],
               onSelected: (value) {
                 if (value == 1){
                   print('Swapping to English');
-                  Locale newLocale = Locale('en');
+                  Locale newLocale = english;
                   setState(() {
                     FlutterI18n.refresh(context, newLocale);
                   });
                 } else if (value == 2){
                   print('Swapping to French');
-                  Locale newLocale = Locale('fr');
+                  Locale newLocale = french;
                   setState(() {
                     FlutterI18n.refresh(context, newLocale);
                   });
                 } else if (value == 3) {
                   print('Swapping to Spanish');
-                  Locale newLocale = Locale('es');
+                  Locale newLocale = spanish;
                   setState(() {
                     FlutterI18n.refresh(context, newLocale);
                   });                }
@@ -104,26 +107,26 @@ class _SignUpFormState extends State<SignUpForm> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     TextFormField(
-                      style: TextStyle(fontSize: 20),
+                      style: style,
                       controller: emailController,
                       cursorColor: Colors.white,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                           labelText: FlutterI18n.translate(context, "forms.email"),
-                          icon: Icon(Icons.email)),
+                          icon: const Icon(Icons.email)),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (email) =>
                       email != null && !EmailValidator.validate(email)
                           ? FlutterI18n.translate(context, "forms.errors.valid_email")
                           : null,
                     ),
-                    SizedBox(height: 14,),
+                    const SizedBox(height: 14,),
                     TextFormField(
-                      style: TextStyle(fontSize: 20),
+                      style: style,
                       controller: passwordController,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
-                          icon: Icon(Icons.password),
+                          icon: const Icon(Icons.password),
                           labelText: FlutterI18n.translate(context, "forms.password")),
                       obscureText: true,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -131,13 +134,13 @@ class _SignUpFormState extends State<SignUpForm> {
                           ? FlutterI18n.translate(context, "forms.errors.valid_password")
                           : null,
                     ),
-                    SizedBox(height: 14,),
+                    const SizedBox(height: 14,),
                     TextFormField(
-                        style: TextStyle(fontSize: 20),
+                        style: style,
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
                             labelText: FlutterI18n.translate(context, "forms.username"),
-                            icon: Icon(Icons.person_pin)),
+                            icon: const Icon(Icons.person_pin)),
                         validator: (value) {
                           if (value == null || value.length < 4) {
                             return FlutterI18n.translate(context, "forms.errors.valid_user");
@@ -147,13 +150,13 @@ class _SignUpFormState extends State<SignUpForm> {
                           }
                         }
                     ),
-                    SizedBox(height: 14),
+                    const SizedBox(height: 14),
                     TextFormField(
-                      style: TextStyle(fontSize: 20),
+                      style: style,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                           labelText: FlutterI18n.translate(context, "forms.phone"),
-                          icon: Icon(Icons.phone)),
+                          icon: const Icon(Icons.phone)),
                       validator: (value){
                         if (value == null || value?.length != 10){
                           return FlutterI18n.translate(context, "forms.errors.valid_num");
@@ -163,12 +166,12 @@ class _SignUpFormState extends State<SignUpForm> {
                         }
                       },
                     ),
-                    SizedBox(height: 14),
+                    const SizedBox(height: 14),
                     TextFormField(
-                        style: TextStyle(fontSize: 20),
+                        style: style,
                         textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
-                            icon: Icon(Icons.location_city),
+                            icon: const Icon(Icons.location_city),
                             labelText: FlutterI18n.translate(context, "forms.city")),
                         validator: (value) {
                           if (value == null || value.length < 2) {
@@ -179,23 +182,49 @@ class _SignUpFormState extends State<SignUpForm> {
                           }
                         }
                     ),
-                    SizedBox(height: 14,),
-                    TextFormField(
-                        style: TextStyle(fontSize: 20),
-                        textInputAction: TextInputAction.next,
+                    const SizedBox(height: 14,),
+                    DropdownButtonFormField(
+                        style: const TextStyle(fontSize: fontSize, color: Colors.black),
                         decoration: InputDecoration(
                             labelText: FlutterI18n.translate(context, "forms.country"),
-                            icon: Icon(Icons.location_on)),
-                        validator: (value) {
-                          if (value == null || value.length < 2) {
+                            icon: const Icon(Icons.location_on)),
+                        items: countriesForm
+                            .map<DropdownMenuItem>((String value){
+                              return DropdownMenuItem(
+                                value: value,
+                                  child: Text(value),
+                              );
+                        }).toList(),
+                        isExpanded: true,
+                        onChanged: (value) {
+                          print("Country: $value");
+                        },
+                        validator: (value){
+                          if (value == null) {
                             return FlutterI18n.translate(context, "forms.errors.valid_country");
                           } else {
-                            country = value;
+                            country = value.toString();
                             return null;
                           }
                         }
                     ),
-                    SizedBox(height: 14),
+                    // TextFormField(
+                    //     style: TextStyle(fontSize: 20),
+                    //     textInputAction: TextInputAction.next,
+                    //     decoration: InputDecoration(
+                    //         labelText: FlutterI18n.translate(context, "forms.country"),
+                    //         icon: Icon(Icons.location_on)
+                    //     ),
+                    //     validator: (value) {
+                    //       if (value == null || value.length < 2) {
+                    //         return FlutterI18n.translate(context, "forms.errors.valid_country");
+                    //       } else {
+                    //         country = value;
+                    //         return null;
+                    //       }
+                    //     }
+                    // ),
+                    const SizedBox(height: 14),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -213,34 +242,34 @@ class _SignUpFormState extends State<SignUpForm> {
                               });
                             });
                           },
-                          icon: Icon(Icons.calendar_month),
+                          icon: const Icon(Icons.calendar_month),
                           label: Text(
                             FlutterI18n.translate(context, "forms.buttons.birthday"),
-                            style: TextStyle(fontSize: 20,),
+                            style: style,
                           ),
                         ),
                         Container(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(_toDateString(_eventTime), style: TextStyle(fontSize: 20),)
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(_toDateString(_eventTime), style: style,)
                         )
                       ],
                     ),
-                    SizedBox(height: 14,),
+                    const SizedBox(height: 14,),
                     ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
                           minimumSize: Size.fromHeight(50),
                         ),
                         onPressed: signUp,
-                        icon: Icon(Icons.arrow_forward, size: 20),
+                        icon: const Icon(Icons.arrow_forward, size: 20),
                         label: Text(
                           FlutterI18n.translate(context, "titles.signup"),
-                          style: TextStyle(fontSize: 20),
+                          style: style,
                         )
                     ),
-                    SizedBox(height: 14,),
+                    const SizedBox(height: 14,),
                     RichText(
                         text: TextSpan(
-                            style: TextStyle(color: Colors.deepPurple, fontSize: 20),
+                            style: const TextStyle(color: Colors.deepPurple, fontSize: fontSize),
                             text: FlutterI18n.translate(context, "forms.texts.have_account"),
                             children: [
                               TextSpan(
@@ -272,7 +301,7 @@ class _SignUpFormState extends State<SignUpForm> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => Center(child: CircularProgressIndicator()),
+      builder: (context) => const CustomCircularProgressIndicator(),
     );
 
     try {
