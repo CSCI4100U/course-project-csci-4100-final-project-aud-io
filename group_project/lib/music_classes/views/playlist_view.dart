@@ -74,6 +74,9 @@ class _PlaylistViewState extends State<PlaylistView> {
     );
   }
 
+  /*
+    gets a list from all songs in your local storage
+   */
   getMySongs() async {
     mySongs = await db.getAllSongs();
     setState(() {
@@ -81,6 +84,10 @@ class _PlaylistViewState extends State<PlaylistView> {
       mySongs;
     });
   }
+  /*
+    shows a dialog when wanting to remove a song from
+    your playlist
+   */
   _showRemoveSongAlert(Song song){
     showDialog(
         barrierDismissible: true,
@@ -110,7 +117,11 @@ class _PlaylistViewState extends State<PlaylistView> {
         }
     );
   }
-  
+
+  /*
+    Removes a specific song from your local storage and updates
+    the songs in your playlist
+   */
   Future _removeSongFromPlaylist(int id) async {
     await db.deleteSongByID(id);
     getMySongs();

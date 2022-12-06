@@ -15,6 +15,11 @@ import '../../main.dart';
 import '../../statistics_classes/models/countries.dart';
 import '../models/user_model.dart';
 
+/*
+* Class designated to load and receive input from the user
+* during the signup process. With valid information, the user then
+* is signed up into our applications database.
+* */
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key, required this.onClickedSignIn}) : super(key: key);
 
@@ -276,6 +281,10 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
+  /*
+  * Function which occurs asynchronously to validate the registration
+  * of a new user.
+  * */
   Future signUp() async{
 
     final isValid = _formKey.currentState!.validate();
@@ -313,6 +322,9 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 }
 
+/*
+  * Function which returns a String value, used to format dates properly
+  * */
 String _twoDigits(int value){
   if (value > 9){
     return "$value";
@@ -320,6 +332,9 @@ String _twoDigits(int value){
   return "0$value";
 }
 
+/*
+  * Function which returns a string value, used to display dates properly
+  * */
 String _toDateString(DateTime date){
   return "${date.year}-${_twoDigits(date.month)}-${_twoDigits(date.day)}";
 }

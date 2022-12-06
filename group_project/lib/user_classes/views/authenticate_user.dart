@@ -17,6 +17,12 @@ import 'forgot_password.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
+/*
+  * Class which is the first screen displayed of the project. This is the
+  * login page, where the user can show authentification of their account
+  * and view the apps contents. They can also change language, request
+  * a password reset or sign up for a new account.
+  * */
 class LoginWidget extends StatefulWidget {
   LoginWidget({Key? key, required this.title, required this.onClickedSignUp}) : super(key: key);
 
@@ -192,6 +198,10 @@ class _LoginWidgetState extends State<LoginWidget> {
     );
   }
 
+  /*
+  * Function which occurs asynchronously to authenticate the sign in
+  * of a user and their credentials
+  * */
   Future signIn() async{
 
     showDialog(

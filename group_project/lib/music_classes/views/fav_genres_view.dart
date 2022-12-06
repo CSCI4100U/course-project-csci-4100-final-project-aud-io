@@ -120,6 +120,7 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
     );
   }
 
+
   /*
   * Loads all the genres from the local database and
   * updates current user's favorite genres in the
