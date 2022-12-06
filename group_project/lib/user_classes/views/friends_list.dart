@@ -12,11 +12,14 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 
 import '../models/utils.dart';
 
+/*
+* Class displays the friends list of the current user.
+* Can delete friends from this view
+* */
 class FriendList extends StatefulWidget {
-  const FriendList({Key? key,this.title,this.userFromExplore}) : super(key: key);
+  const FriendList({Key? key,this.title}) : super(key: key);
 
   final String? title;
-  final Profile? userFromExplore;
 
   @override
   State<FriendList> createState() => _FriendListState();
@@ -25,16 +28,12 @@ class FriendList extends StatefulWidget {
 class _FriendListState extends State<FriendList> {
 
   List<Profile> allFriends = [];
-
   final _model = UserModel();
   late Stream friendListStream;
 
   @override
   void initState(){
     super.initState();
-    if(widget.userFromExplore != null){
-      _addFriend(widget.userFromExplore);
-    }
     friendListStream = _model.getFriendStream(currentUser);
     loadFriends();
   }
@@ -57,6 +56,7 @@ class _FriendListState extends State<FriendList> {
                 print("Found data for friendsList");
 
                 if(allFriends.isNotEmpty){
+                  // display friends list
                   return Expanded(
                     child: ListView.builder(
                         padding: const EdgeInsets.all(8.0),
@@ -107,6 +107,7 @@ class _FriendListState extends State<FriendList> {
                   );
                 }
                 else{
+                  // display no friends
                   return Container(
                       padding: padding,
                       child: Text(
@@ -183,19 +184,6 @@ class _FriendListState extends State<FriendList> {
     }
     Utils.showSnackBar("${FlutterI18n.translate(context, "snackbars.deleted")} ${friend.userName} ${FlutterI18n.translate(context, "snackbars.as_friend")}",Colors.black);
   }
-
-  /*
-  * Function shows a snackBar given a
-  * string content
-  * */
-  // showSnackBar(String content){
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //           content: Text(content,
-  //             style: const TextStyle(fontSize: 20),)
-  //       )
-  //   );
-  // }
 
   /*
   * Shows a Dialog confirming whether the user

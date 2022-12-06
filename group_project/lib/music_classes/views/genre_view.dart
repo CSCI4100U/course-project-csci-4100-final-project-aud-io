@@ -9,6 +9,11 @@ import 'package:group_project/music_classes/models/fav_genre.dart';
 
 import '../../user_classes/models/user_model.dart';
 
+/*
+* Class displays the list of all genres available
+* in cloud storage and gives the user the ability to
+* favorite a genre.
+* */
 class GenreView extends StatefulWidget {
   const GenreView({Key? key,this.title, required this.heartBool}) : super(key: key);
 
@@ -36,6 +41,9 @@ class _GenreViewState extends State<GenreView> {
     return genreList();
   }
 
+  /*
+  * Displays the list of genres on the cloud storage
+  * */
   Widget genreList() {
     return Scaffold(
       appBar: AppBar(
@@ -106,43 +114,6 @@ class _GenreViewState extends State<GenreView> {
                                 : const Icon(Icons.favorite_border,color: Colors.black)
                         ),
                       )
-                  // Row(
-                  //   children: [
-                  //     TextButton(
-                  //       onPressed: (){
-                  //         Navigator.of(context).push(
-                  //             MaterialPageRoute(
-                  //                 builder: (context)=> SongsList(title: genreOnDisplay,)));
-                  //       },
-                  //       child: Text("${genreOnDisplay.toUpperCase()}",
-                  //         style: const TextStyle(fontSize: fontSize,
-                  //           color: Colors.black,
-                  //
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     IconButton(
-                  //         onPressed: () {
-                  //           setState(() {
-                  //             if (!isHearted) {
-                  //               // add to database
-                  //               FavGenre favGenre = FavGenre();
-                  //               favGenre = FavGenre(genre: genreOnDisplay);
-                  //               _addGenre(favGenre);
-                  //             }
-                  //             else{
-                  //               //remove from database
-                  //               if(favGenreToBeDeleted != null){
-                  //                 _deleteGenre(favGenreToBeDeleted.id!);
-                  //               }
-                  //             }
-                  //           });
-                  //         },
-                  //         icon: isHearted ? const Icon(Icons.favorite)
-                  //             : const Icon(Icons.favorite_border)
-                  //     ),
-                  //   ],
-                  // ),
                 ),
               ),
             ],
@@ -152,17 +123,29 @@ class _GenreViewState extends State<GenreView> {
     );
   }
 
+  /*
+  * Loads all the hearted genres from the local database and
+  * for the hearting genres functionality. Also updates
+  * the current user's favorite genres on the cloud storage
+  * */
   getFavGenres() async{
     allFavGenres = await db.getAllGenres();
     UserModel().updateFavGenres(allFavGenres);
     setState(() {});
   }
 
+  /*
+  * Adds genre to current user's favorite genres
+  * */
   Future _addGenre(FavGenre genre) async{
     await db.insertGenre(genre);
     getFavGenres();
   }
 
+  /*
+  * Deletes genre from favorites given its
+  * id in the local database
+  * */
   Future _deleteGenre(int id) async {
     await db.deleteGenreById(id);
     getFavGenres();
