@@ -72,16 +72,16 @@ class MyApp extends StatelessWidget {
           '/friendsList' : (context) => FriendList(title: FlutterI18n.translate(context, "titles.friend"),),
           '/addFriend' : (context) => AddFriendSearch(title: FlutterI18n.translate(context, "titles.add_friend"),userNameEntered: ""),
 
-          '/addSongs' : (context) => AddSongs(title: "Add Song"),
+          '/addSongs' : (context) => AddSongs(title: FlutterI18n.translate(context, "titles.add_song")),
           '/genre' : (context) => GenreView(title: FlutterI18n.translate(context, "titles.genre",), heartBool: false,),
           '/heartGenre' : (context) => GenreView(title: FlutterI18n.translate(context, "titles.genre",), heartBool: true,),
 
           '/settings' : (context) => SettingsView(title: FlutterI18n.translate(context, "titles.setting")),
-          '/favGenres' : (context) => FavoriteGenresView(title: "Liked Genres",),
+          '/favGenres' : (context) => FavoriteGenresView(title: FlutterI18n.translate(context, "titles.liked_genre"),),
           '/explore' : (context) => ExplorePage(title: FlutterI18n.translate(context, "titles.explore"),),
           '/statistics' : (context) => StatisticsDataTable(title: FlutterI18n.translate(context, "titles.stats_table"),),
           '/statisticsChart' : (context) => StatisticsChart(title: FlutterI18n.translate(context, "titles.stats_chart"), frequencies: [],),
-          '/playlist' : (context) => PlaylistView(title: "My Playlist"),
+          '/playlist' : (context) => PlaylistView(title: FlutterI18n.translate(context, "titles.my_playlist")),
 
         },
         localizationsDelegates: [
@@ -144,17 +144,17 @@ class _MyHomePageState extends State<MyHomePage> {
             child: PopupMenuButton(
               itemBuilder: (context) => [
                 //TODO: Translate these texts as well
-                const PopupMenuItem(
+                PopupMenuItem(
                     value: 1,
-                    child: Text('English')
+                    child: Text(FlutterI18n.translate(context, "forms.languages.english"))
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                     value: 2,
-                    child: Text('French')
+                    child: Text(FlutterI18n.translate(context, "forms.languages.french"))
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                     value: 3,
-                    child: Text('Spanish')
+                    child: Text(FlutterI18n.translate(context, "forms.languages.spanish"))
                 ),
               ],
               onSelected: (value) {
@@ -251,9 +251,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           padding: padding,
                           width: 300,
                           decoration: const BoxDecoration(color: Color.fromRGBO(149, 215, 250, 1.0)),
-                          child: const ListTile(
-                              title: Text("Playlist", style: style,),
-                              subtitle: Text("Check out your playlist", style: style,),
+                          child: ListTile(
+                              title: Text(FlutterI18n.translate(context, "titles.playlist"), style: style,),
+                              subtitle: Text(FlutterI18n.translate(context, "main.view_playlist"), style: style,),
                               trailing: const Icon(Icons.playlist_add_check_outlined)
                           ),
                         ),
