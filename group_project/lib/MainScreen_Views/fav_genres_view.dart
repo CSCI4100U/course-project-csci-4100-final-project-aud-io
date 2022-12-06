@@ -103,31 +103,28 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
             );
           }
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: _addGenre,
-      ),
     );
   }
 
-  Future _addGenre() async{
-    FavGenre newGenre = await Navigator.pushNamed(context, '/heartGenre') as FavGenre;
-    print(newGenre);
-    for (int i = 0; i < allGenres.length; i++) {
-      if (newGenre.genre == allGenres[i].genre) {
-        final snackBar = SnackBar(
-            content: Text("you already have ${newGenre.genre} favourited")
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        return print("this is not allowed");
-      }
-    }
-
-    await db.insertGenre(newGenre);
-    setState(() {
-      getGenres();
-    });
-  }
+  // Future _addGenre() async{
+  //   FavGenre? newGenre = await Navigator.pushNamed(context, '/heartGenre') as FavGenre?;
+  //
+  //   if(newGenre != null){
+  //     for (int i = 0; i < allGenres.length; i++) {
+  //       if (newGenre.genre == allGenres[i].genre) {
+  //         final snackBar = SnackBar(
+  //             content: Text("you already have ${newGenre.genre} favourited")
+  //         );
+  //         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //         return print("this is not allowed");
+  //       }
+  //     }
+  //     await db.insertGenre(newGenre);
+  //     setState(() {
+  //       getGenres();
+  //     });
+  //   }
+  // }
 
   getGenres() async{
     allGenres = await db.getAllGenres();
