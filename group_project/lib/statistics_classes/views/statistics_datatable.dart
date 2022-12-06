@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:group_project/statistics_classes/views/statistics_chart.dart';
 import 'package:group_project/user_classes/models/user_model.dart';
-import '../../MainScreen_Model/app_constants.dart';
 import 'package:group_project/statistics_classes/models/countries.dart';
 
 class StatisticsDataTable extends StatefulWidget {

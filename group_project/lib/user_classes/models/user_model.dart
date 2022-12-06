@@ -6,12 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:group_project/user_classes/models/utils.dart';
 import 'package:group_project/user_classes/views/profile_view.dart';
 import 'dart:async';
 import '../../music_classes/models/fav_genre.dart';
 import 'profile.dart';
-import 'package:latlong2/latlong.dart';
 
 Profile currentUser = Profile();
 

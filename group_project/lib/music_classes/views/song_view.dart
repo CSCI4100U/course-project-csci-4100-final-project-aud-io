@@ -1,9 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:group_project/music_classes/models/genre_model.dart';
-import '../../MainScreen_Model/app_constants.dart';
-import '../../MainScreen_Views/custom_circular_progress_indicator.dart';
+import '../../mainScreen_classes/MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../../user_classes/models/utils.dart';
 import '../models/song.dart';
 import '../models/song_model.dart';

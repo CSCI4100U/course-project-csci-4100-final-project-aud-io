@@ -2,8 +2,7 @@
 * Authors: Mathew Kasbarian, Rajiv Williams and Alessandro Prataviera
 * */
 import 'package:flutter/material.dart';
-import 'package:group_project/MainScreen_Model/app_constants.dart';
-import 'package:group_project/MainScreen_Model/navigation_bar.dart';
+import 'package:group_project/mainScreen_classes/MainScreen_Model/app_constants.dart';
 import 'package:group_project/music_classes/models/genre_model.dart';
 import 'package:group_project/music_classes/views/song_view.dart';
 import 'package:group_project/music_classes/models/fav_genre.dart';

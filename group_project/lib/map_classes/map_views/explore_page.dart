@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:group_project/MainScreen_Views/custom_circular_progress_indicator.dart';
-import 'package:group_project/map_model/userLocation.dart';
+import 'package:group_project/mainScreen_classes/MainScreen_Views/custom_circular_progress_indicator.dart';
+import 'package:group_project/map_classes/map_model/userLocation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:group_project/map_model/map_constants.dart';
+import 'package:group_project/map_classes/map_model/map_constants.dart';
 import 'package:group_project/user_classes/models/user_model.dart';
 import 'package:latlong2/latlong.dart';
-
-import '../MainScreen_Model/app_constants.dart';
-import '../user_classes/models/profile.dart';
-import '../user_classes/models/utils.dart';
+import '../../mainScreen_classes/MainScreen_Model/app_constants.dart';
+import '../../user_classes/models/profile.dart';
+import '../../user_classes/models/utils.dart';
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key, required this.title}) : super(key: key);
 

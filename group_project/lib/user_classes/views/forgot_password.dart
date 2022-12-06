@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../MainScreen_Model/app_constants.dart';
-import '../../MainScreen_Views/custom_circular_progress_indicator.dart';
+import '../../mainScreen_classes/MainScreen_Model/app_constants.dart';
+import '../../mainScreen_classes/MainScreen_Views/custom_circular_progress_indicator.dart';
 import '../models/notifications.dart';
 import '../models/utils.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';

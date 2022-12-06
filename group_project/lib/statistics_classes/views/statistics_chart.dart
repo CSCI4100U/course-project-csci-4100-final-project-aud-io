@@ -4,8 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:group_project/MainScreen_Model/navigation_bar.dart';
-import '../../MainScreen_Model/app_constants.dart';
+import '../../mainScreen_classes/MainScreen_Model/app_constants.dart';
 import '../models/countries.dart';
 import 'package:charts_flutter_new/flutter.dart' as charts;
 

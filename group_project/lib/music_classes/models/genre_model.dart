@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:group_project/music_classes/models/song.dart';
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import '../../music_classes/models/db_utils.dart';
