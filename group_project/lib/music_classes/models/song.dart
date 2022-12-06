@@ -18,6 +18,7 @@ class Song {
     this.link = map['link'];
   }
 
+
   Map<String,Object?> toMap(){
     return {
       'id': this.id,
@@ -38,4 +39,6 @@ class Song {
   String toString() {
     return "{$id} '$name' by $artist - ($duration) - Genre: $genre ";
   }
+
+
 }
