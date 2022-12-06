@@ -10,9 +10,10 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:group_project/mainScreen_classes/MainScreen_Model/app_constants.dart';
 
 class AddSongs extends StatefulWidget {
-  AddSongs({Key? key, this.title}) : super(key: key);
+  const AddSongs({Key? key, this.title, this.genreSelected}) : super(key: key);
 
-  String? title;
+  final String? title;
+  final String? genreSelected;
 
 
 
@@ -26,7 +27,7 @@ class _AddSongsState extends State<AddSongs> {
   String songArtistEntered = "";
   String songDurationEntered = "";
   var songModel=SongModel();
-  var genreEntered= "";
+  late var genreEntered= widget.genreSelected;
   @override
   void initState(){
     super.initState();
@@ -135,9 +136,9 @@ class _AddSongsState extends State<AddSongs> {
                   var song=Song(
                       name: songNameEntered,
                       artist: songArtistEntered,
-                      duration: songDurationEntered
+                      duration: songDurationEntered,
                   );
-                  Navigator.of(context).pop(song);
+                  Navigator.of(context).pop([song,genreEntered]);
                 },
                     icon: const Icon(Icons.arrow_forward, size: 20),
                     label: Text(

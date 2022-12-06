@@ -11,6 +11,13 @@ import 'package:latlong2/latlong.dart';
 import '../../mainScreen_classes/MainScreen_Model/app_constants.dart';
 import '../../user_classes/models/profile.dart';
 import '../../user_classes/models/utils.dart';
+
+/*
+* Class shows a Flutter Map of all users who enable
+* location permissions. It shows the number of friends
+* each user has and the genres they have in common with
+* the current user.
+* */
 class ExplorePage extends StatefulWidget {
   const ExplorePage({Key? key, required this.title}) : super(key: key);
 
@@ -24,18 +31,19 @@ class ExplorePage extends StatefulWidget {
 
 class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin{
 
+  // Logical variables
   int selectedIndex = 0;
   bool permissionDenied = false;
+  int? numFriends;
 
   // User Variables
   final _model = UserModel();
   List<Profile> otherUserFriendsList = [];
   List<Profile> currentUserFriendsList = [];
-  int? numFriends;
 
   // Map Variables
   late PageController pageController;
-  late MapController mapController; // = MapController();
+  late MapController mapController;
   late LatLng currentLocation;
   List<UserLocation> mapMarkers = [];
   bool locationLoaded = false;
@@ -62,6 +70,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
             onPressed: (){
               setState(() {
                 if(zoomValue < maxZoom){
+                  // Increase Zoom on the map (Zoom in)
                   zoomValue++;
                   mapController.move(mapController.center, zoomValue);
                 }
@@ -73,6 +82,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
             onPressed: (){
               setState(() {
                 if(zoomValue > minZoom){
+                  // Decrease Zoom on the map (Zoom out)
                   zoomValue--;
                   mapController.move(mapController.center, zoomValue);
                 }
@@ -112,7 +122,6 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                   radius: 40,
                                   backgroundColor: selectedIndex == i ?
                                   Colors.white : Colors.black,
-                                  //Todo: Replace with profile photo
                                   child: Text(mapMarkers[i].user!.userName![0].toUpperCase()),
                                 ),
                               ),
@@ -143,6 +152,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                 itemCount: mapMarkers.length,
                 onPageChanged: (value){
                   setState(() {
+                    // resets number of friends so widget can reload
                     numFriends = null;
                     selectedIndex = value;
                     currentLocation = mapMarkers[value].latlng!;
@@ -150,6 +160,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                   });
                 },
                 itemBuilder: (context,index){
+
                   var user = mapMarkers[index].user;
                   getAllFriends(user!);
 
@@ -159,7 +170,6 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                       elevation: 5,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
-
                       ),
                       color: const Color.fromARGB(255, 23, 23, 23),
                       child: Row(
@@ -197,6 +207,8 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                                     setState(() {
                                                       _model.addToFriendList(currentUser, user);
                                                       _model.addToFriendList(user, currentUser);
+
+                                                      // resets number of friends so widget can reload
                                                       numFriends = null;
                                                       Utils.showSnackBar("${FlutterI18n.translate(context, "snackbars.just_added")} ${user.userName} ${FlutterI18n.translate(context, "snackbars.as_friend")}",Colors.black);
                                                     });
@@ -211,7 +223,9 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                           child: Row(
                                             children: [
                                               const Icon(Icons.person,color: Colors.white,),
-                                               Text(numFriends! != 1 ? "$numFriends ${FlutterI18n.translate(context, "titles.friend")}": "1 ${FlutterI18n.translate(context, "titles.friend_sing")}",
+                                               Text(numFriends! != 1 ?
+                                               "$numFriends ${FlutterI18n.translate(context, "titles.friend")}" :
+                                               "1 ${FlutterI18n.translate(context, "titles.friend_sing")}",
                                                 style: const TextStyle(
                                                     fontSize: fontSize,
                                                     color: Colors.white
@@ -253,8 +267,8 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
             ),
           ),
         ]
-      ) : permissionDenied
-          ? AlertDialog(
+      ) : permissionDenied ?
+      AlertDialog(
         title: Text(FlutterI18n.translate(context, "dialogs.permission_denied")),
         actions: [
           TextButton(
@@ -268,23 +282,39 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
     );
   }
 
+  /*
+  * Gets all relevant user location information and
+  * updates the stream and the map
+  * */
   _updateLocationStream(Position userLocation) async{
+
     userLocation = await Geolocator.getCurrentPosition();
+
     List<Placemark> places = await placemarkFromCoordinates(
         userLocation.latitude,
         userLocation.longitude
     );
+
     if(mounted){
       setState(() {
         currentLocation = LatLng(userLocation.latitude, userLocation.longitude);
         currentUser.location = "${userLocation.latitude},${userLocation.longitude}";
+
+        // if location not already loaded
         if(!locationLoaded){
+
           String userAddress = "${places[0].subThoroughfare!} "
               "${places[0].thoroughfare!}";
+
+          // if user address is unknown
           if(userAddress == " "){
             userAddress = FlutterI18n.translate(context, "forms.texts.user_unknown");
           }
+
+          // updates user location on cloud storage
           UserModel().updateUser(currentUser);
+
+          // shows current user address in a snackbar
           Utils.showSnackBar("${FlutterI18n.translate(
               context, "forms.texts.user_current")} "
               "${places[0].subThoroughfare!} "
@@ -293,12 +323,18 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
 
           getAllFriends(currentUser);
         }
+
         getAllUserMarkers();
         locationLoaded = true;
       });
     }
   }
 
+  /*
+  * Ensures location permissions are given, and listens to the
+  * location stream to update the location. Also determines
+  * whether or not permission was denied.
+  * */
   _askForLocation() async{
     await Geolocator.isLocationServiceEnabled().then((value) => null);
     await Geolocator.requestPermission().then((value) => null);
@@ -325,6 +361,11 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
     }
   }
 
+  /*
+  * Gets all markers of the locations of the users
+  * who allow location permissions on the Flutter
+  * Map.
+  * */
   getAllUserMarkers() async{
     List<Profile> allUsers = await _model.getAllUsers();
     for(Profile user in allUsers){
@@ -344,8 +385,9 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
   }
 
   /*
-  * Function reloads friend stream and updates the
-  * List of all the friends of the current user
+  * Function updates the list of all the friends of
+  * the current user and the currently displayed user
+  * on the map
   * */
   getAllFriends(Profile user) async{
     otherUserFriendsList = await _model.getFriendsList(user);
@@ -358,6 +400,10 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
     }
   }
 
+  /*
+  * Returns whether or not a given user is a friend of
+  * the current user
+  * */
   bool isAFriend(Profile user){
     for(Profile friend in currentUserFriendsList){
       if(friend.userName == user.userName){
@@ -367,6 +413,10 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
     return false;
   }
 
+  /*
+  * Return a string of genres in common between
+  * a given user and the current user
+  * */
   getGenresInCommon(Profile user){
 
     if(user.favGenres != null && currentUser.favGenres != null){
@@ -390,6 +440,10 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
     return "";
   }
 
+  /*
+  * Returns the longitude and latitude (UserLocation)
+  * of a given user.
+  * */
   UserLocation getUserLocation(Profile user){
     List<String> locationFromDatabase = user.location.toString().split(",");
 

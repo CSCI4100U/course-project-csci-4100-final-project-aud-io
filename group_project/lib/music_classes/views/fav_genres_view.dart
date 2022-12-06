@@ -10,8 +10,13 @@ import '../../user_classes/models/user_model.dart';
 import '../models/genre_model.dart';
 import 'song_view.dart';
 
+/*
+* Class shows current user's favorite genres. They can remove them
+* from their favorites and view them from a separate screen, aside
+* from the main genres page.
+* */
 class FavoriteGenresView extends StatefulWidget {
-  FavoriteGenresView({Key? key, this.title}) : super(key: key);
+  const FavoriteGenresView({Key? key, this.title}) : super(key: key);
   final String? title;
   @override
   State<FavoriteGenresView> createState() => _FavoriteGenresViewState();
@@ -70,7 +75,7 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
                     child: IconButton(
                       icon: const Icon(Icons.remove_circle_outline),
                       onPressed: (){
-                        _showRemoveSongAlert(allGenres[index]);
+                        _showRemoveGenreAlert(allGenres[index]);
                       },
                     )
                 )
@@ -81,7 +86,11 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
     );
   }
 
-  _showRemoveSongAlert(FavGenre genre){
+  /*
+  * Shows a Dialog confirming whether the user
+  * wants to remove a genre from their favorites.
+  * */
+  _showRemoveGenreAlert(FavGenre genre){
     showDialog(
         barrierDismissible: true,
         context: context,
@@ -110,13 +119,23 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
         }
     );
   }
-  
+
+
+  /*
+  * Loads all the genres from the local database and
+  * updates current user's favorite genres in the
+  * cloud database
+  * */
   getGenres() async{
     allGenres = await db.getAllGenres();
     UserModel().updateFavGenres(allGenres);
     setState(() {});
   }
 
+  /*
+  * Deletes genre from favorites given its
+  * id in the local database
+  * */
   void deleteGenre(int id) async {
     await db.deleteGenreById(id);
     setState(() {

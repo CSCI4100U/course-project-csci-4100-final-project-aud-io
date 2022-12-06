@@ -6,8 +6,14 @@ import '../../user_classes/models/utils.dart';
 import '../models/song.dart';
 import '../models/song_model.dart';
 
+/*
+* Class shows a list of songs from a given genre within
+* the Genre View page.
+* */
 class SongsList extends StatefulWidget {
   const SongsList({Key? key, required this.title }) : super(key: key);
+
+  // genre passed from the Genre View
   final String title;
 
   @override
@@ -107,15 +113,11 @@ class _SongsListState extends State<SongsList> {
       ),
     );
   }
-  loadSongs(){
-    setState(() {
-      getAllSongs();
-    });
-  }
 
   /*
-  * Function reloads friend stream and updates the
-  * List of all the friends of the current user
+  * Function reloads song stream and updates the
+  * List of all the songs from the selected genre
+  * from the cloud storage.
   * */
   getAllSongs() async{
     songStream = _songModel.getSongStream(genreSelected);
@@ -125,14 +127,23 @@ class _SongsListState extends State<SongsList> {
     });
   }
 
+  /*
+  * Adds a song to the current user's playlist
+  * */
   _addSongToLocalStorage(Song song) async {
     await _songModel.insertSongLocal(song);
-    Utils.showSnackBar("${FlutterI18n.translate(context, "snackbars.added")} ${song.name} ${FlutterI18n.translate(context, "snackbars.to_playlist")}",Colors.black);
+    Utils.showSnackBar("${FlutterI18n.translate(context, "snackbars.added")} "
+        "${song.name} ${FlutterI18n.translate(context, "snackbars.to_playlist")}",
+        Colors.black
+    );
   }
 
+  /*
+  * Adds a song to the current user's playlist
+  * */
   _addSongToCloudStorage() async{
-    var song = await Navigator.of(context).pushNamed('/addSongs') as Song;
-    _songModel.insertSong(song,genreSelected);
+    var songInfo = await Navigator.of(context).pushNamed('/addSongs') as List<dynamic>;
+    _songModel.insertSong(songInfo[0],songInfo[1]);
     getAllSongs();
   }
 }
