@@ -10,6 +10,8 @@ import '../models/user_model.dart';
 import 'package:group_project/MainScreen_Model/navigation_bar.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
+import '../models/utils.dart';
+
 class FriendList extends StatefulWidget {
   const FriendList({Key? key,this.title,this.userFromExplore}) : super(key: key);
 
@@ -141,7 +143,7 @@ class _FriendListState extends State<FriendList> {
 
       loadFriends();
 
-      showSnackBar("Just added ${friend.userName} as a friend :)");
+      Utils.showSnackBar("Just added ${friend.userName} as a friend :)",Colors.black);
     }
   }
 
@@ -171,21 +173,21 @@ class _FriendListState extends State<FriendList> {
         }
       }
     }
-    showSnackBar("Deleted ${friend.userName} as a friend :(");
+    Utils.showSnackBar("Deleted ${friend.userName} as a friend :(",Colors.black);
   }
 
   /*
   * Function shows a snackBar given a
   * string content
   * */
-  showSnackBar(String content){
-    ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(content,
-              style: const TextStyle(fontSize: 20),)
-        )
-    );
-  }
+  // showSnackBar(String content){
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //           content: Text(content,
+  //             style: const TextStyle(fontSize: 20),)
+  //       )
+  //   );
+  // }
 
   /*
   * Shows a Dialog confirming whether the user
@@ -197,9 +199,8 @@ class _FriendListState extends State<FriendList> {
         context: context,
         builder: (context){
           return AlertDialog(
-            title: const Text("Delete Friend"),
-            content: Text("Are you sure you want to delete "
-                "${user.userName}?"),
+            title: const Text("Remove Friend?"),
+            content: Text("${user.userName}"),
             actions: [
               TextButton(
                   onPressed: (){
@@ -208,13 +209,13 @@ class _FriendListState extends State<FriendList> {
                     });
                     Navigator.of(context).pop();
                   },
-                  child: const Text("Yes")
+                  child: const Text("Remove")
               ),
               TextButton(
                   onPressed: (){
                     Navigator.of(context).pop();
                   },
-                  child: const Text("No")
+                  child: const Text("Cancel")
               )
             ],
           );

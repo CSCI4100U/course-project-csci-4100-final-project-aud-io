@@ -18,6 +18,29 @@ class SongModel{
 
   String songCollectionID = "qH6SDHlnOTIVWWuBjnWP";
 
+  Stream getSongStream(String genre) async* {
+    print("retrieving genres");
+    yield await FirebaseFirestore.instance.collection('songs')
+        .doc(songCollectionID)
+        .collection(genre).get();
+  }
+
+
+  Future<List<Song>> getSongList(String genre) async {
+    QuerySnapshot songs = await FirebaseFirestore.instance.collection('songs')
+        .doc(songCollectionID)
+        .collection(genre).get();
+
+    List<Song> allSongs = songs.docs.map<Song>((user) {
+      final songs = Song.fromMap(
+          user.data(),
+          reference: user.reference);
+      return songs;
+    }).toList();
+
+    return allSongs;
+  }
+
 
   Future insertSong(Song song, String genre) async{
 
@@ -35,7 +58,7 @@ class SongModel{
 
   Future getAllSongs() async {
     final db = await SongDBUtils.init();
-    final List maps = await db.query('playlist_items');
+    final List maps = await db.query('playlist_songs');
     List result = [];
     for (int i = 0; i < maps.length; i++){
       result.add(
@@ -49,9 +72,18 @@ class SongModel{
   Future<int> insertSongLocal(Song song) async{
     final db = await SongDBUtils.init();
     return db.insert(
-      'playlist_items',
+      'playlist_songs',
       song.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<int> deleteSongByID(int id) async {
+    final db = await SongDBUtils.init();
+    return db.delete(
+      'playlist_songs',
+      where: 'id = ?',
+      whereArgs: [id],
     );
   }
 

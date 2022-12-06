@@ -267,7 +267,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           width: 300,
                           decoration: const BoxDecoration(color: Color.fromRGBO(
                               149, 250, 226, 1.0)),
-                          child: ListTile(
+                          child: const ListTile(
                               title: Text("Playlist", style: style,),
                               subtitle: Text("Check out your playlist", style: style,),
                               trailing: const Icon(Icons.playlist_add_check_outlined)

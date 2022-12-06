@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:group_project/music_classes/models/song.dart';
 import 'dart:async';
-import 'genreCreator.dart';
 import 'package:sqflite/sqflite.dart';
 import '../../music_classes/models/db_utils.dart';
-import 'genre.dart';
+import 'fav_genre.dart';
 
 class GenreModel {
 
@@ -17,29 +16,6 @@ class GenreModel {
     "Hip Hop", "alternative", "classical",
     "dance", "grime", "pop", "rock", "soul"
   ];
-
-  Stream getSongStream(String genre) async* {
-    print("retrieving genres");
-    yield await FirebaseFirestore.instance.collection('songs')
-        .doc(songCollectionID)
-        .collection(genre).get();
-  }
-
-
-  Future<List<Song>> getSongList(String genre) async {
-    QuerySnapshot songs = await FirebaseFirestore.instance.collection('songs')
-        .doc(songCollectionID)
-        .collection(genre).get();
-
-    List<Song> allSongs = songs.docs.map<Song>((user) {
-      final songs = Song.fromMap(
-          user.data(),
-          reference: user.reference);
-      return songs;
-    }).toList();
-
-    return allSongs;
-  }
 
   /*
   * Local Storage Functions

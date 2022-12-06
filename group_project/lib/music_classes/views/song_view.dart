@@ -16,8 +16,7 @@ class SongsList extends StatefulWidget {
 class _SongsListState extends State<SongsList> {
 
   List<Song> allSongs = [];
-
-  final _model = GenreModel();
+  List<bool> isAdded = [];
   final _songModel = SongModel();
   late Stream songStream;
   late String genreSelected = widget.title;
@@ -25,7 +24,7 @@ class _SongsListState extends State<SongsList> {
   @override
   void initState(){
     super.initState();
-    songStream = _model.getSongStream(genreSelected);
+    songStream = _songModel.getSongStream(genreSelected);
     loadSongs();
   }
 
@@ -37,9 +36,9 @@ class _SongsListState extends State<SongsList> {
         actions: [
           IconButton(
             onPressed: () {
-
+              Navigator.of(context).pushNamed('/playlist');
             },
-            icon: Icon(Icons.playlist_add),
+            icon: const Icon(Icons.view_list_rounded),
           )
         ],
       ),
@@ -57,37 +56,37 @@ class _SongsListState extends State<SongsList> {
                 print("Found data for SongList");
                 print(allSongs);
                 return ListView.builder(
-                    itemCount: allSongs.length,
+                  itemCount: allSongs.length,
                   itemBuilder: (context, index) {
-                      return Row(
-                          children: [
-                            Expanded(
-                              flex: 6,
-                              child: ListTile(
-                                title: Text(allSongs[index].name!),
-                                subtitle: Text(allSongs[index].artist!),
-                                trailing: Text(allSongs[index].duration!)
-                              ),
+                    Song songOnDisplay = allSongs[index];
+                    return Row(
+                        children: [
+                          Expanded(
+                            flex: 6,
+                            child: ListTile(
+                              title: Text(songOnDisplay.name!),
+                              subtitle: Text(songOnDisplay.artist!),
+                              trailing: Text(songOnDisplay.duration!)
                             ),
-                            Expanded(
-                              flex: 1,
-                                child: IconButton(
-                                  onPressed: () {
-                                      Song song = Song();
-                                      song = Song(
-                                        name: allSongs[index].name!,
-                                        duration: allSongs[index].duration!,
-                                        artist: allSongs[index].artist!,
-                                        link: allSongs[index].link
-                                      );
-                                      addSong(song);
-                                      Navigator.of(context).pushNamed("/playlist");
-                                    },
-                                  icon: Icon(Icons.add),
-                                )
-                            )
-                           ]
-                      );
+                          ),
+                          Expanded(
+                            flex: 1,
+                              child: IconButton(
+                                onPressed: () {
+                                    Song song = Song();
+                                    song = Song(
+                                        name: songOnDisplay.name!,
+                                        duration: songOnDisplay.duration!,
+                                        artist: songOnDisplay.artist!,
+                                        link: songOnDisplay.link
+                                    );
+                                    addSong(song);
+                                  },
+                                icon: const Icon(Icons.add),
+                              )
+                          ),
+                         ]
+                    );
                   },
                 );
               }
@@ -107,8 +106,8 @@ class _SongsListState extends State<SongsList> {
   * List of all the friends of the current user
   * */
   getAllSongs() async{
-    songStream = _model.getSongStream(genreSelected);
-    allSongs = await _model.getSongList(genreSelected);
+    songStream = _songModel.getSongStream(genreSelected);
+    allSongs = await _songModel.getSongList(genreSelected);
   }
 
   addSong(Song song) async {

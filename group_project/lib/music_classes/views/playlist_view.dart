@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:group_project/music_classes/models/song_model.dart';
 
 import '../../MainScreen_Model/app_constants.dart';
+import '../../user_classes/models/utils.dart';
+import '../models/song.dart';
 
 
 class PlaylistView extends StatefulWidget {
@@ -12,7 +14,7 @@ class PlaylistView extends StatefulWidget {
 }
 
 class _PlaylistViewState extends State<PlaylistView> {
-  SongModel _model = SongModel();
+  final SongModel db = SongModel();
   List mySongs = [];
   @override
   void initState() {
@@ -30,19 +32,35 @@ class _PlaylistViewState extends State<PlaylistView> {
         padding: padding,
         itemCount: mySongs.length,
         itemBuilder: (context, index){
-          return Column(
-            children: [
-              Container(
-                padding: padding,
-                width: 250,
-                color: Colors.red[100+(index*100)],
-                child: ListTile(
-                  title: Text(mySongs[index].name.toString()),
-                  subtitle: Text(mySongs[index].artist.toString()),
-                  trailing: Text(mySongs[index].duration.toString()),
-                )
-              ),
-            ],
+          Song songOnDisplay = mySongs[index];
+          return Row(
+              children: [
+                Expanded(
+                  flex: 6,
+                  child: ListTile(
+                      title: Text(songOnDisplay.name!),
+                      subtitle: Text(songOnDisplay.artist!),
+                      trailing: Text(songOnDisplay.duration!)
+                  ),
+                ),
+                Expanded(
+                    flex: 1,
+                    child: IconButton(
+                      onPressed: () {
+                        Song song = Song();
+                        song = Song(
+                            id: songOnDisplay.id,
+                            name: songOnDisplay.name!,
+                            duration: songOnDisplay.duration!,
+                            artist: songOnDisplay.artist!,
+                            link: songOnDisplay.link
+                        );
+                        _showRemoveSongAlert(song);
+                      },
+                      icon: const Icon(Icons.delete),
+                    )
+                ),
+              ]
           );
         },
       ),
@@ -50,10 +68,44 @@ class _PlaylistViewState extends State<PlaylistView> {
   }
 
   getMySongs() async {
-    mySongs = await _model.getAllSongs();
+    mySongs = await db.getAllSongs();
     setState(() {
       print(mySongs);
       mySongs;
     });
+  }
+  _showRemoveSongAlert(Song song){
+    showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (context){
+          return AlertDialog(
+            title: const Text("Remove from Playlist?"),
+            content: Text("${song.name}"),
+            actions: [
+              TextButton(
+                  onPressed: (){
+                    setState(() {
+                      _removeSongFromPlaylist(song.id!);;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Remove")
+              ),
+              TextButton(
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Cancel")
+              )
+            ],
+          );
+        }
+    );
+  }
+  
+  Future _removeSongFromPlaylist(int id) async {
+    await db.deleteSongByID(id);
+    getMySongs();
   }
 }

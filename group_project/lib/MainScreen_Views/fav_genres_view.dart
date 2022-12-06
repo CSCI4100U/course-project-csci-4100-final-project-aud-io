@@ -3,9 +3,8 @@
 * */
 
 import 'package:flutter/material.dart';
-import '../music_classes/models/genre.dart';
-import '../user_classes/models/genre_model.dart';
 import 'dart:math';
+import '../music_classes/models/genre_model.dart';
 
 class FavoriteGenresView extends StatefulWidget {
   FavoriteGenresView({Key? key, this.title}) : super(key: key);
@@ -53,12 +52,6 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
                 });
               },
               icon: Icon(Icons.delete)
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed('/home');
-            },
-            icon: Icon(Icons.home),
           ),
         ],
       ),

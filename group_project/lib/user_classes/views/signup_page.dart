@@ -312,7 +312,7 @@ class _SignUpFormState extends State<SignUpForm> {
     } on FirebaseAuthException catch (e) {
       print(e);
 
-      Utils.showSnackBar(e.message);
+      Utils.showSnackBar(e.message, Colors.red);
     }
 
     Profile newUser = Profile(
