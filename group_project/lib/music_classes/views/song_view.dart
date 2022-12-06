@@ -30,7 +30,17 @@ class _SongsListState extends State<SongsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(genreSelected),),
+      appBar: AppBar(
+        title: Text(genreSelected),
+        actions: [
+          IconButton(
+            onPressed: () {
+
+            },
+            icon: Icon(Icons.playlist_add),
+          )
+        ],
+      ),
       body: Container(
         child:
         StreamBuilder(
@@ -47,29 +57,31 @@ class _SongsListState extends State<SongsList> {
                 return ListView.builder(
                     itemCount: allSongs.length,
                   itemBuilder: (context, index) {
-                      return Container(
-                          child: ListTile(
-                            title: Text(allSongs[index].name!),
-                            subtitle: Text(allSongs[index].duration!),
-                            trailing: IconButton(
+                      return Row(
+                          children: [
+                            Expanded(
+                              flex: 6,
+                              child: ListTile(
+                                title: Text(allSongs[index].name!),
+                                subtitle: Text(allSongs[index].artist!),
+                                trailing: Text(allSongs[index].duration!)
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                                child: IconButton(
                               onPressed: () {
 
                               },
                               icon: Icon(Icons.add),
-                            ),
-                          )
+                            ))
+                          ]
                       );
                 },
                 );
               }
             }
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-
-        },
-        child: Icon(Icons.add),
       ),
     );
   }
