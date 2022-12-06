@@ -199,6 +199,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                                     setState(() {
                                                       _model.addToFriendList(currentUser, user);
                                                       numFriends = null;
+                                                      Utils.showSnackBar("${FlutterI18n.translate(context, "snackbars.just_added")} ${user.userName} ${FlutterI18n.translate(context, "snackbars.as_friend")}",Colors.black);
                                                     });
                                                   },
                                                   icon: Icon(Icons.person_add_alt_1,color: Colors.white,)
@@ -226,8 +227,8 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                             children: [
                                               const Icon(Icons.favorite_border,color: Colors.white,),
                                               Text(getGenresInCommon(user) != "" ?
-                                              "Likes ${getGenresInCommon(user)}" :
-                                              "No Genres in common",
+                                              " ${FlutterI18n.translate(context, "forms.texts.likes")} ${getGenresInCommon(user)}" :
+                                              FlutterI18n.translate(context, "forms.texts.no_genres"),
                                                 style: const TextStyle(
                                                     fontSize: fontSize,
                                                     color: Colors.white
@@ -271,7 +272,7 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
           String userAddress = "${places[0].subThoroughfare!} "
               "${places[0].thoroughfare!}";
           if(userAddress == " "){
-            userAddress = "Unknown address";
+            userAddress = FlutterI18n.translate(context, "forms.texts.user_unknown");
           }
           UserModel().updateUser(currentUser);
           Utils.showSnackBar("${FlutterI18n.translate(
