@@ -22,16 +22,6 @@ class _GenreViewState extends State<GenreView> {
   final db = GenreModel();
   List allGenres = [];
   late var allFavGenres = [];
-  var colors = [
-    Colors.red[100],
-    Colors.blue[100],
-    Colors.cyan[100],
-    Colors.green[100],
-    Colors.yellow[100],
-    Colors.orange[100],
-    Colors.purple[100],
-    Colors.teal[100],
-  ];
 
   @override
   void initState() {
@@ -71,48 +61,87 @@ class _GenreViewState extends State<GenreView> {
               isHearted = true;
             }
           }
-          return Column(
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                padding: padding,
-                width: 250,
-                color: colors[index],
-                child: Row(
-                  children: [
-                    TextButton(
-                      onPressed: (){
-                        Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context)=> SongsList(title: genreOnDisplay,)));
-                      },
-                      child: Text("${genreOnDisplay.toUpperCase()}",
-                        style: const TextStyle(fontSize: fontSize,
-                          color: Colors.black,
+              Expanded(
+                child: Container(
+                  padding: padding,
+                  width: 250,
+                  color: db.genreColors[index],
+                  child:
+                      ListTile(
+                        title: TextButton(
+                          onPressed: (){
+                            Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (context)=> SongsList(title: genreOnDisplay,)));
+                          },
+                          child: Text("${genreOnDisplay.toUpperCase()}",
+                            style: const TextStyle(fontSize: fontSize,
+                              color: Colors.black,
 
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          setState(() {
-                            if (!isHearted) {
-                              // add to database
-                              FavGenre favGenre = FavGenre();
-                              favGenre = FavGenre(genre: genreOnDisplay);
-                              _addGenre(favGenre);
-                            }
-                            else{
-                              //remove from database
-                              if(favGenreToBeDeleted != null){
-                                _deleteGenre(favGenreToBeDeleted.id!);
-                              }
-                            }
-                          });
-                        },
-                        icon: isHearted ? const Icon(Icons.favorite)
-                            : const Icon(Icons.favorite_border)
-                    ),
-                  ],
+                        trailing: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                if (!isHearted) {
+                                  // add to database
+                                  FavGenre favGenre = FavGenre();
+                                  favGenre = FavGenre(genre: genreOnDisplay);
+                                  _addGenre(favGenre);
+                                }
+                                else{
+                                  //remove from database
+                                  if(favGenreToBeDeleted != null){
+                                    _deleteGenre(favGenreToBeDeleted.id!);
+                                  }
+                                }
+                              });
+                            },
+                            icon: isHearted ? Icon(Icons.favorite,color: Colors.black,)
+                                : const Icon(Icons.favorite_border,color: Colors.black)
+                        ),
+                      )
+                  // Row(
+                  //   children: [
+                  //     TextButton(
+                  //       onPressed: (){
+                  //         Navigator.of(context).push(
+                  //             MaterialPageRoute(
+                  //                 builder: (context)=> SongsList(title: genreOnDisplay,)));
+                  //       },
+                  //       child: Text("${genreOnDisplay.toUpperCase()}",
+                  //         style: const TextStyle(fontSize: fontSize,
+                  //           color: Colors.black,
+                  //
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     IconButton(
+                  //         onPressed: () {
+                  //           setState(() {
+                  //             if (!isHearted) {
+                  //               // add to database
+                  //               FavGenre favGenre = FavGenre();
+                  //               favGenre = FavGenre(genre: genreOnDisplay);
+                  //               _addGenre(favGenre);
+                  //             }
+                  //             else{
+                  //               //remove from database
+                  //               if(favGenreToBeDeleted != null){
+                  //                 _deleteGenre(favGenreToBeDeleted.id!);
+                  //               }
+                  //             }
+                  //           });
+                  //         },
+                  //         icon: isHearted ? const Icon(Icons.favorite)
+                  //             : const Icon(Icons.favorite_border)
+                  //     ),
+                  //   ],
+                  // ),
                 ),
               ),
             ],

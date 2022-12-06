@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:group_project/music_classes/models/song.dart';
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
@@ -17,6 +18,17 @@ class GenreModel {
     "dance", "grime", "pop", "rock", "soul"
   ];
 
+  var genreColors = [
+    Colors.red[100],
+    Colors.blue[100],
+    Colors.cyan[100],
+    Colors.green[100],
+    Colors.yellow[100],
+    Colors.orange[100],
+    Colors.purple[100],
+    Colors.teal[100],
+  ];
+
   /*
   * Local Storage Functions
   * */
@@ -32,7 +44,7 @@ class GenreModel {
   Future getAllGenres() async {
     final db = await DBUtils.init();
     final List maps = await db.query('genre_items');
-    List result = [];
+    List<FavGenre> result = [];
     for (int i = 0; i < maps.length; i++){
       result.add(
           FavGenre.fromMap(maps[i])

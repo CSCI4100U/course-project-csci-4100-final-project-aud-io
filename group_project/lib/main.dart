@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
           '/friendsList' : (context) => FriendList(title: FlutterI18n.translate(context, "titles.friend"),),
           '/addFriend' : (context) => AddFriendSearch(title: FlutterI18n.translate(context, "titles.add_friend"),userNameEntered: ""),
 
-          '/addSongs' : (context) => AddSongs(title: FlutterI18n.translate(context, "titles.add_friend"),),
+          '/addSongs' : (context) => AddSongs(title: "Add Song"),
           '/genre' : (context) => GenreView(title: FlutterI18n.translate(context, "titles.genre",), heartBool: false,),
           '/heartGenre' : (context) => GenreView(title: FlutterI18n.translate(context, "titles.genre",), heartBool: true,),
 
@@ -133,6 +133,12 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             icon: const Icon(Icons.favorite_border),
           ),
+          IconButton(
+            onPressed: (){
+              Navigator.pushNamed(context, '/settings');
+            },
+            icon: const Icon(Icons.settings_outlined),
+          ),
           SizedBox(
             width: 37,
             child: PopupMenuButton(
@@ -172,12 +178,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   });                }
               },
             ),
-          ),
-          IconButton(
-            onPressed: (){
-              Navigator.pushNamed(context, '/settings');
-            },
-            icon: const Icon(Icons.settings_outlined),
           ),
         ],
       ),
