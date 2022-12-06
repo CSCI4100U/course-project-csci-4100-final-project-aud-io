@@ -37,7 +37,7 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
       appBar: AppBar(
         title: Text(
             FlutterI18n.translate(context, "titles.stats_table"),
-              style: style,
+              style: TextStyle(fontSize: 15),
           ),
         actions: [
           SizedBox(
@@ -50,7 +50,6 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
                       ))
                   );
                 },
-                tooltip: 'chart',
                 icon: const Icon(Icons.bar_chart)
             ),
           ),
@@ -60,7 +59,6 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
                 onPressed: (){
                   Navigator.pushNamed(context, '/home');
                 },
-                tooltip: 'Home',
                 icon: const Icon(Icons.home)
             ),
           )
@@ -72,7 +70,6 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
         columns: [
           DataColumn(
             label: Text(FlutterI18n.translate(context, "forms.country")),
-            tooltip: "Country",
               onSort: (index, ascending) {
                 setState(() {
                   _sortColumnIndex = index;
@@ -90,7 +87,6 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
           ),
           DataColumn(
             label: Text(FlutterI18n.translate(context, "charts.freq")),
-            tooltip: "Frequency",
             onSort: (index, ascending) {
               setState(() {
                 _sortColumnIndex = index;
