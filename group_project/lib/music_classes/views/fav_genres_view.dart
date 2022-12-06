@@ -3,6 +3,7 @@
 * */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:group_project/music_classes/models/fav_genre.dart';
 import '../../MainScreen_Model/app_constants.dart';
 import '../../user_classes/models/user_model.dart';
@@ -86,7 +87,7 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
         context: context,
         builder: (context){
           return AlertDialog(
-            title: const Text("Remove from Favorite Genres?"),
+            title: Text(FlutterI18n.translate(context, "dialogs.remove_genre")),
             content: Text(genre.genre.toString().toUpperCase()),
             actions: [
               TextButton(
@@ -96,13 +97,13 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
                     });
                     Navigator.of(context).pop();
                   },
-                  child: const Text("Remove")
+                  child: Text(FlutterI18n.translate(context, "dialogs.remove"))
               ),
               TextButton(
                   onPressed: (){
                     Navigator.of(context).pop();
                   },
-                  child: const Text("Cancel")
+                  child: Text(FlutterI18n.translate(context, "dialogs.cancel"))
               )
             ],
           );

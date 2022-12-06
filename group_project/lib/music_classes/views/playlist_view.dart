@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:group_project/music_classes/models/song_model.dart';
 
 import '../../MainScreen_Model/app_constants.dart';
@@ -89,7 +90,7 @@ class _PlaylistViewState extends State<PlaylistView> {
         context: context,
         builder: (context){
           return AlertDialog(
-            title: const Text("Remove from Playlist?"),
+            title: Text(FlutterI18n.translate(context, "dialogs.remove_playlist")),
             content: Text("${song.name}"),
             actions: [
               TextButton(
@@ -99,13 +100,13 @@ class _PlaylistViewState extends State<PlaylistView> {
                     });
                     Navigator.of(context).pop();
                   },
-                  child: const Text("Remove")
+                  child: Text(FlutterI18n.translate(context, "dialogs.remove"))
               ),
               TextButton(
                   onPressed: (){
                     Navigator.of(context).pop();
                   },
-                  child: const Text("Cancel")
+                  child: Text(FlutterI18n.translate(context, "dialogs.cancel"))
               )
             ],
           );
