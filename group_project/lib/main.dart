@@ -17,6 +17,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:group_project/MainScreen_Views/fav_genres_view.dart';
+import 'package:group_project/music_classes/views/addSong.dart';
 import 'package:group_project/music_classes/views/playlist_view.dart';
 import 'package:group_project/statistics_classes/views/statistics_chart.dart';
 import 'package:group_project/statistics_classes/views/statistics_datatable.dart';
@@ -72,6 +73,7 @@ class MyApp extends StatelessWidget {
           '/addFriend' : (context) => AddFriendSearch(title: FlutterI18n.translate(context, "titles.add_friend"),userNameEntered: ""),
           '/genre' : (context) => genreView(title: FlutterI18n.translate(context, "titles.genre",), heartBool: false,),
           '/heartGenre' : (context) => genreView(title: FlutterI18n.translate(context, "titles.genre",), heartBool: true,),
+          '/addSongs' : (context) => AddSongs(title: FlutterI18n.translate(context, "titles.add_friend"),),
           '/settings' : (context) => SettingsView(title: FlutterI18n.translate(context, "titles.setting")),
           '/favGenres' : (context) => FavoriteGenresView(title: "Liked Genres",),
           '/explore' : (context) => ExplorePage(title: FlutterI18n.translate(context, "titles.explore"),),
