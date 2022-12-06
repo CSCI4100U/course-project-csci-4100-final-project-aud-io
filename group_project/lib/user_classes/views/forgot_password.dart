@@ -63,7 +63,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (email) {
                   email != null && !EmailValidator.validate(email)
-                      ? 'Please Enter a Valid Email'
+                      ? FlutterI18n.translate(context, "forms.errors.valid_email")
                       : null;
                 },
               ),
@@ -94,7 +94,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       await FirebaseAuth.instance.sendPasswordResetEmail(
           email: emailController.text.trim(),
       );
-      Utils.showSnackBar('Password Reset Email Sent', Colors.black);
+      Utils.showSnackBar(
+          FlutterI18n.translate(context, "snackbars.reset_confirm"),
+          Colors.black
+      );
       Navigator.of(context).popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
       print(e);

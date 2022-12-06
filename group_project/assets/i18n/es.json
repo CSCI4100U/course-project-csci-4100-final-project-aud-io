@@ -11,7 +11,11 @@
     "add_friend" : "Agregar Amigos",
     "explore" : "Explorar",
     "stats_table" :  "Tabla de datos Estadísticos",
-    "stats_chart" : "Gráfico de Estadísticas"
+    "stats_chart" : "Gráfico de Estadísticas",
+    "playlist" : "Lista de Reproducción",
+    "my_playlist" : "Mi Lista de Reproducción",
+    "liked_genre" : "Géneros Favoritos",
+    "add_song" : "Agregar Canción"
   },
   "forms": {
     "email" : "Correo Electrónico",
@@ -20,7 +24,11 @@
     "phone" : "Número de Teléfono",
     "city" : "Ciudad",
     "country" : "País",
+    "favGenres": "Géneros Favoritos",
     "search" : "Buscar nombre de usuario",
+    "song_name" : "Nombre de la Canción",
+    "song_artist" : "Artista de la Canción",
+    "song_duration" : "Duración de la Canción",
     "buttons" : {
       "birthday" : "Cumpleaños",
       "login_here" : "Entre Aquí",
@@ -31,6 +39,11 @@
       "add" : "Agregar",
       "stats" : "Estadísticas"
     },
+    "languages" : {
+      "english" : "Inglés",
+      "french" : "Francés",
+      "spanish" : "Español"
+    },
     "texts" : {
       "have_account" : "¿Tener una Cuenta?\t\t\t",
       "no_account" : "¿No Estás Registrado?\t\t\t",
@@ -38,7 +51,12 @@
       "no_friend" : "Parece que no tienes\namigos :(",
       "project" : "Este es nuestro proyecto ¡Espero que lo disfrutes!",
       "add_fav" : "Añadir género favorito",
-      "user_current" : "Usuario actualmente a:"
+      "user_current" : "Usuario actualmente a:",
+      "user_unknown" : "Ubicación Desconocida",
+      "no_results" : "No se han Encontrado Resultados",
+      "likes" : "Gustos",
+      "no_genres" : "Sin Géneros Comunes",
+      "none" : "NINGUNO"
     },
     "errors" : {
       "valid_email" : "Introduzca una dirección de correo electrónico válida",
@@ -46,16 +64,41 @@
       "valid_user" : "Introduce un nombre de usuario válido",
       "valid_num" : "Introduce un número de teléfono válido",
       "valid_city" : "Introduzca un nombre de ciudad válido",
-      "valid_country" : "Introduzca un nombre de país válido"
+      "valid_country" : "Introduzca un nombre de país válido",
+      "valid_song_name" : "Introduce un nombre de canción válido",
+      "valid_song_artist" : "Introduce un nombre de artista válido",
+      "valid_duration" : "Introduce una duración válida",
+      "valid_genre" : "Introduce un género válido"
     }
   },
   "main" : {
     "view_profile" : "¡Ver perfil!",
     "view_friend" : "¡Ver amigos!",
-    "view_genre" : "¡Ver género!",
-    "view_explore" : "¡Viajar el mundo!"
+    "view_genre" : "¡Ver géneros!",
+    "view_explore" : "¡Viajar el mundo!",
+    "view_playlist" : "¡Mira tu lista de reproducción!"
   },
   "charts" : {
     "freq" :"Frecuencia"
+  },
+  "dialogs" : {
+    "remove" : "Retirar",
+    "cancel" : "Cancelar",
+    "remove_genre" : "Quitar de Géneros Favoritos",
+    "remove_playlist" : "Eliminar de la Lista de Reproducción",
+    "remove_friend" : "¿Eliminar Amigo?"
+  },
+  "snackbars" : {
+    "reset_confirm" : "Correo electrónico de restablecimiento de contraseña enviado",
+    "added" : "Agregado",
+    "to_playlist" : "a la lista de reproducción!",
+    "deleted" : "Eliminado",
+    "as_friend" : "Como amigo",
+    "just_added" : "Recien agregado"
+  },
+  "notifs" : {
+    "header" : "Aud.io - Restablecer la Contraseña",
+    "notif_now" : "Complete el formulario para restablecer su contraseña",
+    "notif_later" : "Si no ha recibido un correo electrónico, vuelva a enviar el formulario"
   }
 }

@@ -57,17 +57,17 @@ class _SignUpFormState extends State<SignUpForm> {
             width: 37,
             child: PopupMenuButton(
               itemBuilder: (context) => [
-                const PopupMenuItem(
+                PopupMenuItem(
                     value: 1,
-                    child: Text('English')
+                    child: Text(FlutterI18n.translate(context, "forms.languages.english"))
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                     value: 2,
-                    child: Text('French')
+                    child: Text(FlutterI18n.translate(context, "forms.languages.french"))
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                     value: 3,
-                    child: Text('Spanish')
+                    child: Text(FlutterI18n.translate(context, "forms.languages.spanish"))
                 ),
               ],
               onSelected: (value) {
@@ -208,22 +208,6 @@ class _SignUpFormState extends State<SignUpForm> {
                           }
                         }
                     ),
-                    // TextFormField(
-                    //     style: TextStyle(fontSize: 20),
-                    //     textInputAction: TextInputAction.next,
-                    //     decoration: InputDecoration(
-                    //         labelText: FlutterI18n.translate(context, "forms.country"),
-                    //         icon: Icon(Icons.location_on)
-                    //     ),
-                    //     validator: (value) {
-                    //       if (value == null || value.length < 2) {
-                    //         return FlutterI18n.translate(context, "forms.errors.valid_country");
-                    //       } else {
-                    //         country = value;
-                    //         return null;
-                    //       }
-                    //     }
-                    // ),
                     const SizedBox(height: 14),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,

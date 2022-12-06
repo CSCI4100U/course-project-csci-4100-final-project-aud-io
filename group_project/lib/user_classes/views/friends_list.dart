@@ -143,11 +143,13 @@ class _FriendListState extends State<FriendList> {
     if(friend != null && friend.userName != null){
       //Todo: send friend a notification to add
 
+      //Add current user to friend's friendsList
+      _model.addToFriendList(friend, currentUser);
+
       //For the time being, add them to friendsList
       _model.addToFriendList(currentUser, friend);
 
-      //Add current user to friend's friendsList
-      _model.addToFriendList(friend, currentUser);
+      Utils.showSnackBar("${FlutterI18n.translate(context, "snackbars.just_added")} ${friend.userName} ${FlutterI18n.translate(context, "snackbars.as_friend")}",Colors.black);
 
       loadFriends();
     }
@@ -179,7 +181,7 @@ class _FriendListState extends State<FriendList> {
         }
       }
     }
-    Utils.showSnackBar("Deleted ${friend.userName} as a friend :(",Colors.black);
+    Utils.showSnackBar("${FlutterI18n.translate(context, "snackbars.deleted")} ${friend.userName} ${FlutterI18n.translate(context, "snackbars.as_friend")}",Colors.black);
   }
 
   /*
@@ -205,7 +207,7 @@ class _FriendListState extends State<FriendList> {
         context: context,
         builder: (context){
           return AlertDialog(
-            title: const Text("Remove Friend?"),
+            title: Text(FlutterI18n.translate(context, "dialogs.remove_friend")),
             content: Text("${user.userName}"),
             actions: [
               TextButton(
@@ -215,13 +217,13 @@ class _FriendListState extends State<FriendList> {
                     });
                     Navigator.of(context).pop();
                   },
-                  child: const Text("Remove")
+                  child: Text(FlutterI18n.translate(context, "dialogs.remove"))
               ),
               TextButton(
                   onPressed: (){
                     Navigator.of(context).pop();
                   },
-                  child: const Text("Cancel")
+                  child: Text(FlutterI18n.translate(context, "dialogs.cancel"))
               )
             ],
           );

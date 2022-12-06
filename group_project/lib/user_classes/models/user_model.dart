@@ -128,7 +128,7 @@ class UserModel{
     FirebaseFirestore.instance.collection('users')
         .doc(user.reference!.id).collection('friendsList').doc().set(friend.toMap());
 
-    Utils.showSnackBar("Just added ${friend.userName} as a friend :)",Colors.black);
+
   }
 
   Future updateUser(Profile user) async{
