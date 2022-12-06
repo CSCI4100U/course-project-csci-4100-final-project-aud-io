@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
           '/friendsList' : (context) => FriendList(title: FlutterI18n.translate(context, "titles.friend"),),
           '/addFriend' : (context) => AddFriendSearch(title: FlutterI18n.translate(context, "titles.add_friend"),userNameEntered: ""),
 
-          '/addSongs' : (context) => AddSongs(title: FlutterI18n.translate(context, "titles.add_friend"),),
+          '/addSongs' : (context) => AddSongs(title: "Add Song"),
           '/genre' : (context) => GenreView(title: FlutterI18n.translate(context, "titles.genre",), heartBool: false,),
           '/heartGenre' : (context) => GenreView(title: FlutterI18n.translate(context, "titles.genre",), heartBool: true,),
 
