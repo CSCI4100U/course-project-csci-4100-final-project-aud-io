@@ -66,7 +66,7 @@ class _ProfileViewState extends State<ProfileView> {
         translations[3]:userBeingViewed.country!,
         translations[4]:userBeingViewed.phoneNum!,
         translations[5]:userBeingViewed.birthday!,
-        translations[6]:userBeingViewed.favGenres!.toString(),
+        translations[6]:userBeingViewed.favGenres!= null ? userBeingViewed.favGenres!.toString() : "NONE",
       };
       return Scaffold(
         appBar: buildAppBarForSubPages(context, widget.title!),
