@@ -10,6 +10,7 @@ import '../models/profile.dart';
 import '../models/user_model.dart';
 import 'package:group_project/mainScreen_classes/MainScreen_Model/navigation_bar.dart';
 
+
 class ProfileView extends StatefulWidget {
   const ProfileView({Key? key, required this.title, this.otherUserEmail}) : super(key: key);
   final String? title;
@@ -25,7 +26,6 @@ class _ProfileViewState extends State<ProfileView> {
   final _model = UserModel();
   late Profile userBeingViewed = Profile();
   var allGenres = [];
-  var _lastInsertedGenre;
   var selectedIndex = -1;
   var genresLength;
 
@@ -49,6 +49,7 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
+    // null check
     if(userBeingViewed.userName!=null){
       List<String> translations = [
         "forms.username",
@@ -59,6 +60,7 @@ class _ProfileViewState extends State<ProfileView> {
         "forms.buttons.birthday",
         "forms.favGenres"
       ];
+      // Map with all of the users information
       Map<String,String> userInformation = {
         translations[0]:userBeingViewed.userName!,
         translations[1]:userBeingViewed.email!,
@@ -122,50 +124,6 @@ class _ProfileViewState extends State<ProfileView> {
                 );
               }),
             )
-            // Container(
-            //     padding: padding,
-            //   decoration: BoxDecoration(
-            //       color: Colors.white,
-            //       boxShadow: [
-            //         BoxShadow(
-            //             blurRadius: 1
-            //         )
-            //       ]
-            //   ),
-            //   child: Row(
-            //     children: [
-            //       Expanded(
-            //           child: Text("${FlutterI18n.translate(context, "forms.username")
-            //               .toUpperCase()}:")
-            //       ),
-            //       Expanded(
-            //           child: Text(userBeingViewed.userName!)
-            //       )
-            //     ],
-            //   )
-            // ),
-            // Container(
-            //     padding: padding,
-            //     decoration: BoxDecoration(
-            //         color: Colors.white,
-            //         boxShadow: [
-            //           BoxShadow(
-            //               blurRadius: 1
-            //           )
-            //         ]
-            //     ),
-            //     child: Row(
-            //       children: [
-            //         Expanded(
-            //             child: Text("${FlutterI18n.translate(context, "forms.email").toUpperCase()
-            //                 .toUpperCase()}:")
-            //         ),
-            //         Expanded(
-            //             child: Text(userBeingViewed.email!)
-            //         )
-            //       ],
-            //     )
-            // ),
           ],
         ),
       );
@@ -175,6 +133,10 @@ class _ProfileViewState extends State<ProfileView> {
     }
 
   }
+
+  /*
+    gets the information of the user that is logged in and stores it in a list
+   */
   getCurrentUser(String email)async{
     userBeingViewed = await _model.getUserByEmail(email);
     setState(() {

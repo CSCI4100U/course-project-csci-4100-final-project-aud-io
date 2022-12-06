@@ -5,6 +5,11 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
 
+
+/*
+  Both classes initialize a local storage database on your device
+ */
+
 class DBUtils{
   static Future init() async{
     //set up the database

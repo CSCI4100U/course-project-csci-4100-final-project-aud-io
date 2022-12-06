@@ -43,6 +43,7 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
             width: 37,
             child: IconButton(
                 onPressed: (){
+                  // Passes the frequencies list to the chart view
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => StatisticsChart(
                           frequencies: frequencies
@@ -73,6 +74,7 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
                 setState(() {
                   _sortColumnIndex = index;
                   _sortAscending = ascending;
+                  // sorts the countries
                   frequencies!.sort(
                           (a,b) {
                         if (ascending){
@@ -90,6 +92,7 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
               setState(() {
                 _sortColumnIndex = index;
                 _sortAscending = ascending;
+                // sorts the frequencies
                 frequencies!.sort(
                         (a,b) {
                       if (ascending){
@@ -114,23 +117,32 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
       ),
     );
   }
+
+  /*
+    Gets all the users from cloud storage
+   */
   getAllUsers() async{
     allUsers = await _model.getAllUsers();
     setState(() {
+      // sets frequencies list to the calculates frequencies
       frequencies = _calculateCountryFrequencies();
     });
     print(allUsers);
   }
 
+  /*
+    Gathers how many users are from each country, It trims the list to only
+    countries that have a frequency more than 0.
+   */
   List<CountryFrequency> _calculateCountryFrequencies(){
+
+    int? frequency;
+    List<CountryFrequency> usersFrequencies = [];
 
     Map<String, int > frequencies = {};
     for (Country country in countries) {
       frequencies[country.name!] = 0;
     }
-    //print(frequencies);
-
-    int? frequency;
 
     for (int i = 0; i < countries.length; i++){
       for(int j = 0; j < allUsers.length; j++){
@@ -150,8 +162,6 @@ class _StatisticsDataTableState extends State<StatisticsDataTable> {
             frequency: frequencies[country.name]
         ))
         .toList();
-
-    List<CountryFrequency> usersFrequencies = [];
 
     for (CountryFrequency country in list) {
       if (country.frequency! > 0) {

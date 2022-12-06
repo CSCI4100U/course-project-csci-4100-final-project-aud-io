@@ -21,6 +21,7 @@ class CountryFrequency{
   }
 }
 
+//List of all the countries in the world
 List<Country> countries = [
   Country(name: 'Afghanistan', code: 'AF'),
   Country(name: 'Åland Islands', code: 'AX'),

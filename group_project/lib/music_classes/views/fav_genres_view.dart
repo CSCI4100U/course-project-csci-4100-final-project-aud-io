@@ -110,7 +110,7 @@ class _FavoriteGenresViewState extends State<FavoriteGenresView> {
         }
     );
   }
-
+  
   getGenres() async{
     allGenres = await db.getAllGenres();
     UserModel().updateFavGenres(allGenres);
