@@ -66,7 +66,9 @@ class _ProfileViewState extends State<ProfileView> {
         translations[3]:userBeingViewed.country!,
         translations[4]:userBeingViewed.phoneNum!,
         translations[5]:userBeingViewed.birthday!,
-        translations[6]:userBeingViewed.favGenres!= null ? userBeingViewed.favGenres!.toString() : "NONE",
+        translations[6]:userBeingViewed.favGenres!= null
+            ? userBeingViewed.favGenres!.toString()
+            : FlutterI18n.translate(context, "forms.texts.none"),
       };
       return Scaffold(
         appBar: buildAppBarForSubPages(context, widget.title!),

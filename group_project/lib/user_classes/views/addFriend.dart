@@ -126,7 +126,8 @@ class _AddFriendSearchState extends State<AddFriendSearch> {
                       return Expanded(
                           child: Container(
                             padding: padding,
-                            child: Text("No results found.",
+                            child: Text(
+                              FlutterI18n.translate(context, "forms.texts.no_results"),
                               style: style,
                             ),
                           )

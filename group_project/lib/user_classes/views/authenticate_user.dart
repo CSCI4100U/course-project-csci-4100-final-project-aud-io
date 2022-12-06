@@ -57,17 +57,17 @@ class _LoginWidgetState extends State<LoginWidget> {
             width: 37,
             child: PopupMenuButton(
               itemBuilder: (context) => [
-                const PopupMenuItem(
+                PopupMenuItem(
                     value: 1,
-                    child: Text('English')
+                    child: Text(FlutterI18n.translate(context, "forms.languages.english"))
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                     value: 2,
-                    child: Text('French')
+                    child: Text(FlutterI18n.translate(context, "forms.languages.french"))
                 ),
-                const PopupMenuItem(
+                PopupMenuItem(
                     value: 3,
-                    child: Text('Spanish')
+                    child: Text(FlutterI18n.translate(context, "forms.languages.spanish"))
                 ),
               ],
               onSelected: (value) {
@@ -151,11 +151,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                     ),
                   ),
                   onTap: (){
-                    _notifications.sendNotificationNow("Aud.io - Password Reset", "Please Fill in the Form to Reset Your Password");
+                    _notifications.sendNotificationNow(
+                        FlutterI18n.translate(context, "notifs.header"),
+                        FlutterI18n.translate(context, "notifs.notif_now")
+                    );
                     when = tz.TZDateTime.now(tz.local).add(const Duration(minutes: 2));
                     _notifications.scheduleNotificationLater(
-                        "Aud.io - Password Reset",
-                        "If you have not received an email, please resubmit the form",
+                        FlutterI18n.translate(context, "notifs.header"),
+                        FlutterI18n.translate(context, "notifs.notif_later"),
                         when
                     );
                     Navigator.of(context).push(MaterialPageRoute(
