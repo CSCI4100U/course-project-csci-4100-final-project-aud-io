@@ -10,11 +10,13 @@ import '../models/user_model.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:group_project/mainScreen_classes/MainScreen_Model/app_constants.dart';
 
+/*
+* Class iterates through the Firebase database given the username entered
+* */
 class AddFriendSearch extends StatefulWidget {
-  AddFriendSearch({Key? key, this.title, required this.userNameEntered}) : super(key: key);
+  const AddFriendSearch({Key? key, this.title}) : super(key: key);
 
-  String? title;
-  String userNameEntered;
+  final String? title;
 
   @override
   State<AddFriendSearch> createState() => _AddFriendSearchState();
@@ -22,7 +24,7 @@ class AddFriendSearch extends StatefulWidget {
 
 class _AddFriendSearchState extends State<AddFriendSearch> {
   var formKey = GlobalKey<FormState>();
-  late String userNameEntered = widget.userNameEntered;
+  String userNameEntered = "";
   final _model = UserModel();
   List<Profile> allUsers = [];
   List<Profile> allFriends = [];

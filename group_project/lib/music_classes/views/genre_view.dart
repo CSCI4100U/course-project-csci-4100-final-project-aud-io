@@ -15,10 +15,9 @@ import '../../user_classes/models/user_model.dart';
 * favorite a genre.
 * */
 class GenreView extends StatefulWidget {
-  const GenreView({Key? key,this.title, required this.heartBool}) : super(key: key);
+  const GenreView({Key? key,this.title}) : super(key: key);
 
   final String? title;
-  final bool heartBool;
 
   @override
   State<GenreView> createState() => _GenreViewState();
