@@ -10,7 +10,9 @@ class GenreModel {
   * Cloud Storage Functions
   * */
   String songCollectionID = "qH6SDHlnOTIVWWuBjnWP";
-
+  /*
+list for genres and different colors for genres
+  * */
   List<String> genres = [
     "Hip Hop", "alternative", "classical",
     "dance", "grime", "pop", "rock", "soul"
@@ -38,7 +40,9 @@ class GenreModel {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
-
+  /*
+  get all genres
+  * */
   Future getAllGenres() async {
     final db = await DBUtils.init();
     final List maps = await db.query('genre_items');
@@ -51,7 +55,9 @@ class GenreModel {
     print(result);
     return result;
   }
-
+/*
+  * function to delete genres
+  * */
   Future<int> deleteGenreById(int id) async {
     final db = await DBUtils.init();
     return db.delete(

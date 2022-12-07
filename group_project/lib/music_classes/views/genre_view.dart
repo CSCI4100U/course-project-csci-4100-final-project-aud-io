@@ -151,18 +151,24 @@ class _GenreViewState extends State<GenreView> {
       ),
     );
   }
-
+/*
+getting favourite genre base on user
+  * */
   getFavGenres() async{
     allFavGenres = await db.getAllGenres();
     UserModel().updateFavGenres(allFavGenres);
     setState(() {});
   }
-
+/*
+  adding a genre
+  * */
   Future _addGenre(FavGenre genre) async{
     await db.insertGenre(genre);
     getFavGenres();
   }
-
+/*
+  deleting a genre
+  * */
   Future _deleteGenre(int id) async {
     await db.deleteGenreById(id);
     getFavGenres();

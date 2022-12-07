@@ -113,10 +113,9 @@ class _SongsListState extends State<SongsList> {
     });
   }
 
-  /*
-  * Function reloads friend stream and updates the
-  * List of all the friends of the current user
-  * */
+/*
+    gets all songs in database in selected genre
+   */
   getAllSongs() async{
     songStream = _songModel.getSongStream(genreSelected);
     allSongs = await _songModel.getSongList(genreSelected);
@@ -124,12 +123,16 @@ class _SongsListState extends State<SongsList> {
 
     });
   }
-
+/*
+adding song to local storage
+   */
   _addSongToLocalStorage(Song song) async {
     await _songModel.insertSongLocal(song);
     Utils.showSnackBar("${FlutterI18n.translate(context, "snackbars.added")} ${song.name} ${FlutterI18n.translate(context, "snackbars.to_playlist")}",Colors.black);
   }
-
+/*
+adding song to cloud storage
+   */
   _addSongToCloudStorage() async{
     var song = await Navigator.of(context).pushNamed('/addSongs') as Song;
     _songModel.insertSong(song,genreSelected);
