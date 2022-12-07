@@ -239,8 +239,8 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
                                           child: Row(
                                             children: [
                                               const Icon(Icons.favorite_border,color: Colors.white,),
-                                              Text(getGenresInCommon(user) != "" ?
-                                              " ${FlutterI18n.translate(context, "forms.texts.likes")} ${getGenresInCommon(user)}" :
+                                              Text(getGenreInCommon(user) != "" ?
+                                              " ${FlutterI18n.translate(context, "forms.texts.likes")} ${getGenreInCommon(user)}" :
                                               FlutterI18n.translate(context, "forms.texts.no_genres"),
                                                 style: const TextStyle(
                                                     fontSize: fontSize,
@@ -414,28 +414,20 @@ class _ExplorePageState extends State<ExplorePage> with TickerProviderStateMixin
   }
 
   /*
-  * Return a string of genres in common between
+  * Return a genre in common between
   * a given user and the current user
   * */
-  getGenresInCommon(Profile user){
+  getGenreInCommon(Profile user){
 
     if(user.favGenres != null && currentUser.favGenres != null){
-      String genresInCommon = "";
-
       var currUserFavGenres = currentUser.favGenres;
       var otherUserFavGenres = user.favGenres;
 
       for(int i = 0; i < otherUserFavGenres.length; i++){
         if(currUserFavGenres.contains(otherUserFavGenres[i])){
-          if(genresInCommon == ""){
-            genresInCommon += otherUserFavGenres[i];
-          }
-          else{
-            genresInCommon += ", ${otherUserFavGenres[i]}";
-          }
+          return otherUserFavGenres[i];
         }
       }
-      return genresInCommon;
     }
     return "";
   }
