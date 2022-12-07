@@ -13,7 +13,17 @@ import 'profile.dart';
 
 Profile currentUser = Profile();
 
+/*
+* Class contains all the relevant functions for data manipulation
+* to be possible as it relates to users in the Firebase database
+* (Cloud Storage)
+* */
 class UserModel{
+
+  /*
+  * Initializes the current user upon sign in
+  * (Function is called when a user signs in)
+  * */
   static initializeCurrentUser() async{
     print("Initializing current user...");
     if(FirebaseAuth.instance.currentUser != null){
@@ -65,7 +75,7 @@ class UserModel{
   }
 
   /*
-  * Function return a Profile given an
+  * Function returns a Profile given an
   * email, which is then compared with
   * the email in the users under
   * Firebase Authentication.
@@ -129,11 +139,18 @@ class UserModel{
 
   }
 
+  /*
+  * Updates the user information of the given user on the
+  * cloud storage
+  * */
   Future updateUser(Profile user) async{
     print("Updating user info...");
     FirebaseFirestore.instance.collection('users').doc(user.reference!.id).update(user.toMap());
   }
 
+  /*
+  * Deletes the given user from cloud storage
+  * */
   Future deleteUser(Profile user) async{
     user.reference!.delete();
   }
@@ -180,10 +197,18 @@ class UserModel{
     );
   }
 
+  /*
+  * Returns true if a given user is the current user
+  * */
   isCurrentUser(Profile user){
     return user.userName == currentUser.userName;
   }
 
+  /*
+  * Given a list of genres, this function updates the favorite
+  * genres of the current user to this same list in the cloud
+  * storage
+  * */
   updateFavGenres(List<dynamic> allGenres){
     List<String> genres = [];
     for(FavGenre genre in allGenres){
